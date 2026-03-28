@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm --filter @workspace/initia-vienne run typecheck)",
+      "Bash(pnpm --filter @workspace/initia-vienne run build)",
+      "Bash(PORT=5000 pnpm --filter @workspace/initia-vienne run build)",
+      "Bash(PORT=5000 BASE_PATH=/ pnpm --filter @workspace/initia-vienne run build)",
+      "Bash(PORT=5000 BASE_PATH=/ pnpm --filter @workspace/initia-vienne run dev --host 0.0.0.0 2>&1)",
+      "Bash(echo $PORT)",
+      "Bash(echo $BASE_PATH)",
+      "Bash(echo $REPL_ID)"
+    ]
+  }
+}

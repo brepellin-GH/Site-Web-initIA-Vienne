@@ -1,0 +1,20 @@
+packages:
+  "framer-motion": "For smooth scroll reveals and page transitions"
+  "react-hook-form": "For robust contact form state management"
+  "@hookform/resolvers": "For Zod validation integration"
+  "zod": "For form validation schemas"
+  "clsx": "For conditional tailwind class merging"
+  "tailwind-merge": "For tailwind class deduplication"
+
+images:
+  - path: "artifacts/initia-vienne/public/images/hero-home.png"
+    description: "A bright, warm, professional photo of a diverse group of adults and seniors sitting around a table with laptops, smiling and learning together in a bright modern community room. Soft lighting."
+    aspect_ratio: "16:9"
+  - path: "artifacts/initia-vienne/public/images/hero-b2b.png"
+    description: "A professional yet warm photo of an approachable trainer standing in front of a small group of attentive professionals and association members in a bright room. Forest green and vibrant orange subtle accents in the room."
+    aspect_ratio: "16:9"
+
+notes:
+  - No backend API needed for contact forms; they will show a success message on submit
+  - The application is a two-page informational site
+  - Wouter is used for routing, standard anchor tags or scrollIntoView for hash navigation
