@@ -10,7 +10,10 @@
       "Bash(echo $BASE_PATH)",
       "Bash(echo $REPL_ID)",
       "Bash(pkill -f \"vite\")",
-      "Bash(PORT=3000 BASE_PATH=/ pnpm --filter @workspace/initia-vienne run dev 2>&1)"
+      "Bash(PORT=3000 BASE_PATH=/ pnpm --filter @workspace/initia-vienne run dev 2>&1)",
+      "Bash(git remote:*)",
+      "Bash(git add:*)",
+      "Bash(git push:*)"
     ]
   }
 }
