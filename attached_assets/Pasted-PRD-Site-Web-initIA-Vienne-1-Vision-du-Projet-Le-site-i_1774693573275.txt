@@ -1,0 +1,100 @@
+PRD : Site Web initIA Vienne
+1. Vision du Projet
+Le site initIA Vienne a pour objectif de démystifier l’intelligence artificielle (IA) auprès d'un public non technique. Il sert de vitrine pour promouvoir des ateliers concrets, simples et accessibles, visant l’inclusion numérique.
+
++4
+2. Objectifs Stratégiques
+
+Accessibilité : Montrer que l'IA est à la portée de tous (débutants, seniors, associations).
+
+
+
+Conversion : Inciter les particuliers et les structures (collectivités, associations) à prendre contact ou demander un devis.
+
++4
+
+Crédibilité : Mettre en avant l'expérience terrain et les témoignages clients.
+
+
+3. Identité Visuelle (Basée sur le Logo)
+Palette de Couleurs :
+
+Vert forêt/foncé : Confiance, croissance, nature (Utilisé pour "init" et "Vienne").
+
+Orange vif : Énergie, créativité, technologie (Utilisé pour "IA", l'ampoule et l'icône carrée).
+
+Typographie : Sans-serif moderne, lisible et épurée.
+
+Iconographie : Utilisation de l'ampoule (idée/clarté) et des carrés (structure/numérique) présents dans le logo.
+
+4. Architecture du Site (Sitemap)
+Page 1 : Accueil (Grand Public & Individuels)
+Cette page doit rassurer et montrer l'utilité immédiate de l'IA.
+
++1
+
+Section Hero : Titre impactant ("L’intelligence artificielle devient enfin accessible à tous") avec boutons d'action.
+
++1
+
+Le "Pourquoi" : Aborder la complexité perçue pour mieux la déconstruire.
+
+
+
+Bénéfices & Usage : Liste des tâches quotidiennes simplifiées (mails, résumés, idées).
+
++1
+
+Le Déroulement : Les 4 étapes de l'atelier (Découverte, Démo, Pratique, Échanges).
+
+
+
+Preuve Sociale : Section dédiée aux témoignages clients.
+
+
+
+Tunnel Collectivités : Bloc d'appel vers la page spécifique pour les pros.
+
+
+Page 2 : Collectivités & Associations (Inclusion Numérique)
+Ciblage B2B/B2G axé sur l'accompagnement social.
+
++1
+
+Section Hero : Focus sur l'initiation des publics spécifiques.
+
++1
+
+Enjeux : Focus sur l'inclusion numérique et la lutte contre la fracture digitale.
+
+
+
+Objectifs Pédagogiques : Autonomie numérique et confiance en soi.
+
+
+
+Expérience Terrain : Liste des références (Centre social d’Estressin, Club Léo Lagrange, etc.).
+
+
+
+Formats : Précisions logistiques (1h à 2h, groupes de 8 à 12 personnes).
+
+
+5. Spécifications Fonctionnelles
+Fonctionnalité	Description
+Responsive Design	Le site doit être parfaitement lisible sur smartphone (public senior/nomade).
+Appel à l'action (CTA)	
+Boutons "Me contacter" et "Demander un devis" visibles sur chaque page.
+
+Click-to-Call	
+Le numéro de téléphone (07 56 95 85 11) doit être cliquable sur mobile.
+
+Formulaire de contact	Formulaire simple pour recueillir le nom, l'email et le type de structure.
+Exporter vers Sheets
+6. Contraintes Techniques & SEO
+SEO Local : Optimisation sur les mots-clés "IA Vienne", "Atelier numérique Isère", "Initiation ChatGPT senior".
+
+Performance : Temps de chargement rapide pour ne pas perdre les utilisateurs avec une connexion limitée.
+
+Accessibilité (WCAG) : Contrastes élevés pour les seniors et navigation simplifiée.
+
