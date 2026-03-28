@@ -8,7 +8,9 @@
       "Bash(PORT=5000 BASE_PATH=/ pnpm --filter @workspace/initia-vienne run dev --host 0.0.0.0 2>&1)",
       "Bash(echo $PORT)",
       "Bash(echo $BASE_PATH)",
-      "Bash(echo $REPL_ID)"
+      "Bash(echo $REPL_ID)",
+      "Bash(pkill -f \"vite\")",
+      "Bash(PORT=3000 BASE_PATH=/ pnpm --filter @workspace/initia-vienne run dev 2>&1)"
     ]
   }
 }

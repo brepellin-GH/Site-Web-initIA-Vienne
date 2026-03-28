@@ -1,464 +1,323 @@
+import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { useState } from "react";
-import {
-  Lightbulb,
-  Users,
-  CheckCircle2,
-  Star,
+import { 
+  Lightbulb, 
+  FileText, 
+  Clock, 
+  CheckCircle2, 
+  MessageCircle, 
+  Sparkles,
   ArrowRight,
-  Mail,
-  MessageSquare,
-  Smile,
-  BookOpen,
-  Zap,
-  Building2,
-  ChevronDown,
-  Phone,
+  ShieldCheck,
+  Star
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { ContactForm } from "@/components/contact-form";
+import { cn } from "@/lib/utils";
 
-// ────────────────────────────────────────────────
-// CONTACT FORM
-// ────────────────────────────────────────────────
-function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", structure: "", message: "" });
+const FADE_UP = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+};
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // In production, send to backend or Google Sheets webhook
-    setSubmitted(true);
+const STAGGER = {
+  visible: { transition: { staggerChildren: 0.15 } }
+};
+
+export default function Home() {
+  const scrollToContact = () => {
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  if (submitted) {
-    return (
-      <div className="flex flex-col items-center justify-center py-12 text-center">
-        <CheckCircle2 className="h-14 w-14 text-primary mb-4" />
-        <h3 className="text-xl font-semibold text-foreground mb-2">Message envoyé !</h3>
-        <p className="text-muted-foreground">Je vous recontacte sous 48h. À très bientôt !</p>
-      </div>
-    );
-  }
+  const scrollToWorkshops = () => {
+    document.getElementById("workshops")?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1">
-            Votre nom *
-          </label>
-          <input
-            id="name"
-            type="text"
-            required
-            value={form.name}
-            onChange={(e) => setForm({ ...form, name: e.target.value })}
-            placeholder="Marie Dupont"
-            className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition"
-          />
-        </div>
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1">
-            Email *
-          </label>
-          <input
-            id="email"
-            type="email"
-            required
-            value={form.email}
-            onChange={(e) => setForm({ ...form, email: e.target.value })}
-            placeholder="marie@exemple.fr"
-            className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition"
-          />
-        </div>
-      </div>
-      <div>
-        <label htmlFor="structure" className="block text-sm font-medium text-foreground mb-1">
-          Vous êtes…
-        </label>
-        <select
-          id="structure"
-          value={form.structure}
-          onChange={(e) => setForm({ ...form, structure: e.target.value })}
-          className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition"
-        >
-          <option value="">Choisir...</option>
-          <option value="particulier">Un particulier</option>
-          <option value="senior">Un senior / retraité</option>
-          <option value="association">Une association</option>
-          <option value="collectivite">Une collectivité</option>
-          <option value="entreprise">Une entreprise</option>
-          <option value="autre">Autre</option>
-        </select>
-      </div>
-      <div>
-        <label htmlFor="message" className="block text-sm font-medium text-foreground mb-1">
-          Votre message
-        </label>
-        <textarea
-          id="message"
-          rows={4}
-          value={form.message}
-          onChange={(e) => setForm({ ...form, message: e.target.value })}
-          placeholder="Dites-moi ce qui vous intéresse ou posez vos questions..."
-          className="w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition resize-none"
-        />
-      </div>
-      <Button type="submit" size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
-        <Mail className="mr-2 h-4 w-4" />
-        Envoyer ma demande
-      </Button>
-      <p className="text-xs text-center text-muted-foreground">
-        Ou appelez directement :{" "}
-        <a href="tel:+33756958511" className="text-primary font-medium hover:underline">
-          07 56 95 85 11
-        </a>
-      </p>
-    </form>
-  );
-}
-
-// ────────────────────────────────────────────────
-// HOME PAGE
-// ────────────────────────────────────────────────
-export default function Home() {
-  return (
-    <main>
-      {/* ── HERO ─────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary to-[hsl(142,50%,18%)] text-primary-foreground">
-        {/* Decorative circles */}
-        <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-16 -left-16 w-60 h-60 rounded-full bg-primary-foreground/5 blur-2xl pointer-events-none" />
-
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
-          <div className="max-w-3xl">
-            <Badge className="mb-5 bg-accent/20 text-accent-foreground border-accent/30 text-sm font-medium px-3 py-1">
-              <Lightbulb className="h-3.5 w-3.5 mr-1.5" />
-              Ateliers d'initiation — Vienne, Isère
-            </Badge>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-6">
-              L'intelligence artificielle devient enfin{" "}
-              <span className="text-accent">accessible à tous</span>
-            </h1>
-            <p className="text-lg sm:text-xl text-primary-foreground/80 leading-relaxed mb-8 max-w-2xl">
-              Des ateliers concrets, bienveillants et sans jargon technique. Découvrez comment l'IA peut simplifier votre quotidien — que vous soyez débutant, senior ou curieux.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Button
-                asChild
-                size="lg"
-                className="bg-accent hover:bg-accent/90 text-white font-semibold text-base px-8"
-              >
-                <a href="#contact">
+    <main className="flex-1 w-full overflow-hidden">
+      
+      {/* HERO SECTION */}
+      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-brand-cream">
+        {/* Abstract background shapes */}
+        <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[800px] h-[800px] bg-brand-green/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-[600px] h-[600px] bg-brand-orange/5 rounded-full blur-3xl" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+            
+            <motion.div 
+              initial="hidden"
+              animate="visible"
+              variants={STAGGER}
+              className="max-w-2xl"
+            >
+              <motion.div variants={FADE_UP} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-orange/10 text-brand-orange font-semibold text-sm mb-6 border border-brand-orange/20">
+                <Sparkles className="w-4 h-4" />
+                Ateliers d'initiation à l'IA
+              </motion.div>
+              
+              <motion.h1 variants={FADE_UP} className="text-5xl lg:text-6xl font-display font-extrabold text-primary leading-[1.1] text-balance mb-6">
+                L'intelligence artificielle devient <span className="text-brand-orange relative whitespace-nowrap">enfin accessible<svg className="absolute -bottom-2 left-0 w-full h-3 text-brand-orange/30" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0,5 Q50,10 100,5" stroke="currentColor" strokeWidth="4" fill="none"/></svg></span> à tous
+              </motion.h1>
+              
+              <motion.p variants={FADE_UP} className="text-lg lg:text-xl text-muted-foreground mb-8 leading-relaxed text-balance">
+                Des ateliers concrets, simples et bienveillants pour découvrir l'IA sans prise de tête. Spécialement conçus pour les débutants, les seniors et les professionnels.
+              </motion.p>
+              
+              <motion.div variants={FADE_UP} className="flex flex-col sm:flex-row gap-4">
+                <Button size="lg" onClick={scrollToWorkshops} className="group">
+                  Découvrir les ateliers
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
+                <Button size="lg" variant="outline" onClick={scrollToContact}>
                   Me contacter
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-primary-foreground/30 text-primary-foreground bg-primary-foreground/10 hover:bg-primary-foreground/20 font-semibold text-base"
-              >
-                <a href="tel:+33756958511">
-                  <Phone className="mr-2 h-4 w-4" />
-                  07 56 95 85 11
-                </a>
-              </Button>
-            </div>
-          </div>
-        </div>
+                </Button>
+              </motion.div>
 
-        {/* Scroll hint */}
-        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 animate-bounce text-primary-foreground/50">
-          <ChevronDown className="h-6 w-6" />
+              <motion.p variants={FADE_UP} className="mt-6 text-sm text-muted-foreground flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-brand-green" />
+                Ou appelez directement le <a href="tel:0756958511" className="font-bold text-primary hover:text-brand-orange transition-colors">07 56 95 85 11</a>
+              </motion.p>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative lg:ml-auto w-full max-w-lg"
+            >
+              <div className="absolute inset-0 bg-gradient-to-tr from-brand-green to-brand-orange rounded-[2.5rem] transform rotate-3 scale-[1.02] opacity-20 blur-lg" />
+              <img 
+                src={`${import.meta.env.BASE_URL}images/hero-home.png`}
+                alt="Groupe de personnes souriantes en atelier IA"
+                className="relative rounded-[2.5rem] shadow-2xl object-cover aspect-square md:aspect-[4/3] w-full border-4 border-white"
+              />
+              {/* Floating Badge */}
+              <div className="absolute -bottom-6 -left-6 glass-panel p-4 rounded-2xl flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center">
+                  <Star className="w-6 h-6 fill-current" />
+                </div>
+                <div>
+                  <p className="font-bold text-primary">100% Pratique</p>
+                  <p className="text-sm text-muted-foreground">Sans jargon technique</p>
+                </div>
+              </div>
+            </motion.div>
+
+          </div>
         </div>
       </section>
 
-      {/* ── POURQUOI ─────────────────────────────── */}
-      <section className="py-16 md:py-20 bg-background">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <Badge className="mb-4 bg-secondary text-secondary-foreground border-0">Le constat</Badge>
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-5 leading-snug">
-                L'IA semble compliquée ?<br />
-                <span className="text-primary">C'est une idée reçue.</span>
-              </h2>
-              <p className="text-muted-foreground text-base leading-relaxed mb-5">
-                Entre les robots des films de science-fiction et les discours techniques des experts, l'intelligence artificielle effraie. Beaucoup pensent que c'est réservé aux ingénieurs, aux jeunes, aux "geeks".
-              </p>
-              <p className="text-muted-foreground text-base leading-relaxed mb-6">
-                <strong className="text-foreground">En réalité, les outils d'IA disponibles aujourd'hui sont aussi simples à utiliser que Google.</strong> Avec un peu de méthode et de pratique, tout le monde peut en bénéficier.
-              </p>
-              <div className="flex flex-col gap-3">
-                {[
-                  "Pas besoin de compétences techniques",
-                  "Pas besoin d'être jeune ou diplômé",
-                  "Pas besoin d'un équipement particulier",
-                ].map((item) => (
-                  <div key={item} className="flex items-start gap-2">
-                    <CheckCircle2 className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                    <span className="text-foreground text-sm font-medium">{item}</span>
+      {/* WHY SECTION */}
+      <section className="py-24 bg-white relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">Pourquoi se former à l'IA ?</h2>
+            <p className="text-lg text-muted-foreground">
+              L'IA évolue vite et peut sembler intimidante — <span className="font-semibold text-primary">c'est normal</span>. 
+              Nos ateliers sont conçus pour vous accompagner pas à pas, avec des exemples du quotidien.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: FileText,
+                title: "Rédiger en quelques secondes",
+                desc: "Apprenez à rédiger des e-mails, courriers administratifs ou lettres de motivation sans effort."
+              },
+              {
+                icon: Clock,
+                title: "Gagner du temps",
+                desc: "Résumez de longs documents instantanément et trouvez l'information dont vous avez besoin rapidement."
+              },
+              {
+                icon: Lightbulb,
+                title: "Trouver des idées",
+                desc: "Utilisez l'IA comme un assistant créatif pour organiser vos voyages, vos repas ou vos projets."
+              }
+            ].map((feature, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="bg-brand-cream p-8 rounded-3xl border border-border hover:shadow-xl hover:border-brand-green/30 transition-all duration-300 group"
+              >
+                <div className="w-14 h-14 bg-brand-green-light rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <feature.icon className="w-7 h-7 text-brand-green" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{feature.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WORKSHOP STEPS */}
+      <section id="workshops" className="py-24 bg-brand-green text-white relative overflow-hidden">
+        {/* Subtle texture */}
+        <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4=')]" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-white">Comment se déroule un atelier ?</h2>
+            <p className="text-brand-green-light/80 text-lg">Une méthode éprouvée, basée sur l'échange et la pratique.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { num: "1", title: "Découverte", desc: "Comprendre ce qu'est vraiment l'IA (sans les clichés)." },
+              { num: "2", title: "Démonstration", desc: "Voir des outils concrets en action (ChatGPT, etc.)." },
+              { num: "3", title: "Pratique", desc: "Essayer vous-même avec des exercices guidés." },
+              { num: "4", title: "Échanges", desc: "Poser vos questions librement et discuter." }
+            ].map((step, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="relative"
+              >
+                {/* Connecting line for desktop */}
+                {i < 3 && <div className="hidden lg:block absolute top-8 left-full w-full h-[2px] bg-white/20 -translate-x-4" />}
+                
+                <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-8 rounded-3xl h-full relative z-10 hover:bg-white/15 transition-colors">
+                  <div className="w-16 h-16 bg-brand-orange text-white text-2xl font-bold font-display rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-brand-orange/30">
+                    {step.num}
                   </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { icon: Smile, title: "Bienveillant", desc: "Un cadre rassurant, sans jugement, à votre rythme." },
-                { icon: Zap, title: "Concret", desc: "Des exercices pratiques sur des cas du quotidien." },
-                { icon: Users, title: "En groupe", desc: "Petits groupes de 8 à 12 personnes pour un suivi personnalisé." },
-                { icon: BookOpen, title: "Pédagogique", desc: "Un langage clair, sans jargon ni termes techniques." },
-              ].map(({ icon: Icon, title, desc }) => (
-                <Card key={title} className="p-5 border-border hover:border-primary/30 hover:shadow-md transition-all">
-                  <Icon className="h-7 w-7 text-accent mb-3" />
-                  <h3 className="font-semibold text-foreground mb-1">{title}</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">{desc}</p>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── BÉNÉFICES ─────────────────────────────── */}
-      <section className="py-16 md:py-20 bg-muted/40">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <Badge className="mb-4 bg-accent/15 text-accent border-accent/20">Ce que vous allez gagner</Badge>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Des tâches du quotidien simplifiées
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-base">
-              Voici ce que vous saurez faire après un atelier initIA Vienne.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[
-              { emoji: "✉️", title: "Écrire des mails", desc: "Rédiger une lettre de réclamation, un email professionnel ou un message délicat en quelques secondes." },
-              { emoji: "📋", title: "Résumer des textes", desc: "Comprendre rapidement un contrat, une notice ou un article de presse en demandant un résumé." },
-              { emoji: "💡", title: "Trouver des idées", desc: "Préparer un anniversaire, un voyage, un discours ou un cadeau grâce à l'IA comme assistant créatif." },
-              { emoji: "🔍", title: "Mieux chercher", desc: "Obtenir des réponses claires et précises plutôt que de se perdre dans des pages de résultats." },
-              { emoji: "📸", title: "Créer des images", desc: "Générer des visuels originaux pour illustrer un projet, une affiche ou simplement pour s'amuser." },
-              { emoji: "🗣️", title: "Traduire & paraphraser", desc: "Traduire un document en langue étrangère ou reformuler un texte compliqué en langage simple." },
-            ].map(({ emoji, title, desc }) => (
-              <div
-                key={title}
-                className="flex gap-4 bg-white rounded-xl p-5 border border-border hover:border-primary/20 hover:shadow-sm transition-all"
-              >
-                <span className="text-3xl shrink-0">{emoji}</span>
-                <div>
-                  <h3 className="font-semibold text-foreground mb-1">{title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
+                  <h3 className="text-xl font-bold mb-3 text-white">{step.title}</h3>
+                  <p className="text-white/80 leading-relaxed">{step.desc}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── DÉROULEMENT ─────────────────────────── */}
-      <section className="py-16 md:py-20 bg-background">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <Badge className="mb-4 bg-secondary text-secondary-foreground border-0">Programme</Badge>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Comment se déroule un atelier ?
-            </h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Chaque atelier suit 4 étapes claires, pensées pour que vous repartiez avec des compétences réelles.
-            </p>
+      {/* TESTIMONIALS */}
+      <section className="py-24 bg-brand-cream">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">Ils ont participé à nos ateliers</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-            {/* Connecting line (desktop) */}
-            <div className="hidden lg:block absolute top-10 left-[12.5%] right-[12.5%] h-0.5 bg-gradient-to-r from-primary/30 via-accent/50 to-primary/30" />
-
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                step: "01",
-                color: "bg-primary",
-                title: "Découverte",
-                desc: "Qu'est-ce que l'IA ? Démystification des idées reçues et panorama des outils accessibles aujourd'hui.",
+                quote: "Je pensais que l'IA c'était pour les jeunes. Maintenant j'utilise ChatGPT tous les jours pour écrire mes e-mails !",
+                name: "Marie-Claire",
+                desc: "68 ans",
+                bg: "bg-white"
               },
               {
-                step: "02",
-                color: "bg-primary/80",
-                title: "Démonstration",
-                desc: "Observation de cas réels et concrets : comment l'IA répond, rédige, résume et aide au quotidien.",
+                quote: "Très concret, sans jargon, et super sympa. J'ai enfin compris comment ça fonctionne.",
+                name: "Jean-Pierre",
+                desc: "Retraité",
+                bg: "bg-brand-green text-white"
               },
               {
-                step: "03",
-                color: "bg-accent",
-                title: "Pratique",
-                desc: "Vous prenez en main les outils vous-même, avec des exercices guidés adaptés à vos besoins.",
-              },
-              {
-                step: "04",
-                color: "bg-accent/80",
-                title: "Échanges",
-                desc: "Questions, astuces partagées, et conseils personnalisés pour continuer à apprendre chez vous.",
-              },
-            ].map(({ step, color, title, desc }) => (
-              <div key={step} className="relative flex flex-col items-center text-center">
-                <div className={`relative z-10 w-16 h-16 ${color} text-white rounded-full flex items-center justify-center font-bold text-xl shadow-md mb-4`}>
-                  {step}
-                </div>
-                <h3 className="font-semibold text-foreground text-lg mb-2">{title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-10 text-center">
-            <p className="text-sm text-muted-foreground">
-              Durée : <strong className="text-foreground">1h à 2h</strong> · Groupes de{" "}
-              <strong className="text-foreground">8 à 12 personnes</strong> · Matériel fourni
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── TÉMOIGNAGES ─────────────────────────── */}
-      <section className="py-16 md:py-20 bg-primary/5">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <Badge className="mb-4 bg-accent/15 text-accent border-accent/20">Témoignages</Badge>
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Ils ont participé, ils témoignent
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                name: "Martine L.",
-                role: "Retraitée, 68 ans",
-                text: "J'avais très peur de l'informatique. Après l'atelier, j'ai rédigé ma première lettre de résiliation toute seule avec l'IA. Incroyable !",
-                stars: 5,
-              },
-              {
-                name: "Patrick D.",
-                role: "Membre du Club Léo Lagrange",
-                text: "La formatrice explique vraiment bien, sans se moquer. On repart avec des choses qu'on peut utiliser le soir même chez soi.",
-                stars: 5,
-              },
-              {
-                name: "Responsable associatif",
-                role: "Centre social d'Estressin",
-                text: "Nos adhérents avaient des a priori sur l'IA. Après l'atelier, ils étaient enthousiastes et demandaient une suite. On recommande vivement.",
-                stars: 5,
-              },
-            ].map(({ name, role, text, stars }) => (
-              <Card key={name} className="p-6 bg-white border-border">
-                <div className="flex mb-3">
-                  {Array.from({ length: stars }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 text-accent fill-accent" />
-                  ))}
-                </div>
-                <p className="text-foreground text-sm leading-relaxed mb-4 italic">"{text}"</p>
-                <div>
-                  <p className="font-semibold text-sm text-foreground">{name}</p>
-                  <p className="text-xs text-muted-foreground">{role}</p>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── TUNNEL COLLECTIVITÉS ─────────────────── */}
-      <section className="py-16 md:py-20 bg-gradient-to-br from-accent to-[hsl(25,100%,42%)] text-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <Building2 className="h-12 w-12 mx-auto mb-5 text-white/80" />
-            <h2 className="text-3xl sm:text-4xl font-bold mb-5">
-              Vous représentez une structure ?
-            </h2>
-            <p className="text-white/85 text-lg mb-8 leading-relaxed">
-              Collectivités, associations, CCAS, EHPAD — initIA Vienne propose des ateliers clé en main pour lutter contre la fracture numérique et accompagner vos publics vers l'autonomie digitale.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                asChild
-                size="lg"
-                className="bg-white text-accent hover:bg-white/90 font-semibold text-base"
-              >
-                <Link href="/collectivites">
-                  Découvrir l'offre structures
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-white/40 text-white bg-white/10 hover:bg-white/20 font-semibold"
-              >
-                <a href="#contact">
-                  <MessageSquare className="mr-2 h-4 w-4" />
-                  Demander un devis
-                </a>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── CONTACT ─────────────────────────────── */}
-      <section id="contact" className="py-16 md:py-20 bg-background">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-start">
-            <div>
-              <Badge className="mb-4 bg-secondary text-secondary-foreground border-0">Contact</Badge>
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-5">
-                Prêt à franchir le pas ?
-              </h2>
-              <p className="text-muted-foreground text-base leading-relaxed mb-8">
-                Une question, une envie de participer à un atelier, ou un projet pour votre structure ? Contactez-moi — je vous réponds sous 48h.
-              </p>
-
-              <div className="space-y-5">
-                <a
-                  href="tel:+33756958511"
-                  className="flex items-center gap-4 p-4 rounded-xl bg-primary/5 border border-primary/15 hover:bg-primary/10 transition-colors group"
-                >
-                  <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shrink-0">
-                    <Phone className="h-5 w-5 text-white" />
+                quote: "L'animateur est patient et pédagogue. Je recommande vivement pour tous les niveaux !",
+                name: "Sylvie",
+                desc: "Membre d'une association",
+                bg: "bg-white"
+              }
+            ].map((t, i) => (
+              <div key={i} className={cn("p-8 rounded-3xl shadow-sm border border-border/50 flex flex-col justify-between", t.bg)}>
+                <MessageCircle className={cn("w-10 h-10 mb-6 opacity-20", i === 1 ? "text-white" : "text-brand-green")} />
+                <p className={cn("text-lg italic mb-8 font-medium leading-relaxed", i === 1 ? "text-white/90" : "text-primary/80")}>
+                  "{t.quote}"
+                </p>
+                <div className="flex items-center gap-4">
+                  <div className={cn("w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg", i === 1 ? "bg-white text-brand-green" : "bg-brand-green text-white")}>
+                    {t.name[0]}
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground group-hover:text-primary transition-colors">07 56 95 85 11</p>
-                    <p className="text-xs text-muted-foreground">Appel / SMS — Lun–Sam, 9h–19h</p>
+                    <h4 className="font-bold">{t.name}</h4>
+                    <p className={cn("text-sm", i === 1 ? "text-white/70" : "text-muted-foreground")}>{t.desc}</p>
                   </div>
-                </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-                <a
-                  href="mailto:contact@initia-vienne.fr"
-                  className="flex items-center gap-4 p-4 rounded-xl bg-accent/5 border border-accent/15 hover:bg-accent/10 transition-colors group"
-                >
-                  <div className="w-10 h-10 bg-accent rounded-lg flex items-center justify-center shrink-0">
-                    <Mail className="h-5 w-5 text-white" />
+      {/* B2B CALLOUT */}
+      <section className="py-12 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gradient-to-br from-brand-orange to-[#ff9100] rounded-[2.5rem] p-8 md:p-12 text-center text-white shadow-2xl shadow-brand-orange/20 relative overflow-hidden">
+            <ShieldCheck className="absolute top-0 right-0 w-64 h-64 text-white opacity-10 translate-x-1/3 -translate-y-1/4" />
+            <div className="relative z-10">
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-white">Vous représentez une collectivité ou une association ?</h2>
+              <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
+                Découvrez nos formats adaptés à vos publics spécifiques, en groupes de 8 à 12 personnes, pour lutter contre la fracture numérique.
+              </p>
+              <Link href="/collectivites">
+                <Button size="lg" className="bg-primary text-white hover:bg-primary/90 hover:scale-105 border-0 shadow-xl">
+                  Voir l'offre dédiée
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACT SECTION */}
+      <section id="contact" className="py-24 bg-brand-cream relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            <div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-green/10 text-brand-green font-semibold text-sm mb-6">
+                <MessageCircle className="w-4 h-4" />
+                Parlons de votre projet
+              </div>
+              <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
+                Prêt à faire le premier pas ?
+              </h2>
+              <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+                Que vous soyez un particulier curieux, une association ou une collectivité, nous sommes là pour répondre à vos questions.
+              </p>
+              
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center shrink-0 border border-border/50">
+                    <CheckCircle2 className="w-6 h-6 text-brand-green" />
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground group-hover:text-accent transition-colors">contact@initia-vienne.fr</p>
-                    <p className="text-xs text-muted-foreground">Réponse sous 48h</p>
+                    <h4 className="font-bold text-lg">Réponse rapide</h4>
+                    <p className="text-muted-foreground">Nous vous recontactons sous 24 à 48 heures.</p>
                   </div>
-                </a>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center shrink-0 border border-border/50">
+                    <CheckCircle2 className="w-6 h-6 text-brand-green" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg">Devis gratuit</h4>
+                    <p className="text-muted-foreground">Proposition sur-mesure sans engagement.</p>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <Card className="p-6 md:p-8 border-border shadow-sm">
-              <h3 className="font-semibold text-xl text-foreground mb-6">Envoyez-moi un message</h3>
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
               <ContactForm />
-            </Card>
+            </motion.div>
+
           </div>
         </div>
       </section>
+
     </main>
   );
 }
