@@ -47,7 +47,7 @@ export function Navbar() {
             <img 
               src={`${import.meta.env.BASE_URL}logo.png`} 
               alt="initIA Vienne Logo" 
-              className="h-10 md:h-12 w-auto object-contain transition-transform group-hover:scale-105" 
+              className="h-20 md:h-24 w-auto object-contain transition-transform group-hover:scale-105" 
               onError={(e) => {
                 // Fallback if logo not found during dev
                 (e.target as HTMLImageElement).src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="40" viewBox="0 0 100 40"><rect width="100" height="40" fill="%232D6A2D" rx="4"/><text x="50" y="25" font-family="Arial" font-size="16" fill="white" text-anchor="middle">initIA</text></svg>';

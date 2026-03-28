@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { ScrollProgress, FloatingCta } from "@/components/scroll-progress";
 import Home from "@/pages/home";
 import Collectivites from "@/pages/collectivites";
 import NotFound from "@/pages/not-found";
@@ -13,6 +14,8 @@ const queryClient = new QueryClient();
 function Router() {
   return (
     <div className="flex flex-col min-h-screen bg-brand-cream">
+      <ScrollProgress />
+      <FloatingCta />
       <Navbar />
       <div className="flex-1 w-full">
         <Switch>
