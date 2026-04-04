@@ -65,7 +65,7 @@ const TESTIMONIALS = [
     stars: 5,
   },
   {
-    quote: "Nos adhérents étaient sceptiques. Après l'atelier, ils demandaient une suite ! Une vraie réussite.",
+    quote: "Mes adhérents étaient sceptiques. Après l'atelier, ils demandaient une suite ! Une vraie réussite.",
     name: "Responsable associatif",
     role: "Centre social d'Estressin",
     stars: 5,
@@ -151,7 +151,7 @@ function TestimonialsCarousel() {
 const FAQ_ITEMS = [
   {
     q: "Faut-il avoir des compétences en informatique ?",
-    a: "Absolument pas. Nos ateliers sont conçus pour les grands débutants. Nous partons de zéro et avançons à votre rythme. Si vous savez utiliser un smartphone ou envoyer un e-mail, vous avez déjà tout ce qu'il faut.",
+    a: "Absolument pas. Mes ateliers sont conçus pour les grands débutants. Je pars de zéro et avance à votre rythme. Si vous savez utiliser un smartphone ou envoyer un e-mail, vous avez déjà tout ce qu'il faut.",
   },
   {
     q: "Quel matériel dois-je apporter ?",
@@ -159,15 +159,15 @@ const FAQ_ITEMS = [
   },
   {
     q: "Combien coûte un atelier ?",
-    a: "Le tarif varie selon le format et votre situation (particulier, association, collectivité). Contactez-nous pour obtenir un devis personnalisé et sans engagement. Les premières sessions découverte sont souvent accessibles à prix réduit.",
+    a: "Le tarif varie selon le format et votre situation (particulier, association, collectivité). Contactez-moi pour obtenir un devis personnalisé et sans engagement. Les premières sessions découverte sont souvent accessibles à prix réduit.",
   },
   {
     q: "L'IA va-t-elle me faire perdre mon emploi ?",
-    a: "C'est une crainte légitime que nous abordons en atelier. L'IA est avant tout un outil d'assistance. Ceux qui savent l'utiliser auront un avantage. Nos ateliers vous aident justement à maîtriser cet outil plutôt qu'en subir les effets.",
+    a: "C'est une crainte légitime que j'aborde en atelier. L'IA est avant tout un outil d'assistance. Ceux qui savent l'utiliser auront un avantage. Mes ateliers vous aident justement à maîtriser cet outil plutôt qu'en subir les effets.",
   },
   {
     q: "Puis-je organiser un atelier dans mes locaux ?",
-    a: "Oui, c'est même notre mode de fonctionnement principal pour les collectivités et associations. Nous nous déplaçons dans toute la zone Viennoise et l'agglomération. Contactez-nous pour vérifier votre secteur.",
+    a: "Oui, c'est même mon mode de fonctionnement principal pour les collectivités et associations. Je me déplace dans toute la zone Viennoise et les communes environnantes. Contactez-moi pour vérifier votre secteur.",
   },
 ];
 
@@ -205,7 +205,7 @@ export default function Home() {
               </motion.h1>
 
               <motion.p variants={FADE_UP} className="text-lg lg:text-xl text-muted-foreground mb-8 leading-relaxed text-balance">
-                Des ateliers concrets, simples et bienveillants pour découvrir l'IA sans prise de tête. Conçus pour les débutants, les seniors et les curieux.
+                Des ateliers concrets, simples et bienveillants pour découvrir l'IA sans prise de tête. Spécialement conçus pour les débutants, les seniors, les associations et les collectivités.
               </motion.p>
 
               <motion.div variants={FADE_UP} className="flex flex-col sm:flex-row gap-4">
@@ -221,8 +221,8 @@ export default function Home() {
               <motion.p variants={FADE_UP} className="mt-6 text-sm text-muted-foreground flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-brand-green shrink-0" />
                 Ou appelez directement le{" "}
-                <a href="tel:0756958511" className="font-bold text-primary hover:text-brand-orange transition-colors">
-                  07 56 95 85 11
+                <a href="tel:0673984285" className="font-bold text-primary hover:text-brand-orange transition-colors">
+                  06 73 98 42 85
                 </a>
               </motion.p>
             </motion.div>
@@ -292,7 +292,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">Pourquoi se former à l'IA ?</h2>
             <p className="text-lg text-muted-foreground">
               L'IA évolue vite et peut sembler intimidante —{" "}
-              <span className="font-semibold text-primary">c'est normal</span>. Nos ateliers vous accompagnent pas à pas, avec des exemples du quotidien.
+              <span className="font-semibold text-primary">c'est normal</span>. Mes ateliers vous accompagnent pas à pas, avec des exemples du quotidien.
             </p>
           </SectionReveal>
 
@@ -391,10 +391,21 @@ export default function Home() {
       <section className="py-24 bg-brand-cream overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">Ils ont participé à nos ateliers</h2>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">Ils ont participé à mes ateliers</h2>
             <p className="text-lg text-muted-foreground">Des retours sincères de participants de tous âges et tous horizons.</p>
           </SectionReveal>
           <TestimonialsCarousel />
+          <SectionReveal className="mt-10 text-center">
+            <a
+              href="https://www.google.com/search?q=initia+vienne"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border-2 border-brand-orange text-brand-orange font-semibold hover:bg-brand-orange hover:text-white transition-all duration-300"
+            >
+              <Star className="w-4 h-4 fill-current" />
+              Voir tous les avis Google
+            </a>
+          </SectionReveal>
         </div>
       </section>
 
@@ -426,7 +437,7 @@ export default function Home() {
                 Vous représentez une collectivité ou une association ?
               </h2>
               <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-                Des formats clé en main pour lutter contre la fracture numérique, en groupes de 8 à 12 personnes.
+                Des formats sur mesure pour lutter contre la fracture numérique, en groupes de 8 à 12 personnes.
               </p>
               <Link href="/collectivites">
                 <Button size="lg" className="bg-primary text-white hover:bg-primary/90 hover:scale-105 border-0 shadow-xl group">

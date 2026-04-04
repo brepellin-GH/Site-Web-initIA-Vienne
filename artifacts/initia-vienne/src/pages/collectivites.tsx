@@ -43,23 +43,23 @@ const FADE_UP = {
 const FAQ_B2B = [
   {
     q: "Quels publics peuvent bénéficier de ces ateliers ?",
-    a: "Nos ateliers sont adaptés à tout adulte, quelle que soit son aisance numérique. Nous intervenons régulièrement auprès de seniors, de personnes éloignées de l'emploi, d'adhérents d'associations, de familles, et de tout public bénéficiaire de structures sociales.",
+    a: "Mes ateliers sont adaptés à tout adulte, quelle que soit son aisance numérique. J'interviens régulièrement auprès de seniors, de personnes éloignées de l'emploi, d'adhérents d'associations, de familles, et de tout public bénéficiaire de structures sociales.",
   },
   {
     q: "Combien de temps à l'avance faut-il planifier ?",
-    a: "Idéalement 2 à 4 semaines à l'avance pour caler les disponibilités et préparer un contenu adapté à votre public. Nous pouvons parfois intervenir plus rapidement selon nos disponibilités.",
+    a: "Idéalement 2 à 4 semaines à l'avance pour caler les disponibilités et préparer un contenu adapté à votre public. Je peux parfois intervenir plus rapidement selon mes disponibilités.",
   },
   {
-    q: "Quel équipement faut-il prévoir dans nos locaux ?",
-    a: "Une salle avec des tables, une connexion Wi-Fi et idéalement un vidéoprojecteur ou grand écran. Nous apportons nos propres ordinateurs si vos publics n'en ont pas. Nous nous adaptons à votre configuration.",
+    q: "Quel équipement faut-il prévoir dans vos locaux ?",
+    a: "Une salle avec des tables et idéalement un vidéoprojecteur ou grand écran. Je peux apporter un vidéo-projecteur si nécessaire. Les participants viennent équipés d'un smartphone, tablette ou ordinateur portable avec connexion autonome 4G ou 5G.",
   },
   {
     q: "Comment se calcule le tarif ?",
-    a: "Le devis est établi selon la durée de l'atelier, le nombre de participants, le lieu et la fréquence des interventions. Des tarifs préférentiels sont appliqués pour les structures à but non lucratif et les collectivités. Contactez-nous pour un devis gratuit.",
+    a: "Le devis est établi selon la durée de l'atelier, le nombre de participants, le lieu et la fréquence des interventions. Des tarifs préférentiels sont appliqués pour les structures à but non lucratif et les collectivités. Contactez-moi pour un devis gratuit.",
   },
   {
     q: "Peut-on organiser plusieurs sessions pour le même groupe ?",
-    a: "Absolument ! Nous proposons des cycles d'ateliers progressifs pour accompagner vos publics dans la durée. C'est même recommandé pour un ancrage durable des apprentissages.",
+    a: "Absolument ! Je propose des cycles d'ateliers progressifs pour accompagner vos publics dans la durée. C'est même recommandé pour un ancrage durable des apprentissages.",
   },
 ];
 
@@ -89,12 +89,12 @@ export default function Collectivites() {
               </motion.div>
 
               <motion.h1 variants={FADE_UP} className="text-4xl lg:text-5xl xl:text-6xl font-display font-extrabold text-white leading-[1.1] mb-6">
-                Initier vos publics à{" "}
-                <span className="text-brand-orange">l'intelligence artificielle</span>
+                Formations IA pour les{" "}
+                <span className="text-brand-orange">organisations, associations et collectivités</span>
               </motion.h1>
 
               <motion.p variants={FADE_UP} className="text-lg lg:text-xl text-primary-foreground/85 mb-8 leading-relaxed">
-                Des ateliers clé en main pour les collectivités, centres sociaux et associations qui souhaitent lutter contre la fracture numérique.
+                Des ateliers sur mesure pour les collectivités, centres sociaux et associations qui souhaitent lutter contre la fracture numérique.
               </motion.p>
 
               <motion.div variants={FADE_UP} className="flex flex-col sm:flex-row gap-4">
@@ -103,10 +103,10 @@ export default function Collectivites() {
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
                 <a
-                  href="tel:0756958511"
+                  href="tel:0673984285"
                   className="inline-flex items-center justify-center h-14 px-8 text-lg rounded-xl font-semibold border-2 border-white/30 text-white bg-white/10 hover:bg-white/20 transition-all duration-300"
                 >
-                  07 56 95 85 11
+                  06 73 98 42 85
                 </a>
               </motion.div>
             </motion.div>
@@ -150,7 +150,7 @@ export default function Collectivites() {
                 <p className="text-lg text-muted-foreground">
                   De plus en plus de démarches se font en ligne. L'IA accélère cette transformation.{" "}
                   <strong className="text-primary font-semibold">
-                    Nos aînés et publics fragilisés risquent d'être exclus si nous n'agissons pas.
+                    Les aînés et publics fragilisés risquent d'être exclus si nous n'agissons pas.
                   </strong>
                 </p>
               </div>
@@ -188,7 +188,7 @@ export default function Collectivites() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <SectionReveal>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">Nos objectifs pédagogiques</h2>
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">Mes objectifs pédagogiques</h2>
               <p className="text-lg text-muted-foreground mb-8">
                 Chaque atelier est conçu avec une approche adaptée aux adultes et seniors, favorisant la pratique immédiate.
               </p>
@@ -256,8 +256,8 @@ export default function Collectivites() {
             {[
               { icon: Clock, title: "Durée", desc: "Formats modulables de 1h à 2h par atelier selon votre public et vos contraintes." },
               { icon: Users, title: "Groupes", desc: "Petits groupes de 8 à 12 personnes pour un suivi personnalisé et des échanges riches." },
-              { icon: MapPin, title: "Lieu", desc: "Interventions en présentiel directement dans vos locaux — zone Vienne et agglomération." },
-              { icon: BookOpen, title: "Matériel", desc: "Supports pédagogiques fournis. Ordinateurs disponibles si vos publics n'en possèdent pas." },
+              { icon: MapPin, title: "Lieu", desc: "Interventions en présentiel directement dans vos locaux — Vienne et communes environnantes." },
+              { icon: BookOpen, title: "Matériel", desc: "Possibilité de fourniture d'un vidéo-projecteur. Participants équipés d'un smartphone, tablette ou ordinateur portable avec connexion autonome 4G ou 5G." },
             ].map(({ icon: Icon, title, desc }, i) => (
               <motion.div
                 key={i}
@@ -282,12 +282,12 @@ export default function Collectivites() {
       {/* ── RÉFÉRENCES ────────────────────────── */}
       <section className="py-16 bg-white border-y border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm font-bold tracking-widest uppercase text-muted-foreground mb-8">Ils nous font déjà confiance</p>
+          <p className="text-sm font-bold tracking-widest uppercase text-muted-foreground mb-8">Ils me font déjà confiance</p>
           <div className="flex flex-wrap justify-center gap-4 md:gap-6">
             {[
               "Centre social d'Estressin",
               "Club Léo Lagrange Vienne",
-              "Médiathèques de l'agglo",
+              "MJC de Vienne",
             ].map((ref) => (
               <motion.div
                 key={ref}
@@ -305,7 +305,7 @@ export default function Collectivites() {
               {[1, 2, 3, 4, 5].map((i) => <Star key={i} className="w-5 h-5 text-brand-orange fill-brand-orange" />)}
             </div>
             <p className="text-primary italic text-lg leading-relaxed mb-4">
-              "Nos adhérents étaient sceptiques au départ. Après l'atelier, ils posaient des questions, voulaient réessayer chez eux et demandaient une suite. Une vraie réussite."
+              "Mes adhérents étaient sceptiques au départ. Après l'atelier, ils posaient des questions, voulaient réessayer chez eux et demandaient une suite. Une vraie réussite."
             </p>
             <p className="font-bold text-primary">Responsable associatif</p>
             <p className="text-sm text-muted-foreground">Centre social d'Estressin</p>
@@ -317,8 +317,8 @@ export default function Collectivites() {
       <section className="py-24 bg-brand-cream">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">Vos questions, nos réponses</h2>
-            <p className="text-lg text-muted-foreground">Tout ce que les structures nous demandent habituellement.</p>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">Vos questions, mes réponses</h2>
+            <p className="text-lg text-muted-foreground">Tout ce que les structures me demandent habituellement.</p>
           </SectionReveal>
           <SectionReveal>
             <Faq items={FAQ_B2B} />
@@ -332,9 +332,27 @@ export default function Collectivites() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <SectionReveal className="text-center mb-12 text-white">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-white">Construisons votre projet ensemble</h2>
-            <p className="text-lg text-white/70">
-              Devis gratuit. Nous adaptons le contenu et la durée à vos contraintes et à vos publics.
+            <p className="text-lg text-white/70 mb-6">
+              Devis gratuit. J'adapte le contenu et la durée à vos contraintes et à vos publics.
             </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <a
+                href="mailto:initia.vienne@gmail.com"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold border-2 border-white/30 text-white bg-white/10 hover:bg-white/20 transition-all duration-300"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                initia.vienne@gmail.com
+              </a>
+              <a
+                href="https://wa.me/33673984285"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold bg-[#25D366] text-white hover:bg-[#1ebe57] transition-all duration-300"
+              >
+                <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Me contacter sur WhatsApp
+              </a>
+            </div>
           </SectionReveal>
 
           <motion.div

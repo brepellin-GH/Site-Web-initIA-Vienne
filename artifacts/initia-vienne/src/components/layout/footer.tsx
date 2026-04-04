@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Instagram, Linkedin } from "lucide-react";
 
 export function Footer() {
   return (
@@ -28,11 +28,19 @@ export function Footer() {
             <h4 className="text-lg font-display font-bold mb-4 text-brand-orange-light">Contact</h4>
             <ul className="space-y-3">
               <li>
-                <a href="tel:0756958511" className="flex items-center gap-3 text-primary-foreground/80 hover:text-white transition-colors group">
+                <a href="tel:0673984285" className="flex items-center gap-3 text-primary-foreground/80 hover:text-white transition-colors group">
                   <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-brand-orange transition-colors">
                     <Phone className="w-4 h-4" />
                   </div>
-                  07 56 95 85 11
+                  06 73 98 42 85
+                </a>
+              </li>
+              <li>
+                <a href="mailto:initia.vienne@gmail.com" className="flex items-center gap-3 text-primary-foreground/80 hover:text-white transition-colors group">
+                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-brand-orange transition-colors">
+                    <Mail className="w-4 h-4" />
+                  </div>
+                  initia.vienne@gmail.com
                 </a>
               </li>
               <li>
@@ -40,7 +48,7 @@ export function Footer() {
                   <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
                     <MapPin className="w-4 h-4" />
                   </div>
-                  Vienne (38) et agglomération
+                  Vienne (38) et communes environnantes
                 </div>
               </li>
             </ul>
@@ -70,7 +78,13 @@ export function Footer() {
 
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-primary-foreground/60">
           <p>© {new Date().getFullYear()} initIA Vienne. Tous droits réservés.</p>
-          <div className="flex gap-4">
+          <div className="flex items-center gap-4">
+            <a href="https://www.instagram.com/initia.vienne" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-white transition-colors">
+              <Instagram className="w-5 h-5" />
+            </a>
+            <a href="https://www.linkedin.com/in/bruno-repellin-b1425a21" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:text-white transition-colors">
+              <Linkedin className="w-5 h-5" />
+            </a>
             <a href="#" className="hover:text-white transition-colors">Mentions légales</a>
             <a href="#" className="hover:text-white transition-colors">Politique de confidentialité</a>
           </div>

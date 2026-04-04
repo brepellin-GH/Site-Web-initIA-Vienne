@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, Instagram, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -47,7 +47,7 @@ export function Navbar() {
             <img 
               src={`${import.meta.env.BASE_URL}logo.png`} 
               alt="initIA Vienne Logo" 
-              className="h-20 md:h-24 w-auto object-contain transition-transform group-hover:scale-105" 
+              className="h-28 md:h-32 w-auto object-contain transition-transform group-hover:scale-105"
               onError={(e) => {
                 // Fallback if logo not found during dev
                 (e.target as HTMLImageElement).src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="40" viewBox="0 0 100 40"><rect width="100" height="40" fill="%232D6A2D" rx="4"/><text x="50" y="25" font-family="Arial" font-size="16" fill="white" text-anchor="middle">initIA</text></svg>';
@@ -69,9 +69,15 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <a href="tel:0756958511" className="flex items-center gap-2 text-primary font-bold hover:text-brand-orange transition-colors">
+            <a href="https://www.instagram.com/initia.vienne" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-primary hover:text-brand-orange transition-colors">
+              <Instagram className="w-5 h-5" />
+            </a>
+            <a href="https://www.linkedin.com/in/bruno-repellin-b1425a21" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-primary hover:text-brand-orange transition-colors">
+              <Linkedin className="w-5 h-5" />
+            </a>
+            <a href="tel:0673984285" className="flex items-center gap-2 text-primary font-bold hover:text-brand-orange transition-colors">
               <Phone className="w-4 h-4" />
-              07 56 95 85 11
+              06 73 98 42 85
             </a>
             <Button onClick={scrollToContact} variant="accent">
               Me contacter
@@ -107,12 +113,12 @@ export function Navbar() {
               </Link>
             ))}
             <div className="h-px bg-border my-2" />
-            <a 
-              href="tel:0756958511" 
+            <a
+              href="tel:0673984285"
               className="flex items-center justify-center gap-2 px-4 py-3 text-primary font-bold text-lg"
             >
               <Phone className="w-5 h-5" />
-              07 56 95 85 11
+              06 73 98 42 85
             </a>
             <Button onClick={scrollToContact} variant="accent" className="w-full">
               Me contacter
