@@ -47,27 +47,63 @@ function SectionReveal({ children, className }: { children: React.ReactNode; cla
 // ── Testimonials carousel ────────────────────────
 const TESTIMONIALS = [
   {
-    quote: "Je pensais que l'IA c'était pour les jeunes. Maintenant j'utilise ChatGPT tous les jours pour écrire mes e-mails !",
-    name: "Marie-Claire",
-    role: "68 ans, retraitée",
+    quote: "Excellente initiation à l'intelligence artificielle. Bruno est très pédagogue. Avec des termes simples, il a su nous en expliquer les bases. Je lui souhaite bonne continuation.",
+    name: "Chérif H.",
+    date: "Mars 2026",
     stars: 5,
   },
   {
-    quote: "Très concret, sans jargon, et super sympa. J'ai enfin compris comment ça fonctionne et comment m'en servir au quotidien.",
-    name: "Jean-Pierre",
-    role: "Retraité, membre d'un club",
+    quote: "Très bonne intervention accessible à tous, y compris les personnes qui ne pratiquent pas régulièrement les outils informatiques.",
+    name: "Daniel B.",
+    date: "Mars 2026",
     stars: 5,
   },
   {
-    quote: "L'animateur est patient et pédagogue. Je recommande vivement pour tous les niveaux, même les débutants !",
-    name: "Sylvie",
-    role: "Membre d'une association",
+    quote: "Très bonne intervention sur l'intelligence artificielle auprès des jeunes. Le contenu était clair et accessible, avec une approche ludique qui a su capter leur attention. Merci pour ce moment de qualité !",
+    name: "Laura M.",
+    date: "Mars 2026",
+    stars: 4,
+  },
+  {
+    quote: "Bruno est très clair et j'ai hâte de faire un autre atelier ensemble.",
+    name: "Monik M.",
+    date: "Mars 2026",
     stars: 5,
   },
   {
-    quote: "Mes adhérents étaient sceptiques. Après l'atelier, ils demandaient une suite ! Une vraie réussite.",
-    name: "Responsable associatif",
-    role: "Centre social d'Estressin",
+    quote: "Bien qu'ayant déjà quelques connaissances sur l'IA, nous avons appris d'autres utilisations très intéressantes — une présentation très positive.",
+    name: "Christiane P.",
+    date: "Mars 2026",
+    stars: 5,
+  },
+  {
+    quote: "Formation au top et adaptée au public — merci Bruno !",
+    name: "Denis G.",
+    date: "Mars 2026",
+    stars: 4,
+  },
+  {
+    quote: "Atelier très intéressant et très bien fait. On apprend beaucoup et c'est très accessible.",
+    name: "Guy B.",
+    date: "Mars 2026",
+    stars: 5,
+  },
+  {
+    quote: "Formation de qualité avec un support très adapté.",
+    name: "Sandrine P.",
+    date: "Mars 2026",
+    stars: 5,
+  },
+  {
+    quote: "Intéressant et très bien expliqué.",
+    name: "Bruno D.",
+    date: "Mars 2026",
+    stars: 5,
+  },
+  {
+    quote: "Tout à fait clair pour des profanes.",
+    name: "Ivana G.",
+    date: "Mars 2026",
     stars: 5,
   },
 ];
@@ -103,13 +139,24 @@ function TestimonialsCarousel() {
           "{t.quote}"
         </p>
 
-        <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-brand-green text-white flex items-center justify-center font-bold text-lg">
-            {t.name[0]}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-brand-green text-white flex items-center justify-center font-bold text-lg">
+              {t.name[0]}
+            </div>
+            <div>
+              <p className="font-bold text-primary">{t.name}</p>
+              <p className="text-sm text-muted-foreground">{t.date}</p>
+            </div>
           </div>
-          <div>
-            <p className="font-bold text-primary">{t.name}</p>
-            <p className="text-sm text-muted-foreground">{t.role}</p>
+          <div className="flex items-center gap-1.5 text-xs text-muted-foreground border border-border rounded-full px-3 py-1">
+            <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            Avis Google
           </div>
         </div>
       </motion.div>
@@ -385,7 +432,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionReveal className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">Ils ont participé à mes ateliers</h2>
-            <p className="text-lg text-muted-foreground">Des retours sincères de participants de tous âges et tous horizons.</p>
+            <div className="flex items-center justify-center gap-2 mt-3">
+              {[1,2,3,4,5].map((i) => (
+                <Star key={i} className={cn("w-5 h-5", i <= 4 ? "text-brand-orange fill-brand-orange" : "text-brand-orange fill-brand-orange/50")} />
+              ))}
+              <span className="font-bold text-primary ml-1">4,8 / 5</span>
+              <span className="text-muted-foreground text-sm">· 10 avis Google</span>
+            </div>
           </SectionReveal>
           <TestimonialsCarousel />
           <SectionReveal className="mt-10 text-center">
