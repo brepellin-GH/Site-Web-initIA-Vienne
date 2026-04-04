@@ -227,7 +227,7 @@ export default function Home() {
               </motion.p>
             </motion.div>
 
-            {/* Hero visual placeholder */}
+            {/* Hero photo */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -235,18 +235,12 @@ export default function Home() {
               className="relative lg:ml-auto w-full max-w-lg"
             >
               <div className="absolute inset-0 bg-gradient-to-tr from-brand-green to-brand-orange rounded-[2.5rem] transform rotate-3 scale-[1.02] opacity-20 blur-lg" />
-              <div className="relative rounded-[2.5rem] shadow-2xl bg-gradient-to-br from-brand-green to-[#1a4a1a] aspect-[4/3] w-full border-4 border-white flex flex-col items-center justify-center gap-6 p-8">
-                <div className="text-6xl">🤖💡</div>
-                <p className="text-white/90 text-center font-display font-bold text-2xl">
-                  L'IA, c'est plus simple<br />qu'on ne le croit !
-                </p>
-                <div className="flex gap-3">
-                  {["ChatGPT", "Gemini", "Copilot"].map((tool) => (
-                    <span key={tool} className="bg-white/20 text-white text-xs font-medium px-3 py-1 rounded-full border border-white/30">
-                      {tool}
-                    </span>
-                  ))}
-                </div>
+              <div className="relative rounded-[2.5rem] shadow-2xl aspect-[4/3] w-full border-4 border-white overflow-hidden">
+                <img
+                  src={`${import.meta.env.BASE_URL}images/atelier-hero.png`}
+                  alt="Atelier d'initiation à l'IA animé par Bruno — Léo Lagrange Vienne"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="absolute -bottom-6 -left-6 glass-panel p-4 rounded-2xl flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center">
