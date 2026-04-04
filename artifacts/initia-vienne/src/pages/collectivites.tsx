@@ -43,7 +43,7 @@ const FADE_UP = {
 const FAQ_B2B = [
   {
     q: "Quels publics peuvent bénéficier de ces ateliers ?",
-    a: "Mes ateliers sont adaptés à tout adulte, quelle que soit son aisance numérique. J'interviens régulièrement auprès de seniors, de personnes éloignées de l'emploi, d'adhérents d'associations, de familles, et de tout public bénéficiaire de structures sociales.",
+    a: "Mes ateliers sont adaptés à tout adulte, quelle que soit son aisance numérique. J'interviens régulièrement auprès de seniors, d'adhérents d'associations, de familles, et de tout public bénéficiaire de structures sociales.",
   },
   {
     q: "Combien de temps à l'avance faut-il planifier ?",
@@ -55,7 +55,7 @@ const FAQ_B2B = [
   },
   {
     q: "Comment se calcule le tarif ?",
-    a: "Le devis est établi selon la durée de l'atelier, le nombre de participants, le lieu et la fréquence des interventions. Des tarifs préférentiels sont appliqués pour les structures à but non lucratif et les collectivités. Contactez-moi pour un devis gratuit.",
+    a: "Le devis est établi selon la durée de l'atelier, le nombre de participants, le lieu et la fréquence des interventions. Contactez-moi pour un devis gratuit.",
   },
   {
     q: "Peut-on organiser plusieurs sessions pour le même groupe ?",
@@ -70,9 +70,9 @@ export default function Collectivites() {
     <main className="flex-1 w-full">
 
       {/* ── HERO ──────────────────────────────── */}
-      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 bg-primary overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-brand-green opacity-40 skew-x-12 translate-x-32 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-orange/10 rounded-full blur-3xl pointer-events-none" />
+      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-brand-cream">
+        <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[800px] h-[800px] bg-brand-green/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-[600px] h-[600px] bg-brand-orange/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -83,17 +83,23 @@ export default function Collectivites() {
               variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
               className="max-w-2xl"
             >
-              <motion.div variants={FADE_UP} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-brand-orange font-semibold text-sm mb-6 border border-white/20">
+              <motion.div variants={FADE_UP} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-orange/10 text-brand-orange font-semibold text-sm mb-6 border border-brand-orange/20">
                 <Building2 className="w-4 h-4" />
                 Offre Collectivités & Associations
               </motion.div>
 
-              <motion.h1 variants={FADE_UP} className="text-4xl lg:text-5xl xl:text-6xl font-display font-extrabold text-white leading-[1.1] mb-6">
+              <motion.h1 variants={FADE_UP} className="text-4xl lg:text-5xl xl:text-6xl font-display font-extrabold text-primary leading-[1.1] mb-6">
                 Formations IA pour les{" "}
-                <span className="text-brand-orange">organisations, associations et collectivités</span>
+                <span className="text-brand-orange relative whitespace-nowrap">
+                  organisations
+                  <svg className="absolute -bottom-2 left-0 w-full h-3 text-brand-orange/30" viewBox="0 0 100 10" preserveAspectRatio="none">
+                    <path d="M0,5 Q50,10 100,5" stroke="currentColor" strokeWidth="4" fill="none" />
+                  </svg>
+                </span>
+                {" "}et collectivités
               </motion.h1>
 
-              <motion.p variants={FADE_UP} className="text-lg lg:text-xl text-primary-foreground/85 mb-8 leading-relaxed">
+              <motion.p variants={FADE_UP} className="text-lg lg:text-xl text-muted-foreground mb-8 leading-relaxed">
                 Des ateliers sur mesure pour les collectivités, centres sociaux et associations qui souhaitent lutter contre la fracture numérique.
               </motion.p>
 
@@ -104,7 +110,7 @@ export default function Collectivites() {
                 </Button>
                 <a
                   href="tel:0673984285"
-                  className="inline-flex items-center justify-center h-14 px-8 text-lg rounded-xl font-semibold border-2 border-white/30 text-white bg-white/10 hover:bg-white/20 transition-all duration-300"
+                  className="inline-flex items-center justify-center h-14 px-8 text-lg rounded-xl font-semibold border-2 border-primary/20 text-primary hover:bg-primary/5 transition-all duration-300"
                 >
                   06 73 98 42 85
                 </a>
@@ -298,17 +304,44 @@ export default function Collectivites() {
             ))}
           </div>
 
-          {/* Testimonial */}
-          <SectionReveal className="mt-12 max-w-2xl mx-auto bg-brand-cream rounded-3xl p-8 border border-brand-green/10">
-            <div className="flex justify-center mb-3">
-              {[1, 2, 3, 4, 5].map((i) => <Star key={i} className="w-5 h-5 text-brand-orange fill-brand-orange" />)}
-            </div>
-            <p className="text-primary italic text-lg leading-relaxed mb-4">
-              "Mes adhérents étaient sceptiques au départ. Après l'atelier, ils posaient des questions, voulaient réessayer chez eux et demandaient une suite. Une vraie réussite."
-            </p>
-            <p className="font-bold text-primary">Responsable associatif</p>
-            <p className="text-sm text-muted-foreground">Centre social d'Estressin</p>
-          </SectionReveal>
+          {/* Testimonials */}
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {[
+              {
+                quote: "Très bonne intervention sur l'intelligence artificielle auprès des jeunes. Le contenu était clair et accessible, avec une approche ludique qui a su capter leur attention. Merci pour ce moment de qualité !",
+                name: "Laura M.",
+                role: "Animatrice référente accompagnement scolaire – Primaire / Collège",
+                org: "Centre Social d'Estressin Louis Van HERCK",
+                stars: 4,
+              },
+              {
+                quote: "Formation au top et adaptée au public — merci Bruno !",
+                name: "Denis G.",
+                role: "Directeur",
+                org: "Centre Social d'Estressin Louis Van HERCK",
+                stars: 4,
+              },
+            ].map(({ quote, name, role, org, stars }, i) => (
+              <SectionReveal key={i} className="bg-brand-cream rounded-3xl p-8 border border-brand-green/10 text-left">
+                <div className="flex gap-1 mb-4">
+                  {[1,2,3,4,5].map((s) => (
+                    <Star key={s} className={`w-4 h-4 ${s <= stars ? "text-brand-orange fill-brand-orange" : "text-brand-orange/20 fill-brand-orange/20"}`} />
+                  ))}
+                </div>
+                <p className="text-primary italic leading-relaxed mb-5">"{quote}"</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-brand-green text-white flex items-center justify-center font-bold shrink-0">
+                    {name[0]}
+                  </div>
+                  <div>
+                    <p className="font-bold text-primary">{name}</p>
+                    <p className="text-xs text-muted-foreground">{role}</p>
+                    <p className="text-xs text-brand-green font-medium">{org}</p>
+                  </div>
+                </div>
+              </SectionReveal>
+            ))}
+          </div>
         </div>
       </section>
 

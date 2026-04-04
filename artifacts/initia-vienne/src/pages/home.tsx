@@ -66,7 +66,7 @@ const TESTIMONIALS = [
   },
   {
     quote: "Bruno est très clair et j'ai hâte de faire un autre atelier ensemble.",
-    name: "Monik M.",
+    name: "Monique M.",
     date: "Mars 2026",
     stars: 5,
   },
