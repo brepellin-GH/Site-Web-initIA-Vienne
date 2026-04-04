@@ -48,7 +48,7 @@ export function Footer() {
                   <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
                     <MapPin className="w-4 h-4" />
                   </div>
-                  Vienne (38) et communes environnantes
+                  Vienne (38) et environs
                 </div>
               </li>
             </ul>

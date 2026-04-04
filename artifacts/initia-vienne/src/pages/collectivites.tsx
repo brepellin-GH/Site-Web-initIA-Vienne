@@ -114,9 +114,8 @@ export default function Collectivites() {
             {/* Floating stats cards */}
             <div className="hidden lg:grid grid-cols-2 gap-4 relative">
               {[
-                { value: 50, suffix: "+", label: "Ateliers réalisés", color: "bg-white" },
                 { value: 8, suffix: " à 12", label: "Participants/groupe", color: "bg-brand-orange" },
-                { value: 98, suffix: "%", label: "Taux de satisfaction", color: "bg-white" },
+                { value: 100, suffix: "%", label: "Taux de satisfaction", color: "bg-white" },
                 { value: 0, suffix: " €", label: "Devis sans engagement", color: "bg-brand-green-light" },
               ].map(({ value, suffix, label, color }, i) => (
                 <motion.div
@@ -256,7 +255,7 @@ export default function Collectivites() {
             {[
               { icon: Clock, title: "Durée", desc: "Formats modulables de 1h à 2h par atelier selon votre public et vos contraintes." },
               { icon: Users, title: "Groupes", desc: "Petits groupes de 8 à 12 personnes pour un suivi personnalisé et des échanges riches." },
-              { icon: MapPin, title: "Lieu", desc: "Interventions en présentiel directement dans vos locaux — Vienne et communes environnantes." },
+              { icon: MapPin, title: "Lieu", desc: "Interventions en présentiel directement dans vos locaux — Vienne et environs." },
               { icon: BookOpen, title: "Matériel", desc: "Possibilité de fourniture d'un vidéo-projecteur. Participants équipés d'un smartphone, tablette ou ordinateur portable avec connexion autonome 4G ou 5G." },
             ].map(({ icon: Icon, title, desc }, i) => (
               <motion.div

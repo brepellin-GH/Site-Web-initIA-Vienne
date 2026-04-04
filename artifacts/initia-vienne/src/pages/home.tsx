@@ -59,7 +59,7 @@ const TESTIMONIALS = [
     stars: 5,
   },
   {
-    quote: "L'animateur est patient et pédagogue. Je recommande vivement pour tous les niveaux, même les grands débutants !",
+    quote: "L'animateur est patient et pédagogue. Je recommande vivement pour tous les niveaux, même les débutants !",
     name: "Sylvie",
     role: "Membre d'une association",
     stars: 5,
@@ -151,15 +151,15 @@ function TestimonialsCarousel() {
 const FAQ_ITEMS = [
   {
     q: "Faut-il avoir des compétences en informatique ?",
-    a: "Absolument pas. Mes ateliers sont conçus pour les grands débutants. Je pars de zéro et avance à votre rythme. Si vous savez utiliser un smartphone ou envoyer un e-mail, vous avez déjà tout ce qu'il faut.",
+    a: "Absolument pas. Mes ateliers sont conçus pour les débutants. Je pars de zéro et avance à votre rythme. Si vous savez utiliser un smartphone ou envoyer un e-mail, vous avez déjà tout ce qu'il faut.",
   },
   {
     q: "Quel matériel dois-je apporter ?",
-    a: "Rien ! Tout le matériel est fourni. Vous pouvez toutefois apporter votre propre ordinateur portable ou tablette si vous le souhaitez — mais ce n'est pas obligatoire.",
+    a: "Un smartphone suffit pour participer. Vous pouvez aussi venir avec une tablette ou un ordinateur portable si vous le préférez. Pensez à prévoir votre connexion 4G ou 5G : toutes les salles ne disposent pas d'un accès Wi-Fi fiable.",
   },
   {
     q: "Combien coûte un atelier ?",
-    a: "Le tarif varie selon le format et votre situation (particulier, association, collectivité). Contactez-moi pour obtenir un devis personnalisé et sans engagement. Les premières sessions découverte sont souvent accessibles à prix réduit.",
+    a: "Le tarif varie selon le format et votre situation (particulier, association, collectivité). Contactez-moi pour obtenir un devis personnalisé et sans engagement.",
   },
   {
     q: "L'IA va-t-elle me faire perdre mon emploi ?",
@@ -167,7 +167,7 @@ const FAQ_ITEMS = [
   },
   {
     q: "Puis-je organiser un atelier dans mes locaux ?",
-    a: "Oui, c'est même mon mode de fonctionnement principal pour les collectivités et associations. Je me déplace dans toute la zone Viennoise et les communes environnantes. Contactez-moi pour vérifier votre secteur.",
+    a: "Oui, c'est même mon mode de fonctionnement principal pour les collectivités et associations. Je me déplace dans toute la zone Viennoise et les environs. Contactez-moi pour vérifier votre secteur.",
   },
 ];
 
@@ -261,8 +261,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-white">
             {[
-              { value: 50, suffix: "+", label: "Ateliers animés" },
-              { value: 98, suffix: "%", label: "Participants satisfaits" },
+              { value: 100, suffix: "%", label: "Participants satisfaits" },
               { value: 0, suffix: "", label: "Prérequis technique" },
               { value: 12, suffix: " max", label: "Par groupe" },
             ].map(({ value, suffix, label }, i) => (
@@ -347,7 +346,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { num: "1", title: "Découverte", desc: "Comprendre ce qu'est vraiment l'IA — sans les clichés de la science-fiction.", emoji: "🧠" },
-              { num: "2", title: "Démonstration", desc: "Voir des outils concrets en action : ChatGPT, Gemini, Copilot...", emoji: "🎬" },
+              { num: "2", title: "Démonstration", desc: "Voir des outils concrets en action : ChatGPT, Claude, Gemini, Le Chat...", emoji: "🎬" },
               { num: "3", title: "Pratique", desc: "Essayer par vous-même avec des exercices guidés adaptés à votre niveau.", emoji: "⌨️" },
               { num: "4", title: "Échanges", desc: "Poser toutes vos questions librement, partager vos découvertes.", emoji: "💬" },
             ].map((step, i) => (
@@ -376,7 +375,7 @@ export default function Home() {
           </div>
 
           <SectionReveal className="mt-10 text-center text-white/60 text-sm">
-            Durée : <strong className="text-white/90">1h à 2h</strong> · Groupes de <strong className="text-white/90">8 à 12 personnes max</strong> · Matériel fourni
+            Durée : <strong className="text-white/90">1h à 2h</strong> · Groupes de <strong className="text-white/90">8 à 12 personnes max</strong>
           </SectionReveal>
         </div>
       </section>
