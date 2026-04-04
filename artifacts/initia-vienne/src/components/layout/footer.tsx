@@ -8,11 +8,11 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           
           <div className="space-y-4">
-            <div className="flex items-center gap-2 bg-white p-2 rounded-xl inline-block w-fit">
-              <img 
-                src={`${import.meta.env.BASE_URL}logo.png`} 
-                alt="initIA Vienne" 
-                className="h-10 w-auto"
+            <div className="inline-block w-fit">
+              <img
+                src={`${import.meta.env.BASE_URL}logo.png`}
+                alt="initIA Vienne"
+                className="h-12 w-auto"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="40" viewBox="0 0 100 40"><rect width="100" height="40" fill="%232D6A2D" rx="4"/><text x="50" y="25" font-family="Arial" font-size="16" fill="white" text-anchor="middle">initIA</text></svg>';
                 }}
