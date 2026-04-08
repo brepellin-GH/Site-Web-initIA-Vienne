@@ -110,7 +110,7 @@ export default function Collectivites() {
                 </Button>
                 <a
                   href="tel:0673984285"
-                  className="inline-flex items-center justify-center h-14 px-8 text-lg rounded-xl font-semibold border-2 border-primary/20 text-primary hover:bg-primary/5 transition-all duration-300"
+                  className="inline-flex items-center justify-center h-14 px-8 text-lg rounded-xl font-semibold border-2 border-primary/20 text-primary hover:bg-primary/5 transition-all duration-300 whitespace-nowrap"
                 >
                   06 73 98 42 85
                 </a>
