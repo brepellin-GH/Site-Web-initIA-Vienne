@@ -237,7 +237,7 @@ export default function Home() {
             <motion.div initial="hidden" animate="visible" variants={STAGGER} className="max-w-2xl">
               <motion.div variants={FADE_UP} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-orange/10 text-brand-orange font-semibold text-sm mb-6 border border-brand-orange/20">
                 <Sparkles className="w-4 h-4" />
-                Ateliers d'initiation à l'IA — Vienne (38)
+                Ateliers d'initiation à l'IA, Vienne (38)
               </motion.div>
 
               <motion.h1 variants={FADE_UP} className="text-5xl lg:text-6xl font-display font-extrabold text-primary leading-[1.1] text-balance mb-6">
@@ -285,7 +285,7 @@ export default function Home() {
               <div className="relative rounded-[2.5rem] shadow-2xl aspect-[4/3] w-full border-4 border-white overflow-hidden">
                 <img
                   src={`${import.meta.env.BASE_URL}images/atelier-hero.png`}
-                  alt="Atelier d'initiation à l'IA animé par Bruno — Léo Lagrange Vienne"
+                  alt="Atelier d'initiation à l'IA animé par Bruno, Léo Lagrange Vienne"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -331,7 +331,7 @@ export default function Home() {
           <SectionReveal className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">Pourquoi se former à l'IA ?</h2>
             <p className="text-lg text-muted-foreground">
-              L'IA évolue vite et peut sembler intimidante —{" "}
+              L'IA évolue vite et peut sembler intimidante,{" "}
               <span className="font-semibold text-primary">c'est normal</span>. Mes ateliers vous accompagnent pas à pas, avec des exemples du quotidien.
             </p>
           </SectionReveal>
@@ -341,14 +341,14 @@ export default function Home() {
               {
                 icon: FileText,
                 title: "Rédiger en quelques secondes",
-                desc: "E-mails, courriers administratifs, lettres de motivation — avec l'IA, vous n'êtes plus jamais à court de mots.",
+                desc: "E-mails, courriers administratifs, lettres de motivation, avec l'IA vous n'êtes plus jamais à court de mots.",
                 color: "bg-brand-green-light",
                 iconColor: "text-brand-green",
               },
               {
                 icon: Clock,
                 title: "Gagner un temps précieux",
-                desc: "Résumez des documents longs, trouvez une information précise, organisez votre agenda — tout ça en quelques secondes.",
+                desc: "Résumez des documents longs, trouvez une information précise, organisez votre agenda, tout ça en quelques secondes.",
                 color: "bg-brand-orange-light",
                 iconColor: "text-brand-orange",
               },
@@ -392,7 +392,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { num: "1", title: "Découverte", desc: "Comprendre ce qu'est vraiment l'IA — sans les clichés de la science-fiction.", emoji: "🧠" },
+              { num: "1", title: "Découverte", desc: "Comprendre ce qu'est vraiment l'IA, sans les clichés de la science-fiction.", emoji: "🧠" },
               { num: "2", title: "Démonstration", desc: "Voir des outils concrets en action : ChatGPT, Claude, Gemini, Le Chat...", emoji: "🎬" },
               { num: "3", title: "Pratique", desc: "Essayer par vous-même avec des exercices guidés adaptés à votre niveau.", emoji: "⌨️" },
               { num: "4", title: "Échanges", desc: "Poser toutes vos questions librement, partager vos découvertes.", emoji: "💬" },

@@ -261,7 +261,7 @@ export default function Collectivites() {
             {[
               { icon: Clock, title: "Durée", desc: "Formats modulables de 1h à 2h par atelier selon votre public et vos contraintes." },
               { icon: Users, title: "Groupes", desc: "Petits groupes de 8 à 12 personnes pour un suivi personnalisé et des échanges riches." },
-              { icon: MapPin, title: "Lieu", desc: "Interventions en présentiel directement dans vos locaux — Vienne et environs." },
+              { icon: MapPin, title: "Lieu", desc: "Interventions en présentiel directement dans vos locaux, Vienne et environs." },
               { icon: BookOpen, title: "Matériel", desc: "Possibilité de fourniture d'un vidéo-projecteur. Participants équipés d'un smartphone, tablette ou ordinateur portable avec connexion autonome 4G ou 5G." },
             ].map(({ icon: Icon, title, desc }, i) => (
               <motion.div
