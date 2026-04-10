@@ -11,6 +11,7 @@ const contactSchema = z.object({
   email: z.string().email("Email invalide"),
   type: z.string().min(1, "Veuillez sélectionner un type"),
   message: z.string().min(10, "Le message doit contenir au moins 10 caractères"),
+  consent: z.literal(true, { errorMap: () => ({ message: "Vous devez accepter pour envoyer votre message." }) }),
 });
 
 type ContactFormValues = z.infer<typeof contactSchema>;
@@ -154,8 +155,24 @@ export function ContactForm({ className }: { className?: string }) {
           {errors.message && <p className="text-red-500 text-sm">{errors.message.message}</p>}
         </div>
 
-        <Button 
-          type="submit" 
+        <div className="space-y-1">
+          <label className="flex items-start gap-3 cursor-pointer group">
+            <input
+              {...register("consent")}
+              type="checkbox"
+              id="consent"
+              className="mt-1 w-4 h-4 shrink-0 accent-brand-green cursor-pointer"
+            />
+            <span className="text-sm text-muted-foreground leading-relaxed">
+              J'accepte que mes données soient utilisées pour traiter ma demande, conformément à la{" "}
+              <a href="#" className="underline hover:text-primary transition-colors">politique de confidentialité</a>.
+            </span>
+          </label>
+          {errors.consent && <p className="text-red-500 text-sm">{errors.consent.message}</p>}
+        </div>
+
+        <Button
+          type="submit"
           disabled={isSubmitting}
           className="w-full text-lg"
         >
