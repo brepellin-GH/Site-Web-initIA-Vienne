@@ -1,6 +1,6 @@
 export default function MentionsLegales() {
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-16">
       <h1 className="text-3xl font-display font-bold text-primary mb-10">Mentions légales</h1>
 
       <section className="mb-8">
