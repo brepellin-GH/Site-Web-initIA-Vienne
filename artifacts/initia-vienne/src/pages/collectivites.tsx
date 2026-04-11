@@ -359,18 +359,17 @@ export default function Collectivites() {
       </section>
 
       {/* ── CONTACT ───────────────────────────── */}
-      <section id="contact" className="py-24 bg-primary relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4=')]" />
+      <section id="contact" className="py-24 bg-white relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <SectionReveal className="text-center mb-12 text-white">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-white">Construisons votre projet ensemble</h2>
-            <p className="text-lg text-white/70 mb-6">
+          <SectionReveal className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-primary">Construisons votre projet ensemble</h2>
+            <p className="text-lg text-muted-foreground mb-6">
               Devis gratuit. J'adapte le contenu et la durée à vos contraintes et à vos publics.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a
                 href="mailto:initia.vienne@gmail.com"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold border-2 border-white/30 text-white bg-white/10 hover:bg-white/20 transition-all duration-300"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold border-2 border-primary/20 text-primary hover:bg-primary/5 transition-all duration-300"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                 initia.vienne@gmail.com

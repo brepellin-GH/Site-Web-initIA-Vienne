@@ -167,7 +167,7 @@ export function ContactForm({ className }: { className?: string }) {
             />
             <span className="text-sm text-muted-foreground leading-relaxed">
               J'accepte que mes données soient utilisées pour traiter ma demande, conformément à la{" "}
-              <a href="#" className="underline hover:text-primary transition-colors">politique de confidentialité</a>.
+              <a href="/politique-de-confidentialite" className="underline hover:text-primary transition-colors">politique de confidentialité</a>.
             </span>
           </label>
           {errors.consent && <p className="text-red-500 text-sm">{errors.consent.message}</p>}

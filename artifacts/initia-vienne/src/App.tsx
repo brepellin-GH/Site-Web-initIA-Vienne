@@ -8,6 +8,8 @@ import { Footer } from "@/components/layout/footer";
 import { ScrollProgress, FloatingCta } from "@/components/scroll-progress";
 import Home from "@/pages/home";
 import Collectivites from "@/pages/collectivites";
+import MentionsLegales from "@/pages/mentions-legales";
+import PolitiqueConfidentialite from "@/pages/politique-confidentialite";
 import Admin from "@/pages/admin";
 import NotFound from "@/pages/not-found";
 
@@ -35,6 +37,8 @@ function Router() {
             <Switch>
               <Route path="/" component={Home} />
               <Route path="/collectivites" component={Collectivites} />
+              <Route path="/mentions-legales" component={MentionsLegales} />
+              <Route path="/politique-de-confidentialite" component={PolitiqueConfidentialite} />
               <Route component={NotFound} />
             </Switch>
           </div>

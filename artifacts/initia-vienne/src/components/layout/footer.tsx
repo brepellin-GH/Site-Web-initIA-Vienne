@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+
 import { Mail, Phone, MapPin, Instagram, Linkedin } from "lucide-react";
 
 export function Footer() {
@@ -8,11 +9,11 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           
           <div className="space-y-4">
-            <div className="inline-block w-fit">
+            <div className="inline-block bg-white/95 rounded-2xl px-4 py-2">
               <img
                 src={`${import.meta.env.BASE_URL}logo.png`}
                 alt="initIA Vienne"
-                className="h-12 w-auto"
+                className="h-16 w-auto"
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="40" viewBox="0 0 100 40"><rect width="100" height="40" fill="%232D6A2D" rx="4"/><text x="50" y="25" font-family="Arial" font-size="16" fill="white" text-anchor="middle">initIA</text></svg>';
                 }}
@@ -85,8 +86,8 @@ export function Footer() {
             <a href="https://www.linkedin.com/in/bruno-repellin-b1425a21" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:text-white transition-colors">
               <Linkedin className="w-5 h-5" />
             </a>
-            <a href="#" className="hover:text-white transition-colors">Mentions légales</a>
-            <a href="#" className="hover:text-white transition-colors">Politique de confidentialité</a>
+            <Link href="/mentions-legales" className="hover:text-white transition-colors">Mentions légales</Link>
+            <Link href="/politique-de-confidentialite" className="hover:text-white transition-colors">Politique de confidentialité</Link>
           </div>
         </div>
       </div>
