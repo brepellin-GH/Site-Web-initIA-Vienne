@@ -5,6 +5,7 @@ import * as z from "zod";
 import { CheckCircle2, Send, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/lib/supabase";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Le nom est requis"),
@@ -31,12 +32,13 @@ export function ContactForm({ className }: { className?: string }) {
 
   const onSubmit = async (data: ContactFormValues) => {
     setSubmitError(false);
-    const response = await fetch("https://formspree.io/f/YOUR_FORMSPREE_ID", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({ ...data, _replyto: data.email }),
+    const { error } = await supabase.from("contacts").insert({
+      name: data.name,
+      email: data.email,
+      type: data.type,
+      message: data.message,
     });
-    if (response.ok) {
+    if (!error) {
       setIsSubmitted(true);
     } else {
       setSubmitError(true);
