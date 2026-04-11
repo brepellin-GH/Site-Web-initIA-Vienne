@@ -1,5 +1,5 @@
 [build]
-  command = "corepack enable && pnpm install && pnpm --filter @workspace/initia-vienne run build"
+  command = "corepack enable && pnpm install --no-frozen-lockfile && pnpm --filter @workspace/initia-vienne run build"
   publish = "artifacts/initia-vienne/dist/public"
 
 [build.environment]
