@@ -95,9 +95,21 @@ const TESTIMONIALS = [
     stars: 5,
   },
   {
-    quote: "Intéressant et très bien expliqué.",
-    name: "Bruno D.",
-    date: "Mars 2026",
+    quote: "Explications claires. Exemples bien choisis.",
+    name: "Patrick D.",
+    date: "Avril 2026",
+    stars: 5,
+  },
+  {
+    quote: "Très bon atelier d'initiation à l'IA. Merci Bruno",
+    name: "Michel D.",
+    date: "Avril 2026",
+    stars: 5,
+  },
+  {
+    quote: "Merci pour cet atelier avec des informations et des explications claires et pertinentes !",
+    name: "Christian R.",
+    date: "Avril 2026",
     stars: 5,
   },
   {
