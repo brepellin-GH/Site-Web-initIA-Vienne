@@ -360,7 +360,7 @@ export default function Home() {
               {
                 icon: Clock,
                 title: "Gagner un temps précieux",
-                desc: "Résumez des documents longs, trouvez une information précise, organisez votre agenda, tout ça en quelques secondes.",
+                desc: "Résumez des documents longs, trouvez une information précise, organisez votre agenda, tout cela en quelques secondes.",
                 color: "bg-brand-orange-light",
                 iconColor: "text-brand-orange",
               },
