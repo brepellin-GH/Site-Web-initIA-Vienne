@@ -30,6 +30,8 @@ export function Navbar() {
   const navLinks = [
     { href: "/", label: "Accueil" },
     { href: "/collectivites", label: "Collectivités & Associations" },
+    { href: "/ateliers", label: "Ateliers" },
+    { href: "/newsletter", label: "Newsletter" },
   ];
 
   return (
