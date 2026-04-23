@@ -19,7 +19,7 @@ type Atelier = {
 };
 
 function formatDate(iso: string) {
-  const date = new Date(iso);
+  const date = new Date(iso.replace(/([+-]\d{2}:\d{2}|Z)$/, ""));
   const datePart = date.toLocaleDateString("fr-FR", {
     weekday: "long",
     day: "numeric",
