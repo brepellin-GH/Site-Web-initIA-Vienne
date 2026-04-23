@@ -88,7 +88,7 @@ export default function Ateliers() {
 
       {/* ── LISTE ATELIERS ────────────────────── */}
       <section className="py-16 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[860px] mx-auto px-4 sm:px-6 lg:px-8">
           {loading ? (
             <div className="text-center py-20 text-muted-foreground">Chargement...</div>
           ) : ateliers.length === 0 ? (
@@ -122,28 +122,31 @@ export default function Ateliers() {
                         {atelier.titre}
                       </h2>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                        <div className="flex items-start gap-2 text-muted-foreground">
-                          <Calendar className="w-4 h-4 mt-0.5 shrink-0 text-brand-green" />
-                          <span>{formatDate(atelier.date_heure)}</span>
-                        </div>
-                        <div className="flex items-start gap-2 text-muted-foreground">
-                          <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-brand-green" />
-                          <span>{atelier.lieu}</span>
-                        </div>
-                        {atelier.public_cible && (
+                      <div className="flex flex-col gap-3 text-sm">
+                        <div className="flex flex-col md:flex-row md:items-center gap-3">
                           <div className="flex items-start gap-2 text-muted-foreground">
-                            <Users className="w-4 h-4 mt-0.5 shrink-0 text-brand-green" />
-                            <span>{atelier.public_cible}</span>
+                            <Calendar className="w-4 h-4 mt-0.5 shrink-0 text-brand-green" />
+                            <span>{formatDate(atelier.date_heure)}</span>
                           </div>
-                        )}
-                        {atelier.places_restantes !== null && (
-                          <div className="flex items-center gap-2">
+                          <span className="hidden md:block text-muted-foreground/30">·</span>
+                          <div className="flex items-start gap-2 text-muted-foreground">
+                            <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-brand-green" />
+                            <span>{atelier.lieu}</span>
+                          </div>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-3">
+                          {atelier.public_cible && (
+                            <div className="flex items-start gap-2 text-muted-foreground">
+                              <Users className="w-4 h-4 mt-0.5 shrink-0 text-brand-green" />
+                              <span>{atelier.public_cible}</span>
+                            </div>
+                          )}
+                          {atelier.places_restantes !== null && (
                             <span className={`text-xs font-semibold px-2 py-1 rounded-full ${atelier.places_restantes <= 3 ? "bg-red-100 text-red-700" : "bg-brand-green/10 text-brand-green"}`}>
                               {atelier.places_restantes <= 0 ? "Complet" : `${atelier.places_restantes} place${atelier.places_restantes > 1 ? "s" : ""} restante${atelier.places_restantes > 1 ? "s" : ""}`}
                             </span>
-                          </div>
-                        )}
+                          )}
+                        </div>
                       </div>
 
                       {atelier.themes && (
