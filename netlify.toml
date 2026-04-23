@@ -1,6 +1,7 @@
 [build]
   command = "corepack enable && pnpm install --no-frozen-lockfile && pnpm --filter @workspace/initia-vienne run build"
   publish = "artifacts/initia-vienne/dist/public"
+  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "22"
