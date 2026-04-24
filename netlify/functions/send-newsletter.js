@@ -18,9 +18,9 @@ exports.handler = async (event) => {
   if (event.httpMethod !== "POST")
     return { statusCode: 405, headers: CORS, body: "Method Not Allowed" };
 
-  let sujet, numero, fichier_html, corps_message, password;
+  let sujet, numero, fichier_html, contenu_html, corps_message, password;
   try {
-    ({ sujet, numero, fichier_html, corps_message, password } = JSON.parse(event.body || "{}"));
+    ({ sujet, numero, fichier_html, contenu_html, corps_message, password } = JSON.parse(event.body || "{}"));
   } catch {
     return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: "Corps invalide" }) };
   }
@@ -54,14 +54,17 @@ exports.handler = async (event) => {
     const token = unsubscribeToken(abonne.email);
     const unsubscribeUrl = `https://initia-vienne.com/.netlify/functions/unsubscribe?email=${encodeURIComponent(abonne.email)}&token=${token}`;
 
-    const corpsPersonnalise = corps_message.replace(/\{prenom\}/g, abonne.prenom || "");
+    const corpsPersonnalise = (corps_message || "").replace(/\{prenom\}/g, abonne.prenom || "");
 
-    const htmlBody = `${corpsPersonnalise}
-<hr style="border:none;border-top:1px solid #eee;margin:24px 0">
+    const htmlBody = [
+      corpsPersonnalise,
+      contenu_html || "",
+      `<hr style="border:none;border-top:1px solid #eee;margin:24px 0">
 <p style="font-size:12px;color:#999;text-align:center">
   Vous recevez cet email car vous avez participé à un atelier initIA Vienne.<br>
   <a href="${unsubscribeUrl}" style="color:#999">Se désabonner</a>
-</p>`;
+</p>`,
+    ].filter(Boolean).join("\n");
 
     const emailRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -88,7 +91,9 @@ exports.handler = async (event) => {
       numero: numero || null,
       sujet,
       fichier_html: fichier_html || null,
-      nb_destinataires: succes,
+      nb_envoyes: succes,
+      nb_erreurs: erreurs,
+      date_envoi: new Date().toISOString(),
     }),
   });
 

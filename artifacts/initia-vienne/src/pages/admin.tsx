@@ -34,9 +34,10 @@ interface Envoi {
   id: string;
   numero: number;
   sujet: string;
-  nb_destinataires: number;
+  nb_envoyes: number;
+  nb_erreurs: number;
   fichier_html: string | null;
-  created_at: string;
+  date_envoi: string;
 }
 
 const inputCls = "w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-600";
@@ -116,7 +117,7 @@ function Dashboard() {
     supabase.from("envois_newsletter").select("*")
       .then(({ data }) => {
         const rows = (data as Envoi[]) ?? [];
-        rows.sort((a, b) => (b.created_at ?? "").localeCompare(a.created_at ?? ""));
+        rows.sort((a, b) => (b.date_envoi ?? "").localeCompare(a.date_envoi ?? ""));
         setDernierEnvoi(rows[0] ?? null);
       });
 
@@ -146,7 +147,7 @@ function Dashboard() {
             {dernierEnvoi ? `#${dernierEnvoi.numero}` : "—"}
           </p>
           <p className="text-sm text-gray-500 mt-1">
-            {dernierEnvoi ? `Dernier envoi · ${fmt(dernierEnvoi.created_at)}` : "Aucun envoi"}
+            {dernierEnvoi ? `Dernier envoi · ${fmt(dernierEnvoi.date_envoi)}` : "Aucun envoi"}
           </p>
         </div>
       </div>
@@ -194,6 +195,7 @@ function GestionNewsletter() {
   const [sujet, setSujet] = useState("");
   const [corps, setCorps] = useState("");
   const [fichierNom, setFichierNom] = useState("");
+  const [fichierContenu, setFichierContenu] = useState("");
   const [sending, setSending] = useState(false);
   const [result, setResult] = useState<{ ok: boolean; msg: string } | null>(null);
   const [envois, setEnvois] = useState<Envoi[]>([]);
@@ -203,7 +205,7 @@ function GestionNewsletter() {
     supabase.from("envois_newsletter").select("*")
       .then(({ data }) => {
         const rows = (data as Envoi[]) ?? [];
-        rows.sort((a, b) => (b.created_at ?? "").localeCompare(a.created_at ?? ""));
+        rows.sort((a, b) => (b.date_envoi ?? "").localeCompare(a.date_envoi ?? ""));
         setEnvois(rows);
       });
   };
@@ -214,6 +216,9 @@ function GestionNewsletter() {
     const file = e.target.files?.[0];
     if (!file) return;
     setFichierNom(file.name);
+    const reader = new FileReader();
+    reader.onload = (ev) => setFichierContenu((ev.target?.result as string) ?? "");
+    reader.readAsText(file, "utf-8");
   };
 
   const handleSend = async (e: React.SyntheticEvent) => {
@@ -231,12 +236,13 @@ function GestionNewsletter() {
           sujet,
           corps_message: corps,
           fichier_html: fichierNom || null,
+          contenu_html: fichierContenu || null,
         }),
       });
       const data = await res.json();
       if (res.ok) {
         setResult({ ok: true, msg: `✓ Envoyé à ${data.nb_destinataires} abonné(s).` });
-        setNumero(""); setSujet(""); setCorps(""); setFichierNom("");
+        setNumero(""); setSujet(""); setCorps(""); setFichierNom(""); setFichierContenu("");
         if (fileRef.current) fileRef.current.value = "";
         loadEnvois();
       } else {
@@ -316,8 +322,8 @@ function GestionNewsletter() {
                 <tr key={e.id} className="border-b border-gray-50 hover:bg-gray-50">
                   <td className="px-5 py-3 text-gray-500">#{e.numero}</td>
                   <td className="px-5 py-3 font-medium text-gray-800">{e.sujet}</td>
-                  <td className="px-5 py-3 text-gray-500">{e.nb_destinataires}</td>
-                  <td className="px-5 py-3 text-gray-400">{fmt(e.created_at)}</td>
+                  <td className="px-5 py-3 text-gray-500">{e.nb_envoyes}</td>
+                  <td className="px-5 py-3 text-gray-400">{fmt(e.date_envoi)}</td>
                 </tr>
               ))}
             </tbody>
