@@ -63,14 +63,11 @@ exports.handler = async (event) => {
       htmlBody = [corpsPersonnalise, contenu_html || ""].filter(Boolean).join("\n");
     }
 
-    // Remplace tout lien /desabonnement-confirme par l'URL personnalisée avec HMAC
-    htmlBody = htmlBody.replace(
-      /https?:\/\/[^"']*\/desabonnement-confirme[^"']*/g,
-      unsubscribeUrl
-    ).replace(
-      /(?<=['"])\/desabonnement-confirme[^"']*/g,
-      unsubscribeUrl
-    );
+    // Remplace le placeholder {{UNSUBSCRIBE_URL}} et tout lien /desabonnement-confirme
+    htmlBody = htmlBody
+      .replace(/\{\{UNSUBSCRIBE_URL\}\}/g, unsubscribeUrl)
+      .replace(/https?:\/\/[^"']*\/desabonnement-confirme[^"']*/g, unsubscribeUrl)
+      .replace(/(?<=['"])\/desabonnement-confirme[^"']*/g, unsubscribeUrl);
 
     const emailRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
