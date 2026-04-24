@@ -114,8 +114,12 @@ function Dashboard() {
       .eq("visible", true).gt("date_heure", new Date().toISOString())
       .then(({ count }) => setNbAteliers(count ?? 0));
 
-    supabase.from("envois_newsletter").select("*").order("created_at", { ascending: false }).limit(1)
-      .then(({ data }) => setDernierEnvoi(data?.[0] ?? null));
+    supabase.from("envois_newsletter").select("*")
+      .then(({ data }) => {
+        const rows = (data as Envoi[]) ?? [];
+        rows.sort((a, b) => (b.created_at ?? "").localeCompare(a.created_at ?? ""));
+        setDernierEnvoi(rows[0] ?? null);
+      });
 
     supabase.from("contacts").select("*").order("created_at", { ascending: false }).limit(5)
       .then(({ data }) => setContacts((data as Contact[]) ?? []));
@@ -197,8 +201,12 @@ function GestionNewsletter() {
   const fileRef = useRef<HTMLInputElement>(null);
 
   const loadEnvois = () => {
-    supabase.from("envois_newsletter").select("*").order("created_at", { ascending: false })
-      .then(({ data }) => setEnvois((data as Envoi[]) ?? []));
+    supabase.from("envois_newsletter").select("*")
+      .then(({ data }) => {
+        const rows = (data as Envoi[]) ?? [];
+        rows.sort((a, b) => (b.created_at ?? "").localeCompare(a.created_at ?? ""));
+        setEnvois(rows);
+      });
   };
 
   useEffect(() => { loadEnvois(); }, []);
@@ -562,8 +570,14 @@ function GestionAbonnes() {
 
   const load = () => {
     setLoading(true);
-    supabase.from("abonnes").select("*").order("created_at", { ascending: false })
-      .then(({ data }) => { setAbonnes((data as Abonne[]) ?? []); setLoading(false); });
+    supabase.from("abonnes").select("*")
+      .then(({ data, error }) => {
+        if (error) console.error("Supabase abonnes SELECT error:", error);
+        const rows = (data as Abonne[]) ?? [];
+        rows.sort((a, b) => (b.created_at ?? "").localeCompare(a.created_at ?? ""));
+        setAbonnes(rows);
+        setLoading(false);
+      });
   };
 
   useEffect(() => { load(); }, []);
