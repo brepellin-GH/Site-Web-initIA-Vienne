@@ -77,7 +77,7 @@ export function Navbar() {
             <a href="https://www.linkedin.com/in/bruno-repellin-b1425a21" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-primary hover:text-brand-orange transition-colors">
               <Linkedin className="w-5 h-5" />
             </a>
-            <a href="tel:0673984285" className="flex items-center gap-2 text-primary font-bold hover:text-brand-orange transition-colors">
+            <a href="tel:0673984285" className="flex items-center gap-2 text-primary font-bold hover:text-brand-orange transition-colors whitespace-nowrap">
               <Phone className="w-4 h-4" />
               06 73 98 42 85
             </a>
