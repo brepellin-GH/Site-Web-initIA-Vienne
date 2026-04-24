@@ -7,6 +7,10 @@
   NODE_VERSION = "22"
   BASE_PATH = "/"
 
+[functions]
+  [functions."send-newsletter"]
+    timeout = 26
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
