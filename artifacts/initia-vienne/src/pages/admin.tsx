@@ -214,9 +214,6 @@ function GestionNewsletter() {
     const file = e.target.files?.[0];
     if (!file) return;
     setFichierNom(file.name);
-    const reader = new FileReader();
-    reader.onload = (ev) => setCorps((ev.target?.result as string) ?? "");
-    reader.readAsText(file, "utf-8");
   };
 
   const handleSend = async (e: React.SyntheticEvent) => {
