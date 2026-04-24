@@ -556,7 +556,6 @@ function GestionAbonnes() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const [emailAdd, setEmailAdd] = useState("");
-  const [nomAdd, setNomAdd] = useState("");
   const [prenomAdd, setPrenomAdd] = useState("");
   const [adding, setAdding] = useState(false);
   const [addResult, setAddResult] = useState<{ ok: boolean; msg: string } | null>(null);
@@ -580,7 +579,6 @@ function GestionAbonnes() {
     setAddResult(null);
     const { error } = await supabase.from("abonnes").insert({
       email: emailAdd.toLowerCase().trim(),
-      nom: nomAdd || null,
       prenom: prenomAdd || null,
       source: "admin",
       actif: true,
@@ -589,7 +587,7 @@ function GestionAbonnes() {
       setAddResult({ ok: false, msg: error.code === "23505" ? "Cet email est déjà inscrit." : error.message });
     } else {
       setAddResult({ ok: true, msg: "Abonné ajouté." });
-      setEmailAdd(""); setNomAdd(""); setPrenomAdd("");
+      setEmailAdd(""); setPrenomAdd("");
       load();
     }
     setAdding(false);
@@ -639,7 +637,7 @@ function GestionAbonnes() {
       <div className="bg-white rounded-xl border border-gray-200 p-6">
         <h2 className="font-semibold text-gray-700 mb-4">Ajouter manuellement</h2>
         <form onSubmit={handleAdd} className="space-y-3">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className={labelCls}>Email *</label>
               <input type="email" value={emailAdd} onChange={(e) => setEmailAdd(e.target.value)}
@@ -648,11 +646,6 @@ function GestionAbonnes() {
             <div>
               <label className={labelCls}>Prénom</label>
               <input type="text" value={prenomAdd} onChange={(e) => setPrenomAdd(e.target.value)}
-                className={inputCls} />
-            </div>
-            <div>
-              <label className={labelCls}>Nom</label>
-              <input type="text" value={nomAdd} onChange={(e) => setNomAdd(e.target.value)}
                 className={inputCls} />
             </div>
           </div>
