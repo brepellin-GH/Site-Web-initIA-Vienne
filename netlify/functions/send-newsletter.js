@@ -93,11 +93,14 @@ exports.handler = async (event) => {
     }
   };
 
-  // Envoi par batch de BATCH_SIZE en parallèle
+  // Envoi par batch de BATCH_SIZE en parallèle, avec délai entre chaque batch
   for (let i = 0; i < abonnes.length; i += BATCH_SIZE) {
     const batch = abonnes.slice(i, i + BATCH_SIZE);
     console.log(`[send-newsletter] Batch ${Math.floor(i / BATCH_SIZE) + 1} : ${batch.map(a => a.email).join(", ")}`);
     await Promise.all(batch.map(sendOne));
+    if (i + BATCH_SIZE < abonnes.length) {
+      await new Promise(resolve => setTimeout(resolve, 1200));
+    }
   }
 
   await fetch(`${base}/envois_newsletter`, {
