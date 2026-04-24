@@ -56,15 +56,23 @@ exports.handler = async (event) => {
 
     const corpsPersonnalise = (corps_message || "").replace(/\{prenom\}/g, abonne.prenom || "");
 
-    const htmlBody = [
-      corpsPersonnalise,
-      contenu_html || "",
-      `<hr style="border:none;border-top:1px solid #eee;margin:24px 0">
+    const footer = `<hr style="border:none;border-top:1px solid #eee;margin:24px 0">
 <p style="font-size:12px;color:#999;text-align:center">
   Vous recevez cet email car vous avez participé à un atelier initIA Vienne.<br>
   <a href="${unsubscribeUrl}" style="color:#999">Se désabonner</a>
-</p>`,
-    ].filter(Boolean).join("\n");
+</p>`;
+
+    let htmlBody;
+    if (contenu_html && /<body[\s>]/i.test(contenu_html)) {
+      // Insère corps + footer juste après la balise <body ...>
+      htmlBody = contenu_html.replace(
+        /(<body[^>]*>)/i,
+        `$1\n${corpsPersonnalise}\n`
+      ).replace(/<\/body>/i, `${footer}\n</body>`);
+    } else {
+      // Pas de document complet : simple concaténation
+      htmlBody = [corpsPersonnalise, contenu_html || "", footer].filter(Boolean).join("\n");
+    }
 
     const emailRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
