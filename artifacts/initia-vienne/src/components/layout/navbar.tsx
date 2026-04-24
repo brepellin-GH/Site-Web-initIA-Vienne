@@ -58,7 +58,7 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link 
                 key={link.href} 
@@ -88,7 +88,7 @@ export function Navbar() {
 
           {/* Mobile Menu Toggle */}
           <button 
-            className="md:hidden p-2 text-primary hover:bg-primary/5 rounded-lg"
+            className="lg:hidden p-2 text-primary hover:bg-primary/5 rounded-lg"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -99,7 +99,7 @@ export function Navbar() {
 
       {/* Mobile Navigation Dropdown */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-xl border-t border-border animate-in slide-in-from-top-2">
+        <div className="lg:hidden absolute top-full left-0 right-0 bg-white shadow-xl border-t border-border animate-in slide-in-from-top-2">
           <div className="flex flex-col p-4 space-y-4">
             {navLinks.map((link) => (
               <Link 
