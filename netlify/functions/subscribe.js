@@ -51,7 +51,7 @@ exports.handler = async (event) => {
   await fetch(`${base}/abonnes`, {
     method: "POST",
     headers,
-    body: JSON.stringify({ prenom, email, source: "site", actif: true }),
+    body: JSON.stringify({ prenom, email, source: "site", actif: true, date_inscription: new Date().toISOString() }),
   });
 
   return { statusCode: 200, headers: CORS, body: JSON.stringify({ status: "subscribed" }) };

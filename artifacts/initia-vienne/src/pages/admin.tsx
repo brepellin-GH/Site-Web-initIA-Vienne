@@ -12,7 +12,7 @@ interface Abonne {
   prenom: string | null;
   actif: boolean;
   source: string;
-  created_at?: string | null;
+  date_inscription?: string | null;
 }
 
 interface Atelier {
@@ -573,7 +573,7 @@ function GestionAbonnes() {
       .then(({ data, error }) => {
         if (error) console.error("Supabase abonnes SELECT error:", error);
         const rows = (data as Abonne[]) ?? [];
-        rows.sort((a, b) => (b.created_at ?? "").localeCompare(a.created_at ?? ""));
+        rows.sort((a, b) => (b.date_inscription ?? "").localeCompare(a.date_inscription ?? ""));
         setAbonnes(rows);
         setLoading(false);
       });
@@ -595,6 +595,7 @@ function GestionAbonnes() {
       prenom: prenomAdd || null,
       source: "admin",
       actif: true,
+      date_inscription: new Date().toISOString(),
     });
     if (error) {
       setAddResult({ ok: false, msg: error.code === "23505" ? "Cet email est déjà inscrit." : error.message });
@@ -618,7 +619,7 @@ function GestionAbonnes() {
 
   const exportCsv = () => {
     const rows = [["email", "prenom", "source", "date_inscription"], ...actifs.map((a) => [
-      a.email, a.prenom ?? "", a.source, a.created_at ? fmt(a.created_at) : "",
+      a.email, a.prenom ?? "", a.source, a.date_inscription ? fmt(a.date_inscription) : "",
     ])];
     const csv = rows.map((r) => r.join(";")).join("\n");
     const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
@@ -706,7 +707,7 @@ function GestionAbonnes() {
                       {a.prenom || "—"}
                     </td>
                     <td className="px-5 py-3 text-gray-400 hidden md:table-cell">{a.source}</td>
-                    <td className="px-5 py-3 text-gray-400 hidden md:table-cell">{a.created_at ? fmt(a.created_at) : "—"}</td>
+                    <td className="px-5 py-3 text-gray-400 hidden md:table-cell">{a.date_inscription ? fmt(a.date_inscription) : "—"}</td>
                     <td className="px-5 py-3">
                       <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${a.actif ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}>
                         {a.actif ? "Actif" : "Désabonné"}
