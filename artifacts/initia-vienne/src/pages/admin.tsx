@@ -9,11 +9,10 @@ type Tab = "dashboard" | "newsletter" | "ateliers" | "abonnes";
 interface Abonne {
   id: string;
   email: string;
-  nom: string | null;
   prenom: string | null;
   actif: boolean;
   source: string;
-  created_at: string;
+  created_at?: string | null;
 }
 
 interface Atelier {
@@ -618,8 +617,8 @@ function GestionAbonnes() {
   };
 
   const exportCsv = () => {
-    const rows = [["email", "nom", "prenom", "source", "date_inscription"], ...actifs.map((a) => [
-      a.email, a.nom ?? "", a.prenom ?? "", a.source, fmt(a.created_at),
+    const rows = [["email", "prenom", "source", "date_inscription"], ...actifs.map((a) => [
+      a.email, a.prenom ?? "", a.source, a.created_at ? fmt(a.created_at) : "",
     ])];
     const csv = rows.map((r) => r.join(";")).join("\n");
     const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
@@ -692,7 +691,7 @@ function GestionAbonnes() {
               <thead>
                 <tr className="text-left text-xs text-gray-400 uppercase border-b border-gray-100">
                   <th className="px-5 py-2">Email</th>
-                  <th className="px-5 py-2 hidden sm:table-cell">Nom</th>
+                  <th className="px-5 py-2 hidden sm:table-cell">Prénom</th>
                   <th className="px-5 py-2 hidden md:table-cell">Source</th>
                   <th className="px-5 py-2 hidden md:table-cell">Inscrit le</th>
                   <th className="px-5 py-2">Statut</th>
@@ -704,10 +703,10 @@ function GestionAbonnes() {
                   <tr key={a.id} className="border-b border-gray-50 hover:bg-gray-50">
                     <td className="px-5 py-3 text-gray-800 font-medium">{a.email}</td>
                     <td className="px-5 py-3 text-gray-500 hidden sm:table-cell">
-                      {[a.prenom, a.nom].filter(Boolean).join(" ") || "—"}
+                      {a.prenom || "—"}
                     </td>
                     <td className="px-5 py-3 text-gray-400 hidden md:table-cell">{a.source}</td>
-                    <td className="px-5 py-3 text-gray-400 hidden md:table-cell">{fmt(a.created_at)}</td>
+                    <td className="px-5 py-3 text-gray-400 hidden md:table-cell">{a.created_at ? fmt(a.created_at) : "—"}</td>
                     <td className="px-5 py-3">
                       <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${a.actif ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}>
                         {a.actif ? "Actif" : "Désabonné"}
