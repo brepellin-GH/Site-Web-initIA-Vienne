@@ -83,8 +83,14 @@ exports.handler = async (event) => {
       }),
     });
 
-    if (emailRes.ok) succes++;
-    else erreurs++;
+    if (emailRes.ok) {
+      succes++;
+      console.log(`[send-newsletter] ✓ Envoyé à ${abonne.email}`);
+    } else {
+      erreurs++;
+      const errBody = await emailRes.text();
+      console.error(`[send-newsletter] ✗ Échec pour ${abonne.email} — status ${emailRes.status} — ${errBody}`);
+    }
   }
 
   await fetch(`${base}/envois_newsletter`, {
