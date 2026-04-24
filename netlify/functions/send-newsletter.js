@@ -58,15 +58,19 @@ exports.handler = async (event) => {
 
     let htmlBody;
     if (contenu_html && /<body[\s>]/i.test(contenu_html)) {
-      // Insère corps juste après la balise <body ...>
-      htmlBody = contenu_html.replace(
-        /(<body[^>]*>)/i,
-        `$1\n${corpsPersonnalise}\n`
-      );
+      htmlBody = contenu_html.replace(/(<body[^>]*>)/i, `$1\n${corpsPersonnalise}\n`);
     } else {
-      // Pas de document complet : simple concaténation
       htmlBody = [corpsPersonnalise, contenu_html || ""].filter(Boolean).join("\n");
     }
+
+    // Remplace tout lien /desabonnement-confirme par l'URL personnalisée avec HMAC
+    htmlBody = htmlBody.replace(
+      /https?:\/\/[^"']*\/desabonnement-confirme[^"']*/g,
+      unsubscribeUrl
+    ).replace(
+      /(?<=['"])\/desabonnement-confirme[^"']*/g,
+      unsubscribeUrl
+    );
 
     const emailRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
