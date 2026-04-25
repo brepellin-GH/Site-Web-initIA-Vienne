@@ -117,7 +117,14 @@ export default function Newsletter() {
       .select("id, numero, sujet, fichier_html, date_envoi")
       .order("date_envoi", { ascending: false })
       .then(({ data }) => {
-        setEnvois((data as Envoi[]) ?? []);
+        const rows = (data as Envoi[]) ?? [];
+        const seen = new Set<number>();
+        const dedup = rows.filter(e => {
+          if (seen.has(e.numero)) return false;
+          seen.add(e.numero);
+          return true;
+        });
+        setEnvois(dedup);
         setLoading(false);
       });
   }, []);
