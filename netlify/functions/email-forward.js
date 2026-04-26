@@ -16,28 +16,32 @@ exports.handler = async (event) => {
     return { statusCode: 400, headers: CORS, body: "Corps invalide" };
   }
 
-  console.log("[email-forward] Webhook reçu — type:", payload.type);
+  console.log("[email-forward] Payload brut :", JSON.stringify(payload));
 
-  // Resend envoie { type, created_at, data: { from, to, subject, text, html } }
   if (payload.type !== "email.received") {
     console.log("[email-forward] Événement ignoré :", payload.type);
     return { statusCode: 200, headers: CORS, body: "Ignored" };
   }
 
-  const data = payload.data || {};
-  const from    = data.from    || "Inconnu";
+  // Resend inbound : la structure peut varier selon la version de l'API
+  const data = payload.data || payload;
+  const from    = data.from    || data.sender  || "Inconnu";
   const subject = data.subject || "(sans objet)";
-  const htmlBody = data.html   || "";
-  const textBody = data.text   || "";
 
-  console.log(`[email-forward] Email reçu de : ${from} — sujet : ${subject}`);
+  // Cherche le corps dans tous les champs connus
+  const htmlBody = data.html   || data.html_body  || data.htmlBody  || "";
+  const textBody = data.text   || data.text_body  || data.textBody  || data.body || "";
 
-  // Corps du message de transfert
+  console.log(`[email-forward] from="${from}" subject="${subject}" html=${htmlBody.length}c text=${textBody.length}c`);
+
+  const bodyContent = htmlBody
+    || (textBody ? `<p>${textBody.replace(/\n/g, "<br>")}</p>` : "<p>(corps vide)</p>");
+
   const forwardHtml = `
 <p><strong>De :</strong> ${from}</p>
 <p><strong>Sujet original :</strong> ${subject}</p>
 <hr style="border:none;border-top:1px solid #eee;margin:16px 0">
-${htmlBody || `<p>${textBody.replace(/\n/g, "<br>")}</p>`}
+${bodyContent}
 `;
 
   const emailRes = await fetch("https://api.resend.com/emails", {
