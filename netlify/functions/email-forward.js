@@ -23,16 +23,31 @@ exports.handler = async (event) => {
     return { statusCode: 200, headers: CORS, body: "Ignored" };
   }
 
-  // Resend inbound : la structure peut varier selon la version de l'API
   const data = payload.data || payload;
-  const from    = data.from    || data.sender  || "Inconnu";
+  const from    = data.from    || data.sender || "Inconnu";
   const subject = data.subject || "(sans objet)";
+  const emailId = data.email_id || data.id;
 
-  // Cherche le corps dans tous les champs connus
-  const htmlBody = data.html   || data.html_body  || data.htmlBody  || "";
-  const textBody = data.text   || data.text_body  || data.textBody  || data.body || "";
+  console.log(`[email-forward] from="${from}" subject="${subject}" email_id="${emailId}"`);
 
-  console.log(`[email-forward] from="${from}" subject="${subject}" html=${htmlBody.length}c text=${textBody.length}c`);
+  // Récupère le contenu complet via GET /emails/{email_id}
+  let htmlBody = "";
+  let textBody = "";
+  if (emailId) {
+    const fetchRes = await fetch(`https://api.resend.com/emails/${emailId}`, {
+      headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}` },
+    });
+    if (fetchRes.ok) {
+      const full = await fetchRes.json();
+      console.log("[email-forward] Contenu complet :", JSON.stringify(full));
+      htmlBody = full.html || "";
+      textBody = full.text || "";
+    } else {
+      console.error(`[email-forward] Échec GET /emails/${emailId} — ${fetchRes.status}`);
+    }
+  } else {
+    console.warn("[email-forward] Aucun email_id dans le payload.");
+  }
 
   const bodyContent = htmlBody
     || (textBody ? `<p>${textBody.replace(/\n/g, "<br>")}</p>` : "<p>(corps vide)</p>");
