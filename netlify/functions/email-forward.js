@@ -30,24 +30,29 @@ exports.handler = async (event) => {
 
   console.log(`[email-forward] from="${from}" subject="${subject}" email_id="${emailId}"`);
 
-  // Récupère le contenu complet via GET /emails/{email_id}
-  let htmlBody = "";
-  let textBody = "";
-  if (emailId) {
+  // Corps déjà présent dans le payload webhook ?
+  let htmlBody = data.html || data.html_body || "";
+  let textBody = data.text || data.text_body || data.body || "";
+
+  // Sinon, récupère le contenu complet via GET /emails/{email_id}
+  if (!htmlBody && !textBody && emailId) {
+    const fullKey = process.env.RESEND_FULL_API_KEY || process.env.RESEND_API_KEY;
     const fetchRes = await fetch(`https://api.resend.com/emails/${emailId}`, {
-      headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}` },
+      headers: { Authorization: `Bearer ${fullKey}` },
     });
     if (fetchRes.ok) {
       const full = await fetchRes.json();
-      console.log("[email-forward] Contenu complet :", JSON.stringify(full));
+      console.log("[email-forward] Contenu via API :", JSON.stringify(full));
       htmlBody = full.html || "";
       textBody = full.text || "";
     } else {
       console.error(`[email-forward] Échec GET /emails/${emailId} — ${fetchRes.status}`);
     }
   } else {
-    console.warn("[email-forward] Aucun email_id dans le payload.");
+    console.log(`[email-forward] Corps dans webhook — html=${htmlBody.length}c text=${textBody.length}c`);
   }
+
+  if (!emailId) console.warn("[email-forward] Aucun email_id dans le payload.");
 
   const bodyContent = htmlBody
     || (textBody ? `<p>${textBody.replace(/\n/g, "<br>")}</p>` : "<p>(corps vide)</p>");
