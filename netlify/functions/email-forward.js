@@ -16,7 +16,24 @@ exports.handler = async (event) => {
     return { statusCode: 400, headers: CORS, body: "Corps invalide" };
   }
 
-  console.log("[email-forward] Payload brut :", JSON.stringify(payload));
+  // Log structuré pour identifier où se trouve le corps
+  console.log("[email-forward] Clés racine :", Object.keys(payload).join(", "));
+  console.log("[email-forward] type :", payload.type);
+  if (payload.data) {
+    console.log("[email-forward] Clés data :", Object.keys(payload.data).join(", "));
+    const d = payload.data;
+    console.log("[email-forward] data.from :", d.from);
+    console.log("[email-forward] data.subject :", d.subject);
+    console.log("[email-forward] data.html (longueur) :", typeof d.html === "string" ? d.html.length : d.html);
+    console.log("[email-forward] data.text (longueur) :", typeof d.text === "string" ? d.text.length : d.text);
+    console.log("[email-forward] data.body :", typeof d.body === "string" ? d.body.slice(0, 200) : d.body);
+    // Log les champs restants non connus
+    const known = new Set(["from","to","subject","html","text","body","email_id","id","sender","headers","attachments","spf","dkim"]);
+    const extra = Object.keys(d).filter(k => !known.has(k));
+    if (extra.length) console.log("[email-forward] data champs supplémentaires :", JSON.stringify(Object.fromEntries(extra.map(k => [k, typeof d[k] === "string" ? d[k].slice(0, 100) : d[k]]))));
+  } else {
+    console.log("[email-forward] Pas de champ data — payload complet :", JSON.stringify(payload).slice(0, 500));
+  }
 
   if (payload.type !== "email.received") {
     console.log("[email-forward] Événement ignoré :", payload.type);
@@ -28,30 +45,11 @@ exports.handler = async (event) => {
   const subject = data.subject || "(sans objet)";
   const emailId = data.email_id || data.id;
 
-  console.log(`[email-forward] from="${from}" subject="${subject}" email_id="${emailId}"`);
-
-  // Corps déjà présent dans le payload webhook ?
+  // Extraction du corps depuis le payload webhook
   let htmlBody = data.html || data.html_body || "";
   let textBody = data.text || data.text_body || data.body || "";
 
-  // Sinon, récupère le contenu complet via GET /emails/{email_id}
-  if (!htmlBody && !textBody && emailId) {
-    const fullKey = process.env.RESEND_FULL_API_KEY || process.env.RESEND_API_KEY;
-    const fetchRes = await fetch(`https://api.resend.com/emails/${emailId}`, {
-      headers: { Authorization: `Bearer ${fullKey}` },
-    });
-    if (fetchRes.ok) {
-      const full = await fetchRes.json();
-      console.log("[email-forward] Contenu via API :", JSON.stringify(full));
-      htmlBody = full.html || "";
-      textBody = full.text || "";
-    } else {
-      console.error(`[email-forward] Échec GET /emails/${emailId} — ${fetchRes.status}`);
-    }
-  } else {
-    console.log(`[email-forward] Corps dans webhook — html=${htmlBody.length}c text=${textBody.length}c`);
-  }
-
+  console.log(`[email-forward] Corps extrait — html=${htmlBody.length}c text=${textBody.length}c`);
   if (!emailId) console.warn("[email-forward] Aucun email_id dans le payload.");
 
   const bodyContent = htmlBody
