@@ -112,6 +112,7 @@ exports.handler = async (event) => {
       },
       body: JSON.stringify({
         from: "Bruno Repellin <bruno@initia-vienne.com>",
+        reply_to: "initia.vienne@gmail.com",
         to: [abonne.email],
         subject: sujet,
         html: htmlBody,
