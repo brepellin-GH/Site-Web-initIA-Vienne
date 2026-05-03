@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'IA en clair — N°2 — initIA Vienne</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #F4F1EC; font-family: 'DM Sans', sans-serif; color: #2C2825; -webkit-font-smoothing: antialiased; }
+  .email-wrapper { max-width: 620px; margin: 0 auto; background: #FFFDF9; }
+  .header { background: #1E6B2E; padding: 28px 40px 24px; border-bottom: 4px solid #E8921A; }
+  .header-logo { width: 72px; height: 72px; object-fit: contain; background: #FFFDF9; border-radius: 10px; padding: 6px; }
+  .header-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #E8921A; margin-bottom: 4px; }
+  .header-title { font-family: 'Lora', serif; font-size: 28px; color: #FFFDF9; line-height: 1.2; }
+  .header-title span { color: #E8921A; }
+  .header-meta-item { font-size: 12px; color: rgba(255,253,249,0.7); }
+  .header-meta-sep { font-size: 12px; color: #E8921A; opacity: 0.7; }
+  .edition-bar { background: #E8921A; padding: 10px 40px; }
+  .body-content { padding: 40px 40px 0; }
+  .intro-block { border-left: 3px solid #E8921A; padding-left: 18px; margin-bottom: 36px; }
+  .intro-block p { font-family: 'Lora', serif; font-size: 15px; line-height: 1.75; color: #4A4540; font-style: italic; }
+  .section-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #E8921A; margin-bottom: 6px; }
+  .section-title { font-family: 'Lora', serif; font-size: 21px; color: #1E6B2E; line-height: 1.3; margin-bottom: 14px; }
+  .section-body { font-size: 15px; line-height: 1.8; color: #3D3830; margin-bottom: 24px; }
+  .section-body strong { color: #1E6B2E; font-weight: 700; }
+  .image-block { margin: 20px 0 8px; border-radius: 10px; overflow: hidden; }
+  .image-block img { width: 100%; display: block; }
+  .image-caption { font-size: 12px; color: #9A9088; text-align: center; margin-bottom: 20px; font-style: italic; padding: 0 10px; }
+  .callout { background: #1E6B2E; border-radius: 12px; padding: 22px 26px; margin: 24px 0; }
+  .callout-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #E8921A; margin-bottom: 8px; }
+  .callout p { font-size: 14px; line-height: 1.7; color: rgba(255,253,249,0.9); }
+  .callout p strong { color: #FFFDF9; }
+  .actu-block { background: #FFF8F0; border-left: 4px solid #E8921A; border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 28px; }
+  .actu-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #E8921A; margin-bottom: 8px; }
+  .actu-title { font-family: 'Lora', serif; font-size: 17px; color: #1E6B2E; margin-bottom: 10px; line-height: 1.3; }
+  .actu-body { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .actu-body strong { color: #1E6B2E; }
+  .divider { height: 1px; background: #D4C9B8; margin: 28px 0; }
+  .tool-card { background: #F4F1EC; border-radius: 12px; padding: 24px 26px; margin-bottom: 28px; }
+  .tool-badge { display: inline-block; background: #E8921A; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; margin-bottom: 10px; }
+  .tool-title { font-family: 'Lora', serif; font-size: 17px; color: #1E6B2E; margin-bottom: 16px; line-height: 1.3; }
+  .tool-steps { list-style: none; }
+  .tool-steps li { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; font-size: 14px; line-height: 1.65; color: #3D3830; }
+  .tool-steps li:last-child { margin-bottom: 0; }
+  .step-num { width: 26px; height: 26px; min-width: 26px; background: #1E6B2E; color: #E8921A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; margin-top: 1px; }
+  .step-text { flex: 1; }
+  .question-block { border: 1.5px solid #D4C9B8; border-radius: 12px; padding: 24px 26px; margin-bottom: 28px; }
+  .question-quote { font-family: 'Lora', serif; font-size: 15px; font-style: italic; color: #4A4540; margin-bottom: 14px; line-height: 1.6; padding-left: 16px; border-left: 3px solid #E8921A; }
+  .question-answer { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .question-answer strong { color: #1E6B2E; }
+  .cta-block { background: #1E6B2E; border-radius: 12px; padding: 26px 28px; margin-bottom: 36px; text-align: center; }
+  .cta-block p { font-size: 14px; line-height: 1.7; color: rgba(255,253,249,0.85); margin-bottom: 16px; }
+  .cta-block p strong { color: #FFFDF9; }
+  .cta-button { display: inline-block; background: #E8921A; color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; padding: 11px 24px; border-radius: 6px; }
+  .next-issue { margin-bottom: 40px; padding: 20px 0; border-top: 1px dashed #D4C9B8; }
+  .next-issue-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #7A7068; margin-bottom: 8px; }
+  .next-issue-text { font-family: 'Lora', serif; font-size: 15px; color: #1E6B2E; font-style: italic; margin-bottom: 4px; }
+  .next-issue-sub { font-size: 13px; color: #7A7068; }
+  .footer { background: #1E6B2E; padding: 32px 40px; }
+  .footer-name { font-family: 'Lora', serif; font-size: 16px; color: #FFFDF9; margin-bottom: 4px; }
+  .footer-desc { font-size: 12px; color: rgba(255,253,249,0.85); margin-bottom: 20px; line-height: 1.6; }
+  .footer-links a { font-size: 13px; color: #E8921A; text-decoration: none; font-weight: 500; }
+  .footer-sep { color: rgba(255,253,249,0.5); font-size: 12px; margin: 0 8px; }
+  .footer-legal { font-size: 11px; color: rgba(255,253,249,0.75); line-height: 1.6; border-top: 1px solid rgba(255,253,249,0.25); padding-top: 16px; }
+  .footer-legal a { color: #E8921A; }
+  @media (max-width: 480px) {
+    .header, .body-content, .footer { padding-left: 20px; padding-right: 20px; }
+    .edition-bar { padding-left: 20px; padding-right: 20px; }
+    .header-title { font-size: 23px; }
+  }
+</style>
+</head>
+<body>
+<div class="email-wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:16px;">
+      <tr>
+        <td style="padding-right:20px; vertical-align:middle;">
+          <img src="image_1.png" alt="initIA Vienne" width="72" height="72" style="width:72px; height:72px; background:#FFFDF9; border-radius:10px; padding:6px; display:block;">
+        </td>
+        <td style="vertical-align:middle;">
+          <div class="header-label">La newsletter</div>
+          <div class="header-title">L'IA en clair <span>·</span></div>
+        </td>
+      </tr>
+    </table>
+    <div style="font-size:12px; color:rgba(255,253,249,0.85);">
+      Par Bruno Repellin &nbsp;<span style="color:#E8921A;">|</span>&nbsp; initIA Vienne &nbsp;<span style="color:#E8921A;">|</span>&nbsp; Pour les curieux de l'IA
+    </div>
+  </div>
+
+  <!-- BANDEAU -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#E8921A;">
+    <tr>
+      <td style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase;">N° 2 &nbsp;·&nbsp; Mai 2026</td>
+      <td style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase; text-align:right;">Lecture : 3 min ☕</td>
+    </tr>
+  </table>
+
+  <!-- CORPS -->
+  <div class="body-content">
+
+    <!-- INTRO -->
+    <div class="intro-block" style="margin-top:36px;">
+      <p>Bonjour,<br><br>
+      Ce mois-ci, on parle d'images : créer, modifier, s'émerveiller. Et aussi de se poser les bonnes questions. Les deux images ci-dessous ont été créées en quelques secondes par l'IA : une aquarelle de Vienne et un gladiateur photoréaliste dans une arène romaine. Vous y croyiez ?</p>
+    </div>
+
+    <!-- IMAGES -->
+    <p style="font-size:13px; font-weight:700; color:#1E6B2E; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px;">Style aquarelle artistique</p>
+    <div class="image-block">
+      <img src="image_2.png" alt="Vienne aquarelle générée par IA" style="width:100%; display:block; border-radius:10px;">
+    </div>
+    <p class="image-caption">Vienne et son temple d'Auguste, style aquarelle impressionniste. Créée en quelques secondes par ChatGPT Images 2.0.</p>
+
+    <p style="font-size:13px; font-weight:700; color:#1E6B2E; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; margin-top:20px;">Style photoréaliste</p>
+    <div class="image-block">
+      <img src="image_3.png" alt="Gladiateur arène romaine - image générée par IA" style="width:100%; display:block; border-radius:10px;">
+    </div>
+    <p class="image-caption">Un gladiateur dans une arène romaine. Photo de film ? Non, une image 100% générée par l'IA en quelques secondes, à partir d'un simple texte.</p>
+
+    <p style="font-size:14px; line-height:1.7; color:#3D3830; margin-bottom:24px;">Ces deux images n'ont pas été photographiées ni dessinées à la main. Elles ont été créées <strong style="color:#1E6B2E;">uniquement à partir d'une description en français</strong>, en quelques secondes. C'est ça, la puissance de l'IA générative aujourd'hui.</p>
+
+    <!-- PARTIE 1 -->
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius:20px; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#1E6B2E; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour tout le monde</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ACTU DU MOMENT -->
+    <div class="actu-block">
+      <div class="actu-label">⚡ L'actu du moment</div>
+      <div class="actu-title">ChatGPT Images 2.0 : créer des images réalistes est désormais à la portée de tous</div>
+      <p class="actu-body">
+        Le 21 avril dernier, OpenAI (la société derrière ChatGPT) a lancé <strong>ChatGPT Images 2.0</strong>. Ce nouveau modèle représente un vrai bond en avant pour la création d'images par l'IA.<br><br>
+        La grande nouveauté ? <strong>Le texte dans les images est enfin lisible et précis.</strong> Jusqu'ici, si vous demandiez à l'IA de créer une affiche avec du texte, les mots étaient souvent déformés ou illisibles. Ce problème est désormais résolu.<br><br>
+        Autre changement majeur : le modèle <strong>"réfléchit" avant de générer</strong>. Il analyse votre demande, cherche des informations si nécessaire, puis construit l'image de façon cohérente. Résultat : des images bien plus fidèles à ce qu'on demande.<br><br>
+        La bonne nouvelle : <strong>c'est disponible gratuitement</strong> pour tous les utilisateurs de ChatGPT.<br><br>
+        Un point à garder en tête : avec des textes désormais parfaitement lisibles dans les images générées, <strong>il devient encore plus difficile de distinguer une vraie photo d'une image créée par l'IA.</strong> Une raison de plus de rester vigilant face aux visuels que l'on voit circuler en ligne.
+      </p>
+    </div>
+
+    <!-- SUJET DU MOIS -->
+    <div class="section-eyebrow">Le sujet du mois</div>
+    <h2 class="section-title">L'IA et les images : créer, modifier, s'étonner</h2>
+    <p class="section-body">
+      Vous pensez peut-être que créer une image avec l'IA est réservé aux artistes ou aux experts informatiques. Pas du tout. Aujourd'hui, il suffit de <strong>décrire en français ce que vous voulez</strong>, comme vous l'expliqueriez à un ami, pour obtenir une image en quelques secondes.<br><br>
+      Mais l'IA ne fait pas que créer : elle peut aussi <strong>modifier vos photos existantes</strong>. Supprimer un objet encombrant sur une photo de famille, changer l'arrière-plan d'un portrait, améliorer une photo floue prise en intérieur... Des retouches qui demandaient autrefois des heures avec Photoshop sont maintenant accessibles à tous.
+    </p>
+
+    <div class="callout">
+      <div class="callout-label">💡 Ce que vous pouvez faire concrètement</div>
+      <p>
+        <strong>Créer :</strong> une invitation d'anniversaire illustrée, une carte de voeux personnalisée, une image pour illustrer un article de blog ou un post sur les réseaux sociaux.<br><br>
+        <strong>Modifier :</strong> supprimer quelqu'un d'indésirable sur une photo de groupe, changer la couleur d'un mur sur une photo de votre salon, améliorer l'éclairage d'un portrait.<br><br>
+        <strong>S'amuser :</strong> recréer votre maison dans le style d'un château médiéval, générer votre portrait en peinture impressionniste, imaginer votre jardin en plein été... même en novembre.
+      </p>
+    </div>
+
+    <!-- TABLEAU DES OUTILS -->
+    <div class="divider"></div>
+    <div class="section-eyebrow">Les outils à connaître</div>
+    <h2 class="section-title">Quel outil choisir selon vos besoins ?</h2>
+    <p class="section-body">Il existe aujourd'hui plusieurs outils pour créer ou modifier des images avec l'IA. Voici les trois principaux, comparés simplement :</p>
+
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:28px; border-radius:10px; overflow:hidden;">
+      <tr style="background:#1E6B2E;">
+        <td style="padding:10px 12px; font-size:12px; font-weight:700; color:#FFFDF9; width:28%;">Outil</td>
+        <td style="padding:10px 12px; font-size:12px; font-weight:700; color:#FFFDF9; width:15%; text-align:center;">Gratuit ?</td>
+        <td style="padding:10px 12px; font-size:12px; font-weight:700; color:#FFFDF9; width:12%; text-align:center;">Créer</td>
+        <td style="padding:10px 12px; font-size:12px; font-weight:700; color:#FFFDF9; width:13%; text-align:center;">Modifier</td>
+        <td style="padding:10px 12px; font-size:12px; font-weight:700; color:#FFFDF9; width:32%;">Pour qui ?</td>
+      </tr>
+      <tr style="background:#FFFDF9;">
+        <td style="padding:10px 12px; font-size:13px; font-weight:700; color:#1E6B2E; border-bottom:1px solid #E8E0D5;">ChatGPT Images 2.0</td>
+        <td style="padding:10px 12px; font-size:13px; text-align:center; border-bottom:1px solid #E8E0D5;">Oui ✅</td>
+        <td style="padding:10px 12px; font-size:13px; text-align:center; border-bottom:1px solid #E8E0D5;">✅</td>
+        <td style="padding:10px 12px; font-size:13px; text-align:center; border-bottom:1px solid #E8E0D5;">✅</td>
+        <td style="padding:10px 12px; font-size:12px; color:#5A5048; border-bottom:1px solid #E8E0D5;">Idéal pour commencer, intégré à ChatGPT</td>
+      </tr>
+      <tr style="background:#F4F1EC;">
+        <td style="padding:10px 12px; font-size:13px; font-weight:700; color:#1E6B2E; border-bottom:1px solid #E8E0D5;">Nano Banana</td>
+        <td style="padding:10px 12px; font-size:13px; text-align:center; border-bottom:1px solid #E8E0D5;">Oui ✅</td>
+        <td style="padding:10px 12px; font-size:13px; text-align:center; border-bottom:1px solid #E8E0D5;">✅</td>
+        <td style="padding:10px 12px; font-size:13px; text-align:center; border-bottom:1px solid #E8E0D5;">✅</td>
+        <td style="padding:10px 12px; font-size:12px; color:#5A5048; border-bottom:1px solid #E8E0D5;">Très fort pour retoucher des photos existantes</td>
+      </tr>
+      <tr style="background:#FFFDF9;">
+        <td style="padding:10px 12px; font-size:13px; font-weight:700; color:#1E6B2E;">Midjourney</td>
+        <td style="padding:10px 12px; font-size:13px; text-align:center;">Non ❌<br><span style="font-size:11px; color:#9A9088;">dès 10$/mois</span></td>
+        <td style="padding:10px 12px; font-size:13px; text-align:center;">✅</td>
+        <td style="padding:10px 12px; font-size:13px; text-align:center;">❌</td>
+        <td style="padding:10px 12px; font-size:12px; color:#5A5048;">La référence pour les images artistiques et créatives</td>
+      </tr>
+    </table>
+
+    <div class="divider"></div>
+
+    <!-- PARTIE 2 -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:36px 0 28px;">
+      <tr>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+        <td style="padding:0 14px; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#B0A898; white-space:nowrap; text-align:center;">Pour ceux qui pratiquent déjà</td>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+      </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius:20px; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#E8921A; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour aller plus loin</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ASTUCE -->
+    <div class="section-eyebrow">L'astuce du mois</div>
+    <div class="tool-card">
+      <div class="tool-badge">Prompt efficace</div>
+      <div class="tool-title">Les 3 ingrédients minimum d'un bon prompt image</div>
+      <p style="font-size:14px; line-height:1.7; color:#3D3830; margin-bottom:16px;">Un bon prompt image repose sur <strong style="color:#1E6B2E;">au moins trois éléments</strong> : le sujet, le style et l'ambiance. Mais plus vous en donnez, plus le résultat sera précis et saisissant, comme le montre l'image du gladiateur en haut de cette newsletter :</p>
+      <div style="background:#FFFDF9; border-radius:8px; padding:14px 16px; margin-bottom:12px; border-left:3px solid #D4C9B8;">
+        <p style="font-size:12px; font-weight:700; color:#9A9088; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">❌ Prompt trop vague</p>
+        <p style="font-size:14px; color:#3D3830; font-style:italic;">"Un gladiateur romain face à un lion dans une arène"</p>
+      </div>
+      <div style="background:#E8F4EC; border-radius:8px; padding:14px 16px; margin-bottom:16px; border-left:3px solid #1E6B2E;">
+        <p style="font-size:12px; font-weight:700; color:#1E6B2E; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">✅ Prompt avec les 3 ingrédients + détails supplémentaires</p>
+        <p style="font-size:14px; color:#3D3830; font-style:italic;">"Un gladiateur murmillo dans l'arène du <strong style="color:#1E6B2E;">théâtre antique de Vienne</strong> [sujet], style photoréaliste documentaire historique, rendu 4K [style], soleil au zénith, ombres nettes, atmosphère chaude et poussiéreuse, tension dramatique [ambiance] + angle de vue, cadrage 16:9, position des personnages, détails du costume et du lion [détails supplémentaires]"</p>
+      </div>
+      <ol class="tool-steps">
+        <li>
+          <div class="step-num">1</div>
+          <div class="step-text"><strong>Le sujet :</strong> qui ou quoi, avec précision : "un gladiateur murmillo face à un lion" plutôt que "un gladiateur dans une arène".</div>
+        </li>
+        <li>
+          <div class="step-num">2</div>
+          <div class="step-text"><strong>Le style :</strong> photoréaliste, aquarelle, dessin animé, peinture à l'huile, illustration vintage, documentaire historique...</div>
+        </li>
+        <li>
+          <div class="step-num">3</div>
+          <div class="step-text"><strong>L'ambiance :</strong> soleil au zénith, ombres nettes, atmosphère poussiéreuse, tension dramatique, lumière froide...</div>
+        </li>
+      </ol>
+
+      <div style="background:#FFF8F0; border-radius:8px; padding:12px 16px; border-left:3px solid #E8921A; margin-top:4px;">
+        <p style="font-size:13px; line-height:1.65; color:#3D3830;"><strong style="color:#E8921A;">À retenir :</strong> plus vous donnez de contexte (lieu précis, angle de vue, lumière, style, format), plus l'IA peut produire quelque chose qui ressemble à ce que vous imaginez. Le prompt, c'est votre façon de lui parler.</p>
+      </div>
+
+    </div>
+
+    <!-- QUESTION -->
+    <div class="section-eyebrow">La question d'un participant</div>
+    <div class="question-block">
+      <p class="question-quote">Si l'IA crée des images parfaites, les photographes vont-ils perdre leur travail ?</p>
+      <p class="question-answer">
+        C'est une vraie question, et elle mérite une réponse nuancée. <strong>L'IA va certainement transformer le métier de photographe</strong>, comme la photographie numérique a transformé la photo argentique, ou comme la calculatrice a changé le métier de comptable.<br><br>
+        Mais certaines choses restent irremplaçables : <strong>le regard humain, l'émotion d'un instant vrai, la relation entre un photographe et son sujet.</strong> Une IA peut créer une belle image d'un mariage imaginaire, elle ne peut pas capturer le tremblement de lèvres de la mariée au moment du oui.<br><br>
+        En revanche, pour les images génériques (illustrer un article, créer un visuel pour les réseaux sociaux, simuler une décoration d'intérieur), l'IA sera de plus en plus utilisée. Les photographes qui sauront intégrer ces outils à leur pratique en tireront un avantage. Les autres devront s'adapter.<br><br>
+        La bonne nouvelle pour nous, simples utilisateurs : <strong>des images de qualité sont désormais accessibles à tous, sans budget ni compétences techniques.</strong>
+      </p>
+    </div>
+
+    <!-- CTA ATELIER -->
+    <div class="cta-block">
+      <p>Envie d'aller plus loin et de <strong>créer vos premières images IA en direct</strong> avec des exercices guidés ? Le prochain atelier initIA Vienne de Niveau 2 a lieu le <strong>30 mai au Club Léo Lagrange de Vienne</strong>.</p>
+      <a class="cta-button" href="https://initia-vienne.com/ateliers">Voir les détails de l'atelier →</a>
+    </div>
+
+    <!-- PROCHAIN NUMÉRO -->
+    <div class="next-issue">
+      <div class="next-issue-label">Au prochain numéro</div>
+      <div class="next-issue-text">L'IA et les vacances : planifier, traduire, découvrir</div>
+      <div class="next-issue-sub">Comment l'IA peut vous aider à préparer un voyage, même sans être expert.</div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-name">Bruno Repellin</div>
+    <div class="footer-desc">
+      initIA Vienne · Ateliers d'initiation à l'intelligence artificielle<br>
+      Pour les débutants, les seniors, les associations et les collectivités de Vienne et communes environnantes.
+    </div>
+    <div style="margin-bottom:20px;">
+      <a href="https://initia-vienne.com" class="footer-links" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">initia-vienne.com</a>
+      <span class="footer-sep">|</span>
+      <a href="mailto:initia-vienne@gmail.com" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">initia-vienne@gmail.com</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.instagram.com/initia.vienne" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">Instagram</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.linkedin.com/in/bruno-repellin-b1425a21" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">LinkedIn</a>
+    </div>
+    <div class="footer-legal">
+      Vous recevez cet email parce que vous êtes inscrit à la newsletter initIA Vienne.<br>
+      <a href="{{UNSUBSCRIBE_URL}}">Se désinscrire</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
