@@ -43,7 +43,7 @@
   .tool-steps { list-style: none; }
   .tool-steps li { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; font-size: 14px; line-height: 1.65; color: #3D3830; }
   .tool-steps li:last-child { margin-bottom: 0; }
-  .step-num { width: 26px; height: 26px; min-width: 26px; background: #1E6B2E; color: #E8921A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; margin-top: 1px; }
+  .step-num { width: 26px; height: 26px; min-width: 26px; background: #1E6B2E; color: #E8921A; border-radius: 50%; display: inline-block; font-size: 11px; font-weight: 700; margin-top: 1px; text-align: center; line-height: 26px; }
   .step-text { flex: 1; }
   .question-block { border: 1.5px solid #D4C9B8; border-radius: 12px; padding: 24px 26px; margin-bottom: 28px; }
   .question-quote { font-family: 'Lora', serif; font-size: 15px; font-style: italic; color: #4A4540; margin-bottom: 14px; line-height: 1.6; padding-left: 16px; border-left: 3px solid #E8921A; }
@@ -239,20 +239,26 @@
         <p style="font-size:12px; font-weight:700; color:#1E6B2E; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">✅ Prompt avec les 3 ingrédients + détails supplémentaires</p>
         <p style="font-size:14px; color:#3D3830; font-style:italic;">"Un gladiateur murmillo dans l'arène du <strong style="color:#1E6B2E;">théâtre antique de Vienne</strong> [sujet], style photoréaliste documentaire historique, rendu 4K [style], soleil au zénith, ombres nettes, atmosphère chaude et poussiéreuse, tension dramatique [ambiance] + angle de vue, cadrage 16:9, position des personnages, détails du costume et du lion [détails supplémentaires]"</p>
       </div>
-      <ol class="tool-steps">
-        <li>
-          <div class="step-num">1</div>
-          <div class="step-text"><strong>Le sujet :</strong> qui ou quoi, avec précision : "un gladiateur murmillo face à un lion" plutôt que "un gladiateur dans une arène".</div>
-        </li>
-        <li>
-          <div class="step-num">2</div>
-          <div class="step-text"><strong>Le style :</strong> photoréaliste, aquarelle, dessin animé, peinture à l'huile, illustration vintage, documentaire historique...</div>
-        </li>
-        <li>
-          <div class="step-num">3</div>
-          <div class="step-text"><strong>L'ambiance :</strong> soleil au zénith, ombres nettes, atmosphère poussiéreuse, tension dramatique, lumière froide...</div>
-        </li>
-      </ol>
+      <table cellpadding="0" cellspacing="0" border="0" style="width:100%; margin-bottom:16px;">
+        <tr>
+          <td style="width:26px; vertical-align:top; padding-bottom:12px;">
+            <div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">1</div>
+          </td>
+          <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:12px;"><strong>Le sujet :</strong> qui ou quoi, avec précision : "un gladiateur murmillo face à un lion" plutôt que "un gladiateur dans une arène".</td>
+        </tr>
+        <tr>
+          <td style="width:26px; vertical-align:top; padding-bottom:12px;">
+            <div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">2</div>
+          </td>
+          <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:12px;"><strong>Le style :</strong> photoréaliste, aquarelle, dessin animé, peinture à l'huile, illustration vintage, documentaire historique...</td>
+        </tr>
+        <tr>
+          <td style="width:26px; vertical-align:top;">
+            <div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">3</div>
+          </td>
+          <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top;"><strong>L'ambiance :</strong> soleil au zénith, ombres nettes, atmosphère poussiéreuse, tension dramatique, lumière froide...</td>
+        </tr>
+      </table>
 
       <div style="background:#FFF8F0; border-radius:8px; padding:12px 16px; border-left:3px solid #E8921A; margin-top:4px;">
         <p style="font-size:13px; line-height:1.65; color:#3D3830;"><strong style="color:#E8921A;">À retenir :</strong> plus vous donnez de contexte (lieu précis, angle de vue, lumière, style, format), plus l'IA peut produire quelque chose qui ressemble à ce que vous imaginez. Le prompt, c'est votre façon de lui parler.</p>
