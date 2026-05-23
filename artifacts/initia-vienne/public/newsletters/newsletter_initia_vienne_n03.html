@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'IA en clair — N°3 — initIA Vienne</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #F4F1EC; font-family: 'DM Sans', sans-serif; color: #2C2825; -webkit-font-smoothing: antialiased; }
+  .email-wrapper { max-width: 620px; margin: 0 auto; background: #FFFDF9; }
+  .header { background: #1E6B2E; padding: 28px 40px 24px; border-bottom: 4px solid #E8921A; }
+  .header-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #E8921A; margin-bottom: 4px; }
+  .header-title { font-family: 'Lora', serif; font-size: 28px; color: #FFFDF9; line-height: 1.2; }
+  .header-title span { color: #E8921A; }
+  .section-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #E8921A; margin-bottom: 6px; }
+  .section-title { font-family: 'Lora', serif; font-size: 21px; color: #1E6B2E; line-height: 1.3; margin-bottom: 14px; }
+  .section-body { font-size: 15px; line-height: 1.8; color: #3D3830; margin-bottom: 24px; }
+  .section-body strong { color: #1E6B2E; font-weight: 700; }
+  .image-block { margin: 20px 0 8px; border-radius: 10px; overflow: hidden; }
+  .image-block img { width: 100%; display: block; }
+  .image-caption { font-size: 12px; color: #9A9088; text-align: center; margin-bottom: 24px; font-style: italic; padding: 0 10px; }
+  .actu-block { background: #FFF8F0; border-left: 4px solid #E8921A; border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 28px; }
+  .actu-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #E8921A; margin-bottom: 8px; }
+  .actu-title { font-family: 'Lora', serif; font-size: 17px; color: #1E6B2E; margin-bottom: 10px; line-height: 1.3; }
+  .actu-body { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .actu-body strong { color: #1E6B2E; }
+  .divider { height: 1px; background: #D4C9B8; margin: 28px 0; }
+  .tool-card { background: #F4F1EC; border-radius: 12px; padding: 24px 26px; margin-bottom: 28px; }
+  .tool-badge { display: inline-block; background: #E8921A; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; margin-bottom: 10px; }
+  .tool-title { font-family: 'Lora', serif; font-size: 17px; color: #1E6B2E; margin-bottom: 16px; line-height: 1.3; }
+  .question-block { border: 1.5px solid #D4C9B8; border-radius: 12px; padding: 24px 26px; margin-bottom: 28px; }
+  .question-quote { font-family: 'Lora', serif; font-size: 15px; font-style: italic; color: #4A4540; margin-bottom: 14px; line-height: 1.6; padding-left: 16px; border-left: 3px solid #E8921A; }
+  .question-answer { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .question-answer strong { color: #1E6B2E; }
+  .cta-block { background: #1E6B2E; border-radius: 12px; padding: 26px 28px; margin-bottom: 36px; text-align: center; }
+  .cta-block p { font-size: 14px; line-height: 1.7; color: rgba(255,253,249,0.85); margin-bottom: 16px; }
+  .cta-block p strong { color: #FFFDF9; }
+  .cta-button { display: inline-block; background: #E8921A; color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; padding: 11px 24px; border-radius: 6px; }
+  .next-issue { margin-bottom: 40px; padding: 20px 0; border-top: 1px dashed #D4C9B8; }
+  .next-issue-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #7A7068; margin-bottom: 8px; }
+  .next-issue-text { font-family: 'Lora', serif; font-size: 15px; color: #1E6B2E; font-style: italic; margin-bottom: 4px; }
+  .next-issue-sub { font-size: 13px; color: #7A7068; }
+  .footer { background: #1E6B2E; padding: 32px 40px; }
+  .footer-name { font-family: 'Lora', serif; font-size: 16px; color: #FFFDF9; margin-bottom: 4px; }
+  .footer-desc { font-size: 12px; color: rgba(255,253,249,0.85); margin-bottom: 20px; line-height: 1.6; }
+  .footer-sep { color: rgba(255,253,249,0.5); font-size: 12px; margin: 0 8px; }
+  .footer-legal { font-size: 11px; color: rgba(255,253,249,0.75); line-height: 1.6; border-top: 1px solid rgba(255,253,249,0.25); padding-top: 16px; }
+  .footer-legal a { color: #E8921A; }
+  .intro-block { border-left: 3px solid #E8921A; padding-left: 18px; margin-bottom: 36px; }
+  .intro-block p { font-family: 'Lora', serif; font-size: 15px; line-height: 1.75; color: #4A4540; font-style: italic; }
+  @media (max-width: 480px) {
+    .header, .body-content, .footer { padding-left: 20px; padding-right: 20px; }
+    .header-title { font-size: 23px; }
+  }
+</style>
+</head>
+<body>
+<div class="email-wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:16px;">
+      <tr>
+        <td style="padding-right:20px; vertical-align:middle;">
+          <img src="https://initia-vienne.com/newsletters/image_1.png" alt="initIA Vienne" width="72" height="72" style="width:72px; height:72px; background:#FFFDF9; border-radius:10px; padding:6px; display:block;">
+        </td>
+        <td style="vertical-align:middle;">
+          <div class="header-label">La newsletter</div>
+          <div class="header-title">L'IA en clair <span>·</span></div>
+        </td>
+      </tr>
+    </table>
+    <div style="font-size:12px; color:rgba(255,253,249,0.85);">
+      Par Bruno Repellin &nbsp;<span style="color:#E8921A;">|</span>&nbsp; initIA Vienne &nbsp;<span style="color:#E8921A;">|</span>&nbsp; Pour les curieux de l'IA
+    </div>
+  </div>
+
+  <!-- BANDEAU -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#E8921A;">
+    <tr>
+      <td style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase;">N° 3 &nbsp;·&nbsp; Mai 2026</td>
+      <td style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase; text-align:right;">Lecture : 3 min &#9749;</td>
+    </tr>
+  </table>
+
+  <!-- CORPS -->
+  <div class="body-content" style="padding: 40px 40px 0;">
+
+    <!-- INTRO -->
+    <div class="intro-block" style="margin-top:36px;">
+      <p>Bonjour,<br><br>
+      Dans nos ateliers, une question revient souvent en cette période : "Est-ce que l'IA peut m'aider à organiser mes vacances ?" La réponse est oui, et bien plus qu'on ne l'imagine. Ce numéro est entièrement consacré à ce sujet : de la première idée de destination jusqu'à votre arrivée sur place, voici ce que l'IA peut faire pour vous et là où elle s'arrête encore.</p>
+    </div>
+
+    <!-- IMAGE -->
+    <div class="image-block">
+      <img src="C3475D3A-7D9C-4892-855C-97803BE7210C.png" alt="Couple de touristes devant le Colisée de Rome, style carte postale vintage, généré par IA" style="width:100%; display:block; border-radius:10px;">
+    </div>
+    <p class="image-caption">Un couple de touristes devant le Colisée de Rome. Style carte postale vintage. Image créée avec ChatGPT Images 2.0.</p>
+
+    <!-- BADGE POUR TOUT LE MONDE -->
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius:20px; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#1E6B2E; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour tout le monde</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ACTU DU MOMENT -->
+    <div class="actu-block">
+      <div class="actu-label">&#9889; L'actu du moment</div>
+      <div class="actu-title">On peut maintenant chercher son vol directement dans ChatGPT</div>
+      <p class="actu-body">
+        <strong>Virgin Atlantic</strong> vient de lancer une application intégrée à ChatGPT, présentée comme une première mondiale dans le transport aérien. Concrètement, vous tapez votre demande en langage naturel ("un vol Paris-Londres début juillet, pas trop cher") et l'IA vous propose une sélection de vols. Vous êtes ensuite redirigé vers le site de la compagnie pour finaliser la réservation.<br><br>
+        Dans le même mouvement, <strong>Tripadvisor</strong> et sa filiale Viator permettent désormais de rechercher hôtels et activités directement depuis un assistant IA, en posant vos questions à la voix ou par écrit, comme vous le feriez avec un ami bien informé.<br><br>
+        Ce n'est plus de la science-fiction : les grandes enseignes du voyage s'installent là où vous posez vos questions et l'été 2026 sera probablement le premier où beaucoup de voyageurs utiliseront l'IA sans même s'en rendre compte.
+      </p>
+    </div>
+
+    <!-- SUJET DU MOIS -->
+    <div class="section-eyebrow">Le sujet du mois</div>
+    <h2 class="section-title">L'IA, votre compagnon de voyage</h2>
+    <p class="section-body">L'IA peut vous accompagner à chaque étape de votre voyage, bien avant de faire vos valises.</p>
+
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;">
+      <tr><td style="background:#F0F7F1; border-left:4px solid #1E6B2E; border-radius:0 8px 8px 0; padding:14px 16px;">
+        <p style="font-size:12px; font-weight:700; color:#1E6B2E; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Avant de partir</p>
+        <p style="font-size:14px; line-height:1.7; color:#3D3830; margin:0;">C'est là que l'IA est la plus utile. Trouver des idées de destination selon vos envies et votre budget, construire un itinéraire jour par jour, préparer une liste de choses à prévoir, comparer des options d'hébergement, traduire vos questions à l'avance.</p>
+      </td></tr>
+    </table>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;">
+      <tr><td style="background:#FFF8F0; border-left:4px solid #E8921A; border-radius:0 8px 8px 0; padding:14px 16px;">
+        <p style="font-size:12px; font-weight:700; color:#E8921A; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Sur place</p>
+        <p style="font-size:14px; line-height:1.7; color:#3D3830; margin:0;">Votre téléphone devient votre interprète. Traduire un menu de restaurant, comprendre un panneau en langue étrangère, trouver une activité de dernière minute, poser des questions pratiques sur les transports ou les horaires d'ouverture.</p>
+      </td></tr>
+    </table>
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:28px;">
+      <tr><td style="background:#F5F5F5; border-left:4px solid #AAAAAA; border-radius:0 8px 8px 0; padding:14px 16px;">
+        <p style="font-size:12px; font-weight:700; color:#777777; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Au retour</p>
+        <p style="font-size:14px; line-height:1.7; color:#3D3830; margin:0;">Le voyage continue. Trier et légender vos photos, rédiger un carnet de voyage, partager vos bons plans sous forme de texte ou de message à vos proches.</p>
+      </td></tr>
+    </table>
+
+    <!-- CAS D'USAGE -->
+    <div class="section-eyebrow">Le cas d'usage</div>
+    <h2 class="section-title">"Je pars en Italie, je ne parle pas un mot d'italien"</h2>
+    <p class="section-body">Voici un exemple concret de ce que l'IA peut faire pour vous, de A jusqu'à Z.</p>
+
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%; margin-bottom:28px;">
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">1</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Préparer les phrases utiles.</strong> Vous demandez à l'IA un petit guide de survie en italien : commander au restaurant, demander une direction, se présenter chez un médecin. Elle vous donne le texte, la prononciation phonétique, et la traduction mot à mot.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">2</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Traduire un menu.</strong> Sur place, vous prenez le menu en photo et vous la soumettez à l'IA. En quelques secondes, vous savez ce que vous allez manger, sans mauvaise surprise.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">3</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Comprendre les transports.</strong> Vous lui décrivez votre situation ("Je suis gare Centrale à Milan, je veux rejoindre le lac de Côme, je n'ai pas de voiture") et elle vous explique les options pas à pas, avec les noms des lignes et les prix approximatifs.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">4</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top;"><strong style="color:#1E6B2E;">Écrire à votre hôtel en italien.</strong> Besoin de confirmer votre arrivée tardive ou de demander un lit supplémentaire ? Vous lui dictez le message en français, elle vous le traduit aussitôt, dans un style poli et naturel.</td>
+      </tr>
+    </table>
+
+    <div class="divider"></div>
+
+    <!-- BADGE POUR CEUX QUI PRATIQUENT -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:36px 0 28px;">
+      <tr>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+        <td style="padding:0 14px; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#B0A898; white-space:nowrap; text-align:center;">Pour ceux qui pratiquent déjà</td>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+      </tr>
+    </table>
+
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius:20px; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#E8921A; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour aller plus loin</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ASTUCE DU MOIS -->
+    <div class="section-eyebrow">L'astuce du mois</div>
+    <div class="tool-card">
+      <div class="tool-badge">Prompt clé en main</div>
+      <div class="tool-title">Créez votre itinéraire personnalisé en 30 secondes</div>
+      <p style="font-size:14px; line-height:1.7; color:#3D3830; margin-bottom:16px;">Copiez ce message dans ChatGPT, Gemini ou Claude, et remplacez les informations entre crochets par vos propres choix :</p>
+      <div style="background:#E8F4EC; border-radius:8px; padding:16px 20px; margin-bottom:16px; border-left:3px solid #1E6B2E;">
+        <p style="font-family:'Courier New', monospace; font-size:12px; line-height:1.9; color:#1E6B2E; margin:0;">Tu es un conseiller en voyage. Je pars <strong>[nombre de jours]</strong> jours à <strong>[destination]</strong>, avec <strong>[seul / en couple / en famille]</strong>. Mon budget est <strong>[petit / moyen / confortable]</strong>. J'aime surtout <strong>[culture et musées / nature et randonnées / gastronomie / détente]</strong>. Propose-moi un itinéraire jour par jour, avec les incontournables et quelques idées moins connues des touristes. Ajoute pour chaque journée une estimation du temps de déplacement.</p>
+      </div>
+      <div style="background:#FFF8F0; border-radius:8px; padding:12px 16px; border-left:3px solid #E8921A;">
+        <p style="font-size:13px; line-height:1.65; color:#3D3830; margin:0;"><strong style="color:#E8921A;">À retenir :</strong> si le résultat ne vous convient pas, répondez simplement "Rends ça plus axé sur la gastronomie" ou "Ajoute une journée de plage". L'IA ajuste aussitôt, sans tout recommencer.</p>
+      </div>
+    </div>
+
+    <!-- QUESTION D'UN PARTICIPANT -->
+    <div class="section-eyebrow">La question d'un participant</div>
+    <div class="question-block">
+      <p class="question-quote">"L'IA peut-elle vraiment tout gérer pour l'organisation de mes vacances : la recherche, les réservations et le paiement ?"</p>
+      <p class="question-answer">
+        C'est une excellente question et la réponse est nuancée selon ce que vous voulez faire.<br><br>
+        <strong>Ce qu'elle fait très bien :</strong> préparer, comparer, suggérer. Elle peut construire un itinéraire complet, vous orienter vers les bonnes plateformes, comparer des options selon vos critères et rédiger tous les messages dont vous avez besoin.<br><br>
+        <strong>Ce qu'elle commence à faire :</strong> sur certaines plateformes comme Virgin Atlantic (intégrée à ChatGPT) ou GO Voyages en France, des assistants IA peuvent désormais accompagner la recherche et orienter vers la réservation. C'est encore récent et pas généralisé, mais ça évolue vite.<br><br>
+        <strong>Ce qu'elle ne fait pas :</strong> payer à votre place. Pour des raisons de sécurité, le paiement final se fait toujours sur le site officiel du prestataire. C'est vous qui confirmez et qui réglez. Et ce n'est pas qu'une question technique : une étude récente d'Expedia montre que 66 % des voyageurs refusent que l'IA réserve à leur place. La confiance se construit progressivement.<br><br>
+        Une précision importante : les outils les plus avancés, capables de naviguer seuls sur le web et de remplir des formulaires à votre place, existent déjà… mais uniquement aux États-Unis pour l'instant. En France, l'IA reste un assistant très puissant, mais c'est vous qui restez aux commandes pour les étapes engageantes. Et c'est finalement rassurant : vous gardez le contrôle et l'IA fait le travail fastidieux à votre place.
+      </p>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-block">
+      <p>Envie de mettre tout cela en pratique ? Venez découvrir ou approfondir l'IA lors d'un <strong>atelier initIA Vienne</strong>, en petit groupe, sans jargon technique.</p>
+      <a class="cta-button" href="https://initia-vienne.com/ateliers">Voir les prochaines dates &#8594;</a>
+    </div>
+
+    <!-- PROCHAIN NUMÉRO -->
+    <div class="next-issue">
+      <div class="next-issue-label">Au prochain numéro</div>
+      <div class="next-issue-text">L'IA et les enfants : histoires, activités, idées</div>
+      <div class="next-issue-sub">Comment l'IA peut vous aider à occuper et émerveiller les plus jeunes.</div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-name">Bruno Repellin</div>
+    <div class="footer-desc">
+      initIA Vienne · Ateliers d'initiation à l'intelligence artificielle<br>
+      Pour les débutants, les seniors, les associations et les collectivités de Vienne et communes environnantes.
+    </div>
+    <div style="margin-bottom:20px;">
+      <a href="https://initia-vienne.com" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">initia-vienne.com</a>
+      <span class="footer-sep">|</span>
+      <a href="mailto:initia-vienne@gmail.com" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">initia-vienne@gmail.com</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.instagram.com/initia.vienne" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">Instagram</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.linkedin.com/in/bruno-repellin-b1425a21" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">LinkedIn</a>
+    </div>
+    <div class="footer-legal">
+      Vous recevez cet email parce que vous êtes inscrit à la newsletter initIA Vienne.<br>
+      <a href="{{UNSUBSCRIBE_URL}}">Se désinscrire</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
