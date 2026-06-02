@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'IA en clair — N°4 — initIA Vienne</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #F4F1EC; font-family: 'DM Sans', sans-serif; color: #2C2825; -webkit-font-smoothing: antialiased; }
+  .email-wrapper { max-width: 620px; margin: 0 auto; background: #FFFDF9; }
+  .header { background: #1E6B2E; padding: 28px 40px 24px; border-bottom: 4px solid #E8921A; }
+  .header-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #E8921A; margin-bottom: 4px; }
+  .header-title { font-family: 'Lora', serif; font-size: 28px; color: #FFFDF9; line-height: 1.2; }
+  .header-title span { color: #E8921A; }
+  .section-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #E8921A; margin-bottom: 6px; }
+  .section-title { font-family: 'Lora', serif; font-size: 21px; color: #1E6B2E; line-height: 1.3; margin-bottom: 14px; }
+  .section-body { font-size: 15px; line-height: 1.8; color: #3D3830; margin-bottom: 24px; }
+  .section-body strong { color: #1E6B2E; font-weight: 700; }
+  .image-block { margin: 20px 0 8px; border-radius: 10px; overflow: hidden; }
+  .image-block img { width: 100%; display: block; }
+  .image-caption { font-size: 12px; color: #9A9088; text-align: center; margin-bottom: 24px; font-style: italic; padding: 0 10px; }
+  .actu-block { background: #FFF8F0; border-left: 4px solid #E8921A; border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 28px; }
+  .actu-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #E8921A; margin-bottom: 8px; }
+  .actu-title { font-family: 'Lora', serif; font-size: 17px; color: #1E6B2E; margin-bottom: 10px; line-height: 1.3; }
+  .actu-body { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .actu-body strong { color: #1E6B2E; }
+  .divider { height: 1px; background: #D4C9B8; margin: 28px 0; }
+  .tool-card { background: #F4F1EC; border-radius: 12px; padding: 24px 26px; margin-bottom: 28px; }
+  .tool-badge { display: inline-block; background: #E8921A; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; margin-bottom: 10px; }
+  .tool-title { font-family: 'Lora', serif; font-size: 17px; color: #1E6B2E; margin-bottom: 16px; line-height: 1.3; }
+  .question-block { border: 1.5px solid #D4C9B8; border-radius: 12px; padding: 24px 26px; margin-bottom: 28px; }
+  .question-quote { font-family: 'Lora', serif; font-size: 15px; font-style: italic; color: #4A4540; margin-bottom: 14px; line-height: 1.6; padding-left: 16px; border-left: 3px solid #E8921A; }
+  .question-answer { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .question-answer strong { color: #1E6B2E; }
+  .cta-block { background: #1E6B2E; border-radius: 12px; padding: 26px 28px; margin-bottom: 36px; text-align: center; }
+  .cta-block p { font-size: 14px; line-height: 1.7; color: rgba(255,253,249,0.85); margin-bottom: 16px; }
+  .cta-block p strong { color: #FFFDF9; }
+  .cta-button { display: inline-block; background: #E8921A; color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; padding: 11px 24px; border-radius: 6px; }
+  .next-issue { margin-bottom: 40px; padding: 20px 0; border-top: 1px dashed #D4C9B8; }
+  .next-issue-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #7A7068; margin-bottom: 8px; }
+  .next-issue-text { font-family: 'Lora', serif; font-size: 15px; color: #1E6B2E; font-style: italic; margin-bottom: 4px; }
+  .next-issue-sub { font-size: 13px; color: #7A7068; }
+  .footer { background: #1E6B2E; padding: 32px 40px; }
+  .footer-name { font-family: 'Lora', serif; font-size: 16px; color: #FFFDF9; margin-bottom: 4px; }
+  .footer-desc { font-size: 12px; color: rgba(255,253,249,0.85); margin-bottom: 20px; line-height: 1.6; }
+  .footer-sep { color: rgba(255,253,249,0.5); font-size: 12px; margin: 0 8px; }
+  .footer-legal { font-size: 11px; color: rgba(255,253,249,0.75); line-height: 1.6; border-top: 1px solid rgba(255,253,249,0.25); padding-top: 16px; }
+  .footer-legal a { color: #E8921A; }
+  .intro-block { border-left: 3px solid #E8921A; padding-left: 18px; margin-bottom: 36px; }
+  .intro-block p { font-family: 'Lora', serif; font-size: 15px; line-height: 1.75; color: #4A4540; font-style: italic; }
+  @media (max-width: 480px) {
+    .header, .body-content, .footer { padding-left: 20px; padding-right: 20px; }
+    .header-title { font-size: 23px; }
+  }
+</style>
+</head>
+<body>
+<div class="email-wrapper">
+
+  <!-- ============================================================
+       EN-TÊTE — ne pas modifier
+       ============================================================ -->
+  <div class="header">
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:16px;">
+      <tr>
+        <td style="padding-right:20px; vertical-align:middle;">
+          <img src="https://initia-vienne.com/newsletters/image_1.png" alt="initIA Vienne" width="72" height="72" style="width:72px; height:72px; background:#FFFDF9; border-radius:10px; padding:6px; display:block;">
+        </td>
+        <td style="vertical-align:middle;">
+          <div class="header-label">La newsletter</div>
+          <div class="header-title">L'IA en clair <span>·</span></div>
+        </td>
+      </tr>
+    </table>
+    <div style="font-size:12px; color:rgba(255,253,249,0.85);">
+      Par Bruno Repellin &nbsp;<span style="color:#E8921A;">|</span>&nbsp; initIA Vienne &nbsp;<span style="color:#E8921A;">|</span>&nbsp; Pour les curieux de l'IA
+    </div>
+  </div>
+
+  <!-- ============================================================
+       BANDEAU — modifier : NUMERO et MOIS_ANNEE
+       ============================================================ -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#E8921A;">
+    <tr>
+      <td style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase;">N° 4 &nbsp;·&nbsp; Juin 2026</td>
+      <td style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase; text-align:right;">Lecture : 3 min &#9749;</td>
+    </tr>
+  </table>
+
+  <!-- ============================================================
+       CORPS
+       ============================================================ -->
+  <div class="body-content" style="padding: 40px 40px 0;">
+
+    <!-- INTRO — modifier le texte entre les balises <p> -->
+    <div class="intro-block" style="margin-top:36px;">
+      <p>Bonjour,<br><br>
+      Ce mois-ci, on parle des enfants. Pas de leur rapport à l'IA, mais du vôtre : comment l'IA peut vous aider, vous les parents, les grands-parents, les oncles et tantes, à préparer des activités qui feront briller leur regard.<br><br>
+Histoires inventées sur mesure, dessins à colorier avec leur prénom, jeux de questions sur leur animal préféré... Vous n'avez plus besoin d'être illustrateur ou conteur professionnel. L'IA s'en charge, vous n'avez qu'à imprimer ou lire à voix haute.</p>
+    </div>
+
+    <!-- IMAGE — modifier : NOM_FICHIER_IMAGE et LEGENDE_IMAGE
+         En local   : src="nom_du_fichier.png"
+         Sur Netlify : src="https://initia-vienne.com/newsletters/nom_du_fichier.png" -->
+    <div class="image-block">
+      <img src="https://initia-vienne.com/newsletters/image_5.png" alt="Un adulte imprime un dessin à colorier personnalisé pour un enfant, créé avec l'IA, dans une ambiance chaleureuse et familiale" style="width:100%; display:block; border-radius:10px;">
+    </div>
+    <p class="image-caption">Image créée avec ChatGPT Image 2.0.</p>
+
+    <!-- BADGE — ne pas modifier -->
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius:20px; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#1E6B2E; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour tout le monde</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ============================================================
+         ACTU DU MOMENT — modifier : TITRE_ACTU et CONTENU_ACTU
+         ============================================================ -->
+    <div class="actu-block">
+      <div class="actu-label">&#9889; L'actu du moment</div>
+      <div class="actu-title">Créer un livre illustré pour enfant : de 10 000 euros à quelques minutes</div>
+      <p class="actu-body">Faire illustrer un livre pour enfants par un professionnel coûtait entre 5 000 et 20 000 euros. En 2026, des outils d'IA permettent de produire une histoire complète avec des illustrations soignées en quelques minutes.<br><br>
+La grande nouveauté de cette année : les IA savent maintenant <strong>garder le même visage et la même tenue à un personnage d'une illustration à l'autre</strong>. Ce qui était impossible il y a deux ans est devenu accessible à tous. Résultat : vous pouvez créer un petit livre où le héros s'appelle Théo, ressemble à votre petit-fils et part à l'aventure dans votre jardin. Une idée de cadeau comme on n'en avait jamais fait avant.</p>
+    </div>
+
+    <!-- ============================================================
+         SUJET DU MOIS — modifier : TITRE_SUJET et CONTENU_SUJET
+         ============================================================ -->
+    <div class="section-eyebrow">Le sujet du mois</div>
+    <h2 class="section-title">L'IA comme atelier créatif pour préparer des activités</h2>
+    <p class="section-body">L'IA est un outil de préparation formidable pour les adultes qui entourent les enfants. Voici trois façons de l'utiliser, selon le temps et l'envie du moment.<br><br>
+<strong style="color:#1E6B2E;">Des histoires à lire le soir :</strong> vous donnez quelques ingrédients à ChatGPT ou Gemini (un prénom, un animal, un lieu) et l'IA invente une histoire originale en quelques secondes. Vous pouvez même demander une histoire "à suivre" avec un suspense à la fin de chaque épisode, pour donner envie de revenir le lendemain soir.<br><br>
+<strong style="color:#E8921A;">Des dessins à colorier personnalisés :</strong> avec les outils de génération d'images comme Gemini ou ChatGPT Images, vous pouvez créer un dessin en noir et blanc représentant un personnage imaginaire, un animal rigolo ou une scène de conte. Il ne reste plus qu'à imprimer et donner les feutres. Le dessin est unique, pensé pour cet enfant-là.<br><br>
+<strong style="color:#1E6B2E;">Des jeux et des quiz :</strong> l'IA invente en quelques secondes des devinettes, des jeux de mots, des quiz sur les animaux ou la nature, adaptés à l'âge de l'enfant. Pratique en voiture, autour de la table ou pour occuper un moment d'attente.</p>
+
+    <!-- ============================================================
+         CAS D'USAGE — modifier : TITRE_CAS et les 4 étapes
+         ============================================================ -->
+    <div class="section-eyebrow">Le cas d'usage</div>
+    <h2 class="section-title">"Je voudrais un dessin à colorier avec une licorne qui s'appelle comme ma petite-fille"</h2>
+    <p class="section-body">Voici comment créer en moins de cinq minutes un dessin à colorier unique, avec ChatGPT Images ou Gemini, et l'imprimer pour un enfant ravi.</p>
+
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%; margin-bottom:28px;">
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">1</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Ouvrez ChatGPT ou Gemini sur votre ordinateur ou téléphone.</strong> Pour ChatGPT Images, il faut un compte gratuit et utiliser la version avec génération d'images activée. Pour Gemini, il faut être connecté à votre compte Google sur gemini.google.com.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">2</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Décrivez le dessin que vous souhaitez.</strong> Tapez par exemple : <em>"Crée un dessin à colorier pour enfant, en noir et blanc, sans aplats de couleur. Une licorne avec une longue crinière, entourée d'étoiles et de fleurs. Style simple et mignon, adapté à un enfant de 5 ans. Le prénom Camille est écrit en lettres jolies en bas du dessin."</em> L'IA génère l'image en quelques secondes.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">3</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Vérifiez et ajustez si besoin.</strong> Si le résultat ne vous convient pas, redemandez : "Rends le dessin plus simple, avec des traits plus épais" ou "Retire les ombres, je veux juste des contours." L'IA s'adapte à chaque demande. En deux ou trois essais, vous obtenez ce que vous voulez.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">4</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top;"><strong style="color:#1E6B2E;">Imprimez et offrez.</strong> Cliquez sur l'image pour l'agrandir, faites un clic droit pour l'enregistrer sur votre ordinateur, puis imprimez en noir et blanc sur une feuille A4. Le résultat est souvent bluffant : un dessin propre, original et personnalisé, que l'enfant aura le plaisir de colorier en sachant qu'il a été fait pour lui.</td>
+      </tr>
+    </table>
+
+    <div class="divider"></div>
+
+    <!-- BADGES — ne pas modifier -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:36px 0 28px;">
+      <tr>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+        <td style="padding:0 14px; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#B0A898; white-space:nowrap; text-align:center;">Pour ceux qui pratiquent déjà</td>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+      </tr>
+    </table>
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius:20px; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#E8921A; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour aller plus loin</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ============================================================
+         ASTUCE DU MOIS — modifier : TITRE_ASTUCE, BADGE_ASTUCE,
+         INTRO_ASTUCE, CONTENU_PROMPT, CONTENU_RETENIR
+         ============================================================ -->
+    <div class="section-eyebrow">L'astuce du mois</div>
+    <div class="tool-card">
+      <div class="tool-badge">Prompt clé en main</div>
+      <div class="tool-title">Générer une histoire à épisodes pour le coucher</div>
+      <p style="font-size:14px; line-height:1.7; color:#3D3830; margin-bottom:16px;">Une histoire qui se termine sur un suspense, chaque soir, c'est la garantie que l'enfant redemandera "encore !" demain. Voici le prompt pour lancer votre saga familiale.</p>
+      <div style="background:#E8F4EC; border-radius:8px; padding:16px 20px; margin-bottom:16px; border-left:3px solid #1E6B2E;">
+        <p style="font-family:'Courier New', monospace; font-size:12px; line-height:1.9; color:#1E6B2E; margin:0;">Invente le premier épisode d'une histoire pour enfant de <strong>[âge]</strong> ans.<br>
+Le héros s'appelle <strong>[prénom de l'enfant]</strong> et il adore <strong>[un centre d'intérêt : les dinosaures, la mer, les sorcières...]</strong>.<br>
+L'histoire doit durer environ 5 minutes à lire à voix haute.<br>
+Elle doit se terminer sur un suspense qui donne envie d'entendre la suite demain soir.<br>
+Utilise des phrases courtes et un vocabulaire simple.</p>
+      </div>
+      <div style="background:#FFF8F0; border-radius:8px; padding:12px 16px; border-left:3px solid #E8921A;">
+        <p style="font-size:13px; line-height:1.65; color:#3D3830; margin:0;"><strong style="color:#E8921A;">À retenir :</strong> Pour la suite, dites simplement à l'IA : "Écris l'épisode 2, en reprenant là où on s'était arrêtés." Elle se souvient du contexte et continue l'aventure. Vous pouvez aussi laisser l'enfant proposer un rebondissement : "Et si cette nuit le héros trouvait une carte au trésor ?" Retapez l'idée et l'IA l'intègre dans l'épisode suivant.</p>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         QUESTION D'UN PARTICIPANT — modifier : QUESTION et REPONSE
+         ============================================================ -->
+    <div class="section-eyebrow">La question d'un participant</div>
+    <div class="question-block">
+      <p class="question-quote">"Les dessins créés avec l'IA, j'ai le droit de les imprimer et de les donner à mes petits-enfants ?"</p>
+      <p class="question-answer"><strong>Oui, tout à fait, pour un usage personnel et familial.</strong> Imprimer un dessin généré par l'IA pour le donner à colorier à vos petits-enfants, l'afficher sur le frigo ou l'offrir en cadeau fait partie des usages personnels, et personne ne viendra vous reprocher quoi que ce soit.<br><br>
+<strong>La question des droits se pose différemment si vous souhaitez publier ou vendre.</strong> Utiliser une image générée par l'IA pour illustrer un livre que vous vendez, l'imprimer en grand format pour une exposition publique ou la diffuser commercialement : là, les règles sont plus complexes et varient selon les outils utilisés. Mais pour un usage familial, vous êtes complètement libres.<br><br>
+<strong>Un dernier conseil pratique :</strong> les images générées par l'IA sont parfois un peu complexes pour les petits (trop de détails, traits trop fins). Si le dessin ne convient pas à l'impression, demandez à l'IA de le "simplifier avec des traits épais et bien distincts". Les résultats pour les enfants de 3 à 6 ans sont souvent bien meilleurs en version simplifiée.</p>
+    </div>
+
+    <!-- ============================================================
+         CTA — modifier : TEXTE_CTA (lien fixe, ne pas modifier)
+         ============================================================ -->
+    <div class="cta-block">
+      <p>Vous aimeriez tester ces outils en pratique, avec quelqu'un pour vous guider pas à pas ? C'est exactement ce que proposent les <strong>ateliers initIA Vienne</strong> : une ambiance conviviale, des démonstrations concrètes et des exercices que vous pouvez refaire chez vous le soir même.</p>
+      <a class="cta-button" href="https://initia-vienne.com/ateliers">Voir les prochaines dates &#8594;</a>
+    </div>
+
+    <!-- ============================================================
+         PROCHAIN NUMÉRO — modifier : TITRE_SUIVANT et SOUS_TITRE_SUIVANT
+         ============================================================ -->
+    <div class="next-issue">
+      <div class="next-issue-label">Au prochain numéro</div>
+      <div class="next-issue-text">"L'IA et la santé : s'informer sans se faire peur"</div>
+      <div class="next-issue-sub">Comment utiliser l'IA pour mieux comprendre une ordonnance, préparer une question pour votre médecin ou démêler le vrai du faux sur un traitement.</div>
+    </div>
+
+  </div>
+
+  <!-- ============================================================
+       FOOTER — ne pas modifier
+       ============================================================ -->
+  <div class="footer">
+    <div class="footer-name">Bruno Repellin</div>
+    <div class="footer-desc">
+      initIA Vienne · Ateliers d'initiation à l'intelligence artificielle<br>
+      Pour les débutants, les seniors, les associations et les collectivités de Vienne et communes environnantes.
+    </div>
+    <div style="margin-bottom:20px;">
+      <a href="https://initia-vienne.com" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">initia-vienne.com</a>
+      <span class="footer-sep">|</span>
+      <a href="mailto:initia.vienne@gmail.com" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">initia.vienne@gmail.com</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.instagram.com/initia.vienne" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">Instagram</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.linkedin.com/in/bruno-repellin-b1425a21" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">LinkedIn</a>
+    </div>
+    <div class="footer-legal">
+      Vous recevez cet email parce que vous êtes inscrit à la newsletter initIA Vienne.<br>
+      <a href="{{UNSUBSCRIBE_URL}}">Se désinscrire</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
