@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'IA en clair — N°5 — initIA Vienne</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #F4F1EC; font-family: 'DM Sans', sans-serif; color: #2C2825; -webkit-font-smoothing: antialiased; }
+  .email-wrapper { max-width: 620px; margin: 0 auto; background: #FFFDF9; }
+  .header { background: #1E6B2E; padding: 28px 40px 24px; border-bottom: 4px solid #E8921A; }
+  .header-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #E8921A; margin-bottom: 4px; }
+  .header-title { font-family: 'Lora', serif; font-size: 28px; color: #FFFDF9; line-height: 1.2; }
+  .header-title span { color: #E8921A; }
+  .section-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #E8921A; margin-bottom: 6px; }
+  .section-title { font-family: 'Lora', serif; font-size: 21px; color: #1E6B2E; line-height: 1.3; margin-bottom: 14px; }
+  .section-body { font-size: 15px; line-height: 1.8; color: #3D3830; margin-bottom: 24px; }
+  .section-body strong { color: #1E6B2E; font-weight: 700; }
+  .image-block { margin: 20px 0 8px; border-radius: 10px; overflow: hidden; }
+  .image-block img { width: 100%; display: block; }
+  .image-caption { font-size: 12px; color: #9A9088; text-align: center; margin-bottom: 24px; font-style: italic; padding: 0 10px; }
+  .actu-block { background: #FFF8F0; border-left: 4px solid #E8921A; border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 28px; }
+  .actu-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #E8921A; margin-bottom: 8px; }
+  .actu-title { font-family: 'Lora', serif; font-size: 17px; color: #1E6B2E; margin-bottom: 10px; line-height: 1.3; }
+  .actu-body { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .actu-body strong { color: #1E6B2E; }
+  .divider { height: 1px; background: #D4C9B8; margin: 28px 0; }
+  .tool-card { background: #F4F1EC; border-radius: 12px; padding: 24px 26px; margin-bottom: 28px; }
+  .tool-badge { display: inline-block; background: #E8921A; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; margin-bottom: 10px; }
+  .tool-title { font-family: 'Lora', serif; font-size: 17px; color: #1E6B2E; margin-bottom: 16px; line-height: 1.3; }
+  .question-block { border: 1.5px solid #D4C9B8; border-radius: 12px; padding: 24px 26px; margin-bottom: 28px; }
+  .question-quote { font-family: 'Lora', serif; font-size: 15px; font-style: italic; color: #4A4540; margin-bottom: 14px; line-height: 1.6; padding-left: 16px; border-left: 3px solid #E8921A; }
+  .question-answer { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .question-answer strong { color: #1E6B2E; }
+  .cta-block { background: #1E6B2E; border-radius: 12px; padding: 26px 28px; margin-bottom: 36px; text-align: center; }
+  .cta-block p { font-size: 14px; line-height: 1.7; color: rgba(255,253,249,0.85); margin-bottom: 16px; }
+  .cta-block p strong { color: #FFFDF9; }
+  .cta-button { display: inline-block; background: #E8921A; color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; padding: 11px 24px; border-radius: 6px; }
+  .next-issue { margin-bottom: 40px; padding: 20px 0; border-top: 1px dashed #D4C9B8; }
+  .next-issue-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #7A7068; margin-bottom: 8px; }
+  .next-issue-text { font-family: 'Lora', serif; font-size: 15px; color: #1E6B2E; font-style: italic; margin-bottom: 4px; }
+  .next-issue-sub { font-size: 13px; color: #7A7068; }
+  .footer { background: #1E6B2E; padding: 32px 40px; }
+  .footer-name { font-family: 'Lora', serif; font-size: 16px; color: #FFFDF9; margin-bottom: 4px; }
+  .footer-desc { font-size: 12px; color: rgba(255,253,249,0.85); margin-bottom: 20px; line-height: 1.6; }
+  .footer-sep { color: rgba(255,253,249,0.5); font-size: 12px; margin: 0 8px; }
+  .footer-legal { font-size: 11px; color: rgba(255,253,249,0.75); line-height: 1.6; border-top: 1px solid rgba(255,253,249,0.25); padding-top: 16px; }
+  .footer-legal a { color: #E8921A; }
+  .intro-block { border-left: 3px solid #E8921A; padding-left: 18px; margin-bottom: 36px; }
+  .intro-block p { font-family: 'Lora', serif; font-size: 15px; line-height: 1.75; color: #4A4540; font-style: italic; }
+  @media (max-width: 480px) {
+    .header, .body-content, .footer { padding-left: 20px; padding-right: 20px; }
+    .header-title { font-size: 23px; }
+  }
+</style>
+</head>
+<body>
+<div class="email-wrapper">
+
+  <!-- ============================================================
+       EN-TÊTE — ne pas modifier
+       ============================================================ -->
+  <div class="header">
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:16px;">
+      <tr>
+        <td style="padding-right:20px; vertical-align:middle;">
+          <img src="https://initia-vienne.com/newsletters/image_1.png" alt="initIA Vienne" width="72" height="72" style="width:72px; height:72px; background:#FFFDF9; border-radius:10px; padding:6px; display:block;">
+        </td>
+        <td style="vertical-align:middle;">
+          <div class="header-label">La newsletter</div>
+          <div class="header-title">L'IA en clair <span>·</span></div>
+        </td>
+      </tr>
+    </table>
+    <div style="font-size:12px; color:rgba(255,253,249,0.85);">
+      Par Bruno Repellin &nbsp;<span style="color:#E8921A;">|</span>&nbsp; initIA Vienne &nbsp;<span style="color:#E8921A;">|</span>&nbsp; Pour les curieux de l'IA
+    </div>
+  </div>
+
+  <!-- ============================================================
+       BANDEAU — modifier : NUMERO et MOIS_ANNEE
+       ============================================================ -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#E8921A;">
+    <tr>
+      <td style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase;">N° 5 &nbsp;·&nbsp; Juin 2026</td>
+      <td style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase; text-align:right;">Lecture : 3 min &#9749;</td>
+    </tr>
+  </table>
+
+  <!-- ============================================================
+       CORPS
+       ============================================================ -->
+  <div class="body-content" style="padding: 40px 40px 0;">
+
+    <!-- INTRO — modifier le texte entre les balises <p> -->
+    <div class="intro-block" style="margin-top:36px;">
+      <p>Bonjour,<br><br>
+      Ce mois-ci, on parle de santé. Un sujet qui touche tout le monde, et où l'IA commence à s'inviter discrètement dans notre quotidien. Comprendre une ordonnance, préparer une question pour votre médecin, vérifier une information lue sur internet... Ces situations, vous les vivez peut-être chaque semaine. L'IA peut vous aider à y voir plus clair, à condition de savoir l'utiliser avec un peu de méthode. Et surtout : sans se substituer à votre médecin.</p>
+    </div>
+
+    <!-- IMAGE — modifier : NOM_FICHIER_IMAGE et LEGENDE_IMAGE
+         En local   : src="nom_du_fichier.png"
+         Sur Netlify : src="https://initia-vienne.com/newsletters/nom_du_fichier.png" -->
+    <div class="image-block">
+      <img src="https://initia-vienne.com/newsletters/newsletter_n05_image.png" alt="Une personne consulte une IA sur son téléphone pour mieux comprendre une ordonnance médicale" style="width:100%; display:block; border-radius:10px;">
+    </div>
+    <p class="image-caption">Image créée avec ChatGPT Images.</p>
+
+    <!-- BADGE — ne pas modifier -->
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius:20px; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#1E6B2E; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour tout le monde</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ============================================================
+         ACTU DU MOMENT — modifier : TITRE_ACTU et CONTENU_ACTU
+         ============================================================ -->
+    <div class="actu-block">
+      <div class="actu-label">&#9889; L'actu du moment</div>
+      <div class="actu-title">Un nouveau médicament conçu avec l'IA entre en phase d'essais cliniques</div>
+      <p class="actu-body">Découvrir un nouveau médicament prend habituellement entre 10 et 15 ans et coûte plus d'un milliard d'euros. Avec l'IA, ce délai commence à se raccourcir de manière spectaculaire.<br><br>La société de biotechnologie Insilico Medicine a développé un médicament contre une maladie pulmonaire rare en partant de zéro : <strong>de l'identification de la cible biologique au candidat préclinique en seulement 18 mois</strong>, là où la recherche traditionnelle en aurait pris 3 à 4 fois plus. Ce médicament, baptisé Rentosertib, a franchi avec succès ses premiers essais cliniques en 2025 et se prépare aujourd'hui à entrer en <strong>Phase 3</strong>, la dernière étape avant une demande d'autorisation officielle.<br><br>Ce n'est pas un cas isolé : <strong>en 2025, 31 médicaments conçus grâce à l'IA étaient déjà en phase clinique</strong> dans le monde. L'IA ne remplace pas les chercheurs, elle leur permet d'explorer des millions de molécules candidates en un temps record et de concentrer leurs efforts sur les plus prometteuses.</p>
+    </div>
+
+    <!-- ============================================================
+         SUJET DU MOIS — modifier : TITRE_SUJET et CONTENU_SUJET
+         ============================================================ -->
+    <div class="section-eyebrow">Le sujet du mois</div>
+    <h2 class="section-title">L'IA et la santé : s'informer sans se faire peur</h2>
+    <p class="section-body">Face à une ordonnance qu'on ne comprend pas, un résultat d'analyse qui inquiète ou une information lue sur internet, on se retrouve souvent seul avec ses questions. L'IA générative (ChatGPT, Gemini, Claude) peut jouer un rôle utile : celui d'un interlocuteur disponible 24h/24 pour expliquer, reformuler et mettre en contexte. À condition de garder quelques repères.<br><br>
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin:20px 0;">
+  <tr>
+    <td style="width:33%; padding:12px 10px 12px 0; vertical-align:top;">
+      <div style="background:#E8F4EC; border-radius:8px; padding:14px 16px;">
+        <div style="font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#1E6B2E; margin-bottom:8px;">Ce qu'elle fait bien</div>
+        <div style="font-size:13px; line-height:1.65; color:#3D3830;">Expliquer un terme médical en langage courant, reformuler une ordonnance complexe, vous aider à formuler vos questions avant un rendez-vous.</div>
+      </div>
+    </td>
+    <td style="width:33%; padding:12px 10px; vertical-align:top;">
+      <div style="background:#FFF8F0; border-radius:8px; padding:14px 16px;">
+        <div style="font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#E8921A; margin-bottom:8px;">Ce qu'elle ne fait pas</div>
+        <div style="font-size:13px; line-height:1.65; color:#3D3830;">Poser un diagnostic, prescrire un traitement, remplacer votre médecin ou votre pharmacien. L'IA n'a aucune connaissance de votre historique médical.</div>
+      </div>
+    </td>
+    <td style="width:33%; padding:12px 0 12px 10px; vertical-align:top;">
+      <div style="background:#F4F1EC; border-radius:8px; padding:14px 16px;">
+        <div style="font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#888; margin-bottom:8px;">Le bon réflexe</div>
+        <div style="font-size:13px; line-height:1.65; color:#3D3830;">Utiliser l'IA pour mieux <em>comprendre</em> avant ou après une consultation, pas pour <em>décider</em> à la place de votre médecin.</div>
+      </div>
+    </td>
+  </tr>
+</table></p>
+
+    <!-- ============================================================
+         CAS D'USAGE — modifier : TITRE_CAS et les 4 étapes
+         ============================================================ -->
+    <div class="section-eyebrow">Le cas d'usage</div>
+    <h2 class="section-title">&laquo;&nbsp;J'ai reçu le compte-rendu de mon IRM, mais c'est du chinois&nbsp;&raquo;</h2>
+    <p class="section-body">Hernie discale, lésion hyperintense, épanchement articulaire... Les comptes-rendus d'imagerie médicale regorgent de termes que même les patients les plus attentifs ne comprennent pas. L'IA peut vous en donner une explication claire, à condition de quelques précautions simples.</p>
+
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%; margin-bottom:28px;">
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">1</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Photographiez le document, en masquant vos informations personnelles.</strong> Avant de photographier votre compte-rendu, couvrez ou masquez avec votre doigt les informations personnelles visibles : nom, prénom, numéro de sécurité sociale, date de naissance. Seul le texte médical vous intéresse.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">2</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Envoyez la photo à l'IA avec une demande d'explication simple.</strong> Dans ChatGPT ou Gemini, joignez la photo et tapez : <em>« Voici le compte-rendu de mon IRM. Peux-tu m'expliquer en langage simple ce que dit ce document, terme par terme, sans me faire peur ? »</em> L'IA lit l'image et vous restitue une version compréhensible en quelques secondes.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">3</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Préparez vos questions pour le rendez-vous de suivi.</strong> Une fois que vous avez compris les grandes lignes, demandez : <em>« Quelles questions devrais-je poser à mon médecin lors de la consultation de suivi pour ce compte-rendu ? »</em> Vous arriverez au rendez-vous avec des questions précises, et vous repartirez avec de vraies réponses.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">4</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top;"><strong style="color:#1E6B2E;">Gardez en tête ce que l'IA ne peut pas faire.</strong> L'IA vous explique ce que dit le document, elle ne l'interprète pas à la place d'un spécialiste. Elle ne connaît pas votre historique médical, vos symptômes ni votre contexte. Une explication claire n'est pas un diagnostic. Le rendez-vous avec votre médecin reste indispensable : lui seul peut vous dire ce que ce compte-rendu signifie <em>pour vous</em>.</td>
+      </tr>
+    </table>
+
+    <div class="divider"></div>
+
+    <!-- BADGES — ne pas modifier -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:36px 0 28px;">
+      <tr>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+        <td style="padding:0 14px; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#B0A898; white-space:nowrap; text-align:center;">Pour ceux qui pratiquent déjà</td>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+      </tr>
+    </table>
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius:20px; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#E8921A; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour aller plus loin</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ============================================================
+         ASTUCE DU MOIS — modifier : TITRE_ASTUCE, BADGE_ASTUCE,
+         INTRO_ASTUCE, CONTENU_PROMPT, CONTENU_RETENIR
+         ============================================================ -->
+    <div class="section-eyebrow">L'astuce du mois</div>
+    <div class="tool-card">
+      <div class="tool-badge">Prompt clé en main</div>
+      <div class="tool-title">Vérifier une information santé lue sur internet</div>
+      <p style="font-size:14px; line-height:1.7; color:#3D3830; margin-bottom:16px;">On lit beaucoup de choses sur la santé en ligne : forums, réseaux sociaux, sites de toutes sortes. Certaines informations sont fiables, d'autres beaucoup moins. Avant de vous inquiéter (ou de vous rassurer trop vite), soumettez ce que vous avez lu à l'IA avec ce prompt.</p>
+      <div style="background:#E8F4EC; border-radius:8px; padding:16px 20px; margin-bottom:16px; border-left:3px solid #1E6B2E;">
+        <p style="font-family:'Courier New', monospace; font-size:12px; line-height:1.9; color:#1E6B2E; margin:0;">J'ai lu sur internet que <strong>[copiez ou résumez l'affirmation]</strong>.<br>Cette information concerne <strong>[un médicament / un traitement / une maladie / un symptôme]</strong>.<br><br>Peux-tu m'aider à évaluer cette affirmation ?<br>1. Est-elle fondée sur des données médicales sérieuses ?<br>2. Y a-t-il des nuances importantes que cet article ne mentionne pas ?<br>3. Sur quels types de sources fiables pourrais-je vérifier cela ?</p>
+      </div>
+      <div style="background:#FFF8F0; border-radius:8px; padding:12px 16px; border-left:3px solid #E8921A;">
+        <p style="font-size:13px; line-height:1.65; color:#3D3830; margin:0;"><strong style="color:#E8921A;">À retenir :</strong> L'IA ne tranche pas à votre place, mais elle vous aide à <strong>prendre du recul</strong> sur ce que vous lisez. Un bon réflexe : si l'IA elle-même vous dit "consultez un médecin pour votre situation personnelle", c'est le signe que l'information générale ne suffit pas.</p>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         QUESTION D'UN PARTICIPANT — modifier : QUESTION et REPONSE
+         ============================================================ -->
+    <div class="section-eyebrow">La question d'un participant</div>
+    <div class="question-block">
+      <p class="question-quote">"Est-ce que je peux faire confiance à l'IA pour savoir si un médicament est dangereux pour moi ?"</p>
+      <p class="question-answer"><strong>Une réponse générale, oui. Une réponse personnalisée, non.</strong><br><br>C'est la distinction la plus importante à garder en tête. L'IA peut vous expliquer ce qu'est un médicament, à quoi il sert, quels sont ses effets secondaires connus en général. Ces informations sont souvent fiables car elles s'appuient sur des bases de données médicales publiques bien documentées.<br><br>En revanche, elle ne peut pas vous dire si <em>ce médicament-là est dangereux pour vous</em>, car elle ne sait pas qui vous êtes. Elle ignore votre âge, vos antécédents, vos autres traitements, vos allergies ou votre état de santé au moment où vous posez la question.<br><br><strong>Un usage raisonnable :</strong> demandez à l'IA d'expliquer la notice d'un médicament en langage clair, ou d'indiquer quels types d'interactions peuvent exister en général. Pour savoir si vous pouvez prendre ce médicament, c'est votre médecin ou votre pharmacien qui tranche. Le pharmacien, souvent oublié, est pourtant un expert facilement accessible et très compétent sur ce sujet.</p>
+    </div>
+
+    <!-- ============================================================
+         CTA — modifier : TEXTE_CTA (lien fixe, ne pas modifier)
+         ============================================================ -->
+    <div class="cta-block">
+      <p>Vous souhaitez découvrir comment utiliser l'IA dans votre quotidien, à votre rythme, avec des exemples concrets ? Les <strong>ateliers initIA Vienne</strong> sont faits pour ça : pas de jargon, beaucoup de pratique et toujours dans la bonne humeur.</p>
+      <a class="cta-button" href="https://initia-vienne.com/ateliers">Voir les prochaines dates &#8594;</a>
+    </div>
+
+    <!-- ============================================================
+         PROCHAIN NUMÉRO — modifier : TITRE_SUIVANT et SOUS_TITRE_SUIVANT
+         ============================================================ -->
+    <div class="next-issue">
+      <div class="next-issue-label">Au prochain numéro</div>
+      <div class="next-issue-text">N°6 · L'IA et l'argent : mieux gérer sans être expert</div>
+      <div class="next-issue-sub">Simuler un budget, comprendre une facture, préparer un achat important... À paraître début juillet.</div>
+    </div>
+
+  </div>
+
+  <!-- ============================================================
+       FOOTER — ne pas modifier
+       ============================================================ -->
+  <div class="footer">
+    <div class="footer-name">Bruno Repellin</div>
+    <div class="footer-desc">
+      initIA Vienne · Ateliers d'initiation à l'intelligence artificielle<br>
+      Pour les débutants, les seniors, les associations et les collectivités de Vienne et communes environnantes.
+    </div>
+    <div style="margin-bottom:20px;">
+      <a href="https://initia-vienne.com" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">initia-vienne.com</a>
+      <span class="footer-sep">|</span>
+      <a href="mailto:initia.vienne@gmail.com" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">initia.vienne@gmail.com</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.instagram.com/initia.vienne" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">Instagram</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.linkedin.com/in/bruno-repellin-b1425a21" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">LinkedIn</a>
+    </div>
+    <div class="footer-legal">
+      Vous recevez cet email parce que vous êtes inscrit à la newsletter initIA Vienne.<br>
+      <a href="{{UNSUBSCRIBE_URL}}">Se désinscrire</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
