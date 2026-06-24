@@ -265,7 +265,7 @@ export default function Home() {
                     <path d="M0,5 Q50,10 100,5" stroke="currentColor" strokeWidth="4" fill="none" />
                   </svg>
                 </span>{" "}
-                à tous
+                à tous, à Vienne
               </motion.h1>
 
               <motion.p variants={FADE_UP} className="text-lg lg:text-xl text-muted-foreground mb-8 leading-relaxed text-balance">
@@ -349,7 +349,11 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">Pourquoi se former à l'IA ?</h2>
             <p className="text-lg text-muted-foreground">
               L'IA évolue vite et peut sembler intimidante,{" "}
-              <span className="font-semibold text-primary">c'est normal</span>. Mes ateliers vous accompagnent pas à pas, avec des exemples du quotidien.
+              <span className="font-semibold text-primary">c'est normal</span>. Mes{" "}
+              <Link href="/ateliers" className="text-brand-orange font-semibold underline hover:no-underline">
+                ateliers d'initiation à l'IA à Vienne
+              </Link>{" "}
+              vous accompagnent pas à pas, avec des exemples du quotidien.
             </p>
           </SectionReveal>
 
