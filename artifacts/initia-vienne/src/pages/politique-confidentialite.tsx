@@ -1,4 +1,10 @@
+import { usePageMeta } from "@/hooks/use-page-meta";
+
 export default function PolitiqueConfidentialite() {
+  usePageMeta({
+    title: "Politique de confidentialité | initIA Vienne",
+    description: "Politique de confidentialité et protection des données personnelles du site initIA Vienne.",
+  });
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-16">
       <h1 className="text-3xl font-display font-bold text-primary mb-10">Politique de confidentialité</h1>

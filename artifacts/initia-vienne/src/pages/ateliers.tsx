@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { Calendar, MapPin, Users, BookOpen, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
@@ -34,6 +35,10 @@ function formatDate(iso: string) {
 }
 
 export default function Ateliers() {
+  usePageMeta({
+    title: "Nos ateliers IA à Vienne | initIA Vienne",
+    description: "Calendrier des ateliers d'initiation à l'intelligence artificielle à Vienne : niveau 1, niveau 2, places et inscriptions pour associations et particuliers.",
+  });
   const [ateliers, setAteliers] = useState<Atelier[]>([]);
   const [loading, setLoading] = useState(true);
 

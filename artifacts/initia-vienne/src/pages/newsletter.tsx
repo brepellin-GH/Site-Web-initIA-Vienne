@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { Mail, BookOpen, CheckCircle2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -108,6 +109,10 @@ function SubscribeForm() {
 }
 
 export default function Newsletter() {
+  usePageMeta({
+    title: "L'IA en clair, la newsletter gratuite | initIA Vienne",
+    description: "Recevez gratuitement L'IA en clair, la newsletter qui explique l'intelligence artificielle simplement, pour les débutants et les seniors.",
+  });
   const [envois, setEnvois] = useState<Envoi[]>([]);
   const [loading, setLoading] = useState(true);
 

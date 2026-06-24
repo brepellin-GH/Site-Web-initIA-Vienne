@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { useInView } from "framer-motion";
 import {
   Users,
@@ -64,6 +65,10 @@ const FAQ_B2B = [
 ];
 
 export default function Collectivites() {
+  usePageMeta({
+    title: "Ateliers IA pour associations et collectivités | initIA Vienne",
+    description: "Formations sur mesure à l'intelligence artificielle pour associations, clubs et collectivités de Vienne et de l'Isère. Pédagogie adaptée à tous les niveaux.",
+  });
   const scrollToContact = () => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
 
   return (

@@ -1,4 +1,10 @@
+import { usePageMeta } from "@/hooks/use-page-meta";
+
 export default function MentionsLegales() {
+  usePageMeta({
+    title: "Mentions légales | initIA Vienne",
+    description: "Mentions légales du site initIA Vienne, organisme d'initiation à l'intelligence artificielle basé à Vienne, Isère.",
+  });
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-16">
       <h1 className="text-3xl font-display font-bold text-primary mb-10">Mentions légales</h1>

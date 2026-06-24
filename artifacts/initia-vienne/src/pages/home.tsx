@@ -1,5 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import { usePageMeta } from "@/hooks/use-page-meta";
 import { Link } from "wouter";
 import {
   Lightbulb,
@@ -232,6 +233,10 @@ const FAQ_ITEMS = [
 
 // ── Home Page ────────────────────────────────────
 export default function Home() {
+  usePageMeta({
+    title: "initIA Vienne | Ateliers d'initiation à l'IA à Vienne et en Isère",
+    description: "Ateliers d'initiation à l'intelligence artificielle pour seniors, associations et commerçants à Vienne (Isère). Formations accessibles, sans jargon technique.",
+  });
   const scrollToContact = () => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   const scrollToWorkshops = () => document.getElementById("workshops")?.scrollIntoView({ behavior: "smooth" });
 
