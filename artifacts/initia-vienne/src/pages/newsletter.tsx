@@ -5,6 +5,7 @@ import { Mail, BookOpen, CheckCircle2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/lib/supabase";
+import { Link } from "wouter";
 
 type Envoi = {
   id: string;
@@ -165,7 +166,11 @@ export default function Newsletter() {
             className="text-lg text-muted-foreground max-w-2xl mx-auto"
           >
             Une newsletter simple et accessible pour comprendre l'intelligence artificielle
-            sans jargon. Des conseils pratiques, des outils utiles, des exemples concrets.
+            sans jargon, en complément de mes{" "}
+            <Link href="/ateliers" className="text-brand-orange font-semibold underline hover:no-underline">
+              ateliers à Vienne
+            </Link>
+            . Des conseils pratiques, des outils utiles, des exemples concrets.
           </motion.p>
         </div>
       </section>

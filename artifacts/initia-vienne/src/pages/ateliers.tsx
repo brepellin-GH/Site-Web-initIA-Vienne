@@ -77,7 +77,7 @@ export default function Ateliers() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-4xl lg:text-5xl font-display font-extrabold text-primary leading-tight mb-4"
           >
-            Prochains ateliers
+            Prochains ateliers d'initiation à l'IA à Vienne
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}

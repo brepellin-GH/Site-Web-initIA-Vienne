@@ -101,7 +101,7 @@ export default function Collectivites() {
                     <path d="M0,5 Q50,10 100,5" stroke="currentColor" strokeWidth="4" fill="none" />
                   </svg>
                 </span>
-                {" "}et collectivités
+                {" "}et collectivités, à Vienne
               </motion.h1>
 
               <motion.p variants={FADE_UP} className="text-lg lg:text-xl text-muted-foreground mb-8 leading-relaxed">
