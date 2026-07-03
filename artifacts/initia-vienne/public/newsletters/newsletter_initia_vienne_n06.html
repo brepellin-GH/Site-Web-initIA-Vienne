@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'IA en clair — N°6 — initIA Vienne</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #F4F1EC; font-family: 'DM Sans', sans-serif; color: #2C2825; -webkit-font-smoothing: antialiased; }
+  .email-wrapper { max-width: 620px; margin: 0 auto; background: #FFFDF9; }
+  .header { background: #1E6B2E; padding: 28px 40px 24px; border-bottom: 4px solid #E8921A; }
+  .header-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #E8921A; margin-bottom: 4px; }
+  .header-title { font-family: 'Lora', serif; font-size: 28px; color: #FFFDF9; line-height: 1.2; }
+  .header-title span { color: #E8921A; }
+  .section-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #E8921A; margin-bottom: 6px; }
+  .section-title { font-family: 'Lora', serif; font-size: 21px; color: #1E6B2E; line-height: 1.3; margin-bottom: 14px; }
+  .section-body { font-size: 15px; line-height: 1.8; color: #3D3830; margin-bottom: 24px; }
+  .section-body strong { color: #1E6B2E; font-weight: 700; }
+  .image-block { margin: 20px 0 8px; border-radius: 10px; overflow: hidden; }
+  .image-block img { width: 100%; display: block; }
+  .image-caption { font-size: 12px; color: #9A9088; text-align: center; margin-bottom: 24px; font-style: italic; padding: 0 10px; }
+  .actu-block { background: #FFF8F0; border-left: 4px solid #E8921A; border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 28px; }
+  .actu-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #E8921A; margin-bottom: 8px; }
+  .actu-title { font-family: 'Lora', serif; font-size: 17px; color: #1E6B2E; margin-bottom: 10px; line-height: 1.3; }
+  .actu-body { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .actu-body strong { color: #1E6B2E; }
+  .divider { height: 1px; background: #D4C9B8; margin: 28px 0; }
+  .tool-card { background: #F4F1EC; border-radius: 12px; padding: 24px 26px; margin-bottom: 28px; }
+  .tool-badge { display: inline-block; background: #E8921A; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; margin-bottom: 10px; }
+  .tool-title { font-family: 'Lora', serif; font-size: 17px; color: #1E6B2E; margin-bottom: 16px; line-height: 1.3; }
+  .question-block { border: 1.5px solid #D4C9B8; border-radius: 12px; padding: 24px 26px; margin-bottom: 28px; }
+  .question-quote { font-family: 'Lora', serif; font-size: 15px; font-style: italic; color: #4A4540; margin-bottom: 14px; line-height: 1.6; padding-left: 16px; border-left: 3px solid #E8921A; }
+  .question-answer { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .question-answer strong { color: #1E6B2E; }
+  .cta-block { background: #1E6B2E; border-radius: 12px; padding: 26px 28px; margin-bottom: 36px; text-align: center; }
+  .cta-block p { font-size: 14px; line-height: 1.7; color: rgba(255,253,249,0.85); margin-bottom: 16px; }
+  .cta-block p strong { color: #FFFDF9; }
+  .cta-button { display: inline-block; background: #E8921A; color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; padding: 11px 24px; border-radius: 6px; }
+  .next-issue { margin-bottom: 40px; padding: 20px 0; border-top: 1px dashed #D4C9B8; }
+  .next-issue-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #7A7068; margin-bottom: 8px; }
+  .next-issue-text { font-family: 'Lora', serif; font-size: 15px; color: #1E6B2E; font-style: italic; margin-bottom: 4px; }
+  .next-issue-sub { font-size: 13px; color: #7A7068; }
+  .footer { background: #1E6B2E; padding: 32px 40px; }
+  .footer-name { font-family: 'Lora', serif; font-size: 16px; color: #FFFDF9; margin-bottom: 4px; }
+  .footer-desc { font-size: 12px; color: rgba(255,253,249,0.85); margin-bottom: 20px; line-height: 1.6; }
+  .footer-sep { color: rgba(255,253,249,0.5); font-size: 12px; margin: 0 8px; }
+  .footer-legal { font-size: 11px; color: rgba(255,253,249,0.75); line-height: 1.6; border-top: 1px solid rgba(255,253,249,0.25); padding-top: 16px; }
+  .footer-legal a { color: #E8921A; }
+  .intro-block { border-left: 3px solid #E8921A; padding-left: 18px; margin-bottom: 36px; }
+  .intro-block p { font-family: 'Lora', serif; font-size: 15px; line-height: 1.75; color: #4A4540; font-style: italic; }
+  @media (max-width: 480px) {
+    .header, .body-content, .footer { padding-left: 20px; padding-right: 20px; }
+    .header-title { font-size: 23px; }
+  }
+</style>
+</head>
+<body>
+<div class="email-wrapper">
+
+  <!-- ============================================================
+       EN-TÊTE — ne pas modifier
+       ============================================================ -->
+  <div class="header">
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:16px;">
+      <tr>
+        <td style="padding-right:20px; vertical-align:middle;">
+          <img src="https://initia-vienne.com/newsletters/image_1.png" alt="initIA Vienne" width="72" height="72" style="width:72px; height:72px; background:#FFFDF9; border-radius:10px; padding:6px; display:block;">
+        </td>
+        <td style="vertical-align:middle;">
+          <div class="header-label">La newsletter</div>
+          <div class="header-title">L'IA en clair <span>·</span></div>
+        </td>
+      </tr>
+    </table>
+    <div style="font-size:12px; color:rgba(255,253,249,0.85);">
+      Par Bruno Repellin &nbsp;<span style="color:#E8921A;">|</span>&nbsp; initIA Vienne &nbsp;<span style="color:#E8921A;">|</span>&nbsp; Pour les curieux de l'IA
+    </div>
+  </div>
+
+  <!-- ============================================================
+       BANDEAU — modifier : NUMERO et MOIS_ANNEE
+       ============================================================ -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#E8921A;">
+    <tr>
+      <td style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase;">N° 6 &nbsp;·&nbsp; Juillet 2026</td>
+      <td style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase; text-align:right;">Lecture : 3 min &#9749;</td>
+    </tr>
+  </table>
+
+  <!-- ============================================================
+       CORPS
+       ============================================================ -->
+  <div class="body-content" style="padding: 40px 40px 0;">
+
+    <!-- INTRO — modifier le texte entre les balises <p> -->
+    <div class="intro-block" style="margin-top:36px;">
+      <p>Bonjour,<br><br>
+      L'IA et l'argent : voilà un sujet qui nous concerne tous. Gérer son budget, comprendre ses dépenses, anticiper ses fins de mois... Ces tâches prennent du temps et demandent de la rigueur. Et si l'IA pouvait vous donner un coup de main ? Dans ce numéro, je vous montre comment utiliser concrètement un assistant IA pour analyser vos relevés de compte et construire un vrai budget personnalisé, en toute sécurité.</p>
+    </div>
+
+    <!-- IMAGE — modifier : NOM_FICHIER_IMAGE et LEGENDE_IMAGE
+         En local   : src="nom_du_fichier.png"
+         Sur Netlify : src="https://initia-vienne.com/newsletters/nom_du_fichier.png" -->
+    <div class="image-block">
+      <img src="https://initia-vienne.com/newsletters/image_6.jpg" alt="Illustration représentant un budget et des finances personnelles avec l'IA" style="width:100%; display:block; border-radius:10px;">
+    </div>
+    <p class="image-caption">Image créée avec ChatGPT Images.</p>
+
+    <!-- BADGE — ne pas modifier -->
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius:20px; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#1E6B2E; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour tout le monde</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ============================================================
+         ACTU DU MOMENT — modifier : TITRE_ACTU et CONTENU_ACTU
+         ============================================================ -->
+    <div class="actu-block">
+      <div class="actu-label">&#9889; L'actu du moment</div>
+      <div class="actu-title">BNP Paribas mise sur l'IA française</div>
+      <p class="actu-body">La première banque française vient de prolonger son partenariat avec <strong>Mistral AI</strong>, la pépite tricolore de l'intelligence artificielle. Les modèles tournent sur le cloud privé de BNP Paribas, dans un environnement sécurisé et maîtrisé de bout en bout. En interne, ce sont déjà <strong>80 000 collaborateurs</strong> qui utilisent un assistant IA au quotidien.<br><br>Cette transformation ne concerne pas que les grandes banques : partout, l'IA s'installe dans les services financiers. Mais vous n'avez pas besoin d'attendre votre banque pour en profiter. Des outils comme ChatGPT ou Claude vous permettent dès aujourd'hui de faire des choses très concrètes avec votre budget, comme vous allez le voir dans ce numéro.</p>
+    </div>
+
+    <!-- ============================================================
+         SUJET DU MOIS — modifier : TITRE_SUJET et CONTENU_SUJET
+         ============================================================ -->
+    <div class="section-eyebrow">Le sujet du mois</div>
+    <h2 class="section-title">L'IA, votre nouvelle alliée pour gérer votre budget</h2>
+    <p class="section-body">Beaucoup pensent que l'IA est réservée aux informaticiens ou aux grandes entreprises. En réalité, elle peut vous rendre un service très concret et immédiat : vous aider à <strong>comprendre où passe votre argent</strong> et à <strong>construire un budget réaliste</strong>, basé sur vos vraies habitudes.<br><br>L'IA ne se connecte pas à votre compte bancaire et ne gère rien à votre place. Elle travaille uniquement avec les informations que vous lui donnez. Pensez à elle comme à un <strong>assistant patient et disponible à toute heure</strong>, capable de trier, calculer et expliquer sans jamais se lasser.<br><br>Le point de départ le plus efficace ? Votre relevé de compte du mois dernier. En quelques minutes, l'IA peut en faire une analyse que vous n'auriez pas eu le temps de faire vous-même.</p>
+
+    <!-- ============================================================
+         CAS D'USAGE — modifier : TITRE_CAS et les 4 étapes
+         ============================================================ -->
+    <div class="section-eyebrow">Le cas d'usage</div>
+    <h2 class="section-title">"Je veux construire mon budget à partir de mes relevés"</h2>
+    <p class="section-body">Voici comment procéder, pas à pas, avec ChatGPT ou Claude. La démarche prend moins de dix minutes et le résultat est immédiatement utilisable.</p>
+
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%; margin-bottom:28px;">
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">1</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Préparez votre relevé.</strong> Exportez votre relevé de compte en PDF depuis votre espace bancaire en ligne, ou photographiez-le. Avant de le transmettre à l'IA, prenez un stylo (ou un outil de masquage sur votre téléphone) et <strong>masquez vos données personnelles</strong> : votre nom, votre IBAN et votre numéro de compte. Les montants et les libellés peuvent en général rester visibles, sauf s'ils contiennent des noms de personnes ou d'informations que vous préférez garder pour vous.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">2</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Demandez une analyse de vos dépenses.</strong> Joignez le document et écrivez simplement à l'IA : <em>"Voici mon relevé de compte du mois dernier. Peux-tu regrouper mes dépenses par catégorie et me dire combien j'ai dépensé dans chacune ?"</em> L'IA va trier les lignes de votre relevé et vous donner un tableau clair : alimentation, logement, abonnements, loisirs...</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">3</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Demandez un budget personnalisé.</strong> Une fois l'analyse faite, enchaînez avec : <em>"Sur la base de cette analyse, peux-tu me proposer un budget mensuel réaliste ?"</em> L'IA s'appuie sur vos vraies habitudes, pas sur des moyennes théoriques. Le budget qu'elle propose vous ressemble.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">4</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top;"><strong style="color:#1E6B2E;">Affinez selon vos objectifs.</strong> Vous pouvez aller plus loin : <em>"Je voudrais mettre 100 € de côté chaque mois. Sur quels postes me conseilles-tu de réduire ?"</em> L'IA vous propose des pistes concrètes, que vous restez libre d'accepter ou non. C'est vous qui décidez.</td>
+      </tr>
+    </table>
+
+    <div class="divider"></div>
+
+    <!-- BADGES — ne pas modifier -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:36px 0 28px;">
+      <tr>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+        <td style="padding:0 14px; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#B0A898; white-space:nowrap; text-align:center;">Pour ceux qui pratiquent déjà</td>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+      </tr>
+    </table>
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius:20px; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#E8921A; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour aller plus loin</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ============================================================
+         ASTUCE DU MOIS — modifier : TITRE_ASTUCE, BADGE_ASTUCE,
+         INTRO_ASTUCE, CONTENU_PROMPT, CONTENU_RETENIR
+         ============================================================ -->
+    <div class="section-eyebrow">L'astuce du mois</div>
+    <div class="tool-card">
+      <div class="tool-badge">Prompt clé en main</div>
+      <div class="tool-title">Analysez votre relevé et construisez votre budget en une seule demande</div>
+      <p style="font-size:14px; line-height:1.7; color:#3D3830; margin-bottom:16px;">Voici un prompt complet à copier-coller directement dans ChatGPT ou Claude, après avoir joint votre relevé de compte (données personnelles masquées) :</p>
+      <div style="background:#E8F4EC; border-radius:8px; padding:16px 20px; margin-bottom:16px; border-left:3px solid #1E6B2E;">
+        <p style="font-family:'Courier New', monospace; font-size:12px; line-height:1.9; color:#1E6B2E; margin:0;">Voici mon relevé de compte du mois de <strong>[mois]</strong> (données personnelles masquées).<br>Merci de :<br>1. Regrouper toutes mes dépenses par catégorie<br>2. Calculer le total de chaque catégorie<br>3. Me proposer un budget mensuel réaliste basé sur ces habitudes<br>4. M'indiquer si tu repères des postes inhabituels ou des pistes d'économies simples</p>
+      </div>
+      <div style="background:#FFF8F0; border-radius:8px; padding:12px 16px; border-left:3px solid #E8921A;">
+        <p style="font-size:13px; line-height:1.65; color:#3D3830; margin:0;"><strong style="color:#E8921A;">À retenir :</strong> L'IA ne voit que ce que vous lui montrez et n'a accès à rien d'autre. Masquez toujours nom, IBAN et numéro de compte avant de partager un document financier. Si le résultat vous semble imprécis, précisez : <em>"La catégorie X me semble trop élevée, peux-tu vérifier ?"</em></p>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         QUESTION D'UN PARTICIPANT — modifier : QUESTION et REPONSE
+         ============================================================ -->
+    <div class="section-eyebrow">La question d'un participant</div>
+    <div class="question-block">
+      <p class="question-quote">"J'ai reçu un appel d'une personne qui se présentait comme mon conseiller bancaire. Elle connaissait mon nom et semblait très bien informée. Mais quelque chose sonnait faux. Est-ce que ça peut être de l'IA ?"</p>
+      <p class="question-answer"><strong>Oui, c'est tout à fait possible.</strong> Ce type d'arnaque s'appelle le <strong>vishing</strong> (contraction de "voice" et "phishing"). Ces dernières années, les escrocs ont commencé à utiliser des outils d'IA capables de cloner une voix ou de générer une voix artificielle très convaincante, et ces arnaques se multiplient. Ils peuvent aussi avoir récupéré votre nom et quelques informations via les réseaux sociaux ou des bases de données piratées, ce qui leur donne une apparence de légitimité.<br><br><strong>Les deux réflexes à avoir immédiatement :</strong><br><br>1. <strong>Raccrochez</strong>, même si la personne insiste ou crée un sentiment d'urgence ("votre compte est bloqué", "une opération suspecte a été détectée"). C'est précisément ce sentiment d'urgence qui est le signe d'une arnaque.<br><br>2. <strong>Rappelez vous-même votre banque</strong> en composant le numéro officiel qui figure au dos de votre carte bancaire ou sur votre relevé. Ne rappelez jamais le numéro qui vous a appelé.<br><br>Votre banque ne vous demandera <strong>jamais</strong> votre code secret, votre mot de passe ou un code reçu par SMS par téléphone. Si quelqu'un vous le demande, c'est une arnaque.</p>
+    </div>
+
+    <!-- ============================================================
+         CTA — modifier : TEXTE_CTA (lien fixe, ne pas modifier)
+         ============================================================ -->
+    <div class="cta-block">
+      <p>Vous voulez mettre en pratique ces conseils et découvrir d'autres usages concrets de l'IA au quotidien ? Les <strong>ateliers initIA Vienne</strong> sont faits pour vous. En deux heures, vous repartez avec des outils que vous pouvez utiliser dès le lendemain.</p>
+      <a class="cta-button" href="https://initia-vienne.com/ateliers">Voir les prochaines dates &#8594;</a>
+    </div>
+
+    <!-- ============================================================
+         PROCHAIN NUMÉRO — modifier : TITRE_SUIVANT et SOUS_TITRE_SUIVANT
+         ============================================================ -->
+    <div class="next-issue">
+      <div class="next-issue-label">Au prochain numéro</div>
+      <div class="next-issue-text">L'IA et les souvenirs</div>
+      <div class="next-issue-sub">Rendez-vous dans quinze jours pour le prochain numéro. Et une surprise vous attend à la rentrée...</div>
+    </div>
+
+  </div>
+
+  <!-- ============================================================
+       FOOTER — ne pas modifier
+       ============================================================ -->
+  <div class="footer">
+    <div class="footer-name">Bruno Repellin</div>
+    <div class="footer-desc">
+      initIA Vienne · Ateliers d'initiation à l'intelligence artificielle<br>
+      Pour les débutants, les seniors, les associations et les collectivités de Vienne et communes environnantes.
+    </div>
+    <div style="margin-bottom:20px;">
+      <a href="https://initia-vienne.com" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">initia-vienne.com</a>
+      <span class="footer-sep">|</span>
+      <a href="mailto:initia-vienne@gmail.com" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">initia-vienne@gmail.com</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.instagram.com/initia.vienne" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">Instagram</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.linkedin.com/in/bruno-repellin-b1425a21" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">LinkedIn</a>
+    </div>
+    <div class="footer-legal">
+      Vous recevez cet email parce que vous êtes inscrit à la newsletter initIA Vienne.<br>
+      <a href="{{UNSUBSCRIBE_URL}}">Se désinscrire</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
