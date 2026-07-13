@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'IA en clair — N°7 — initIA Vienne</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #F4F1EC; font-family: 'DM Sans', sans-serif; color: #2C2825; -webkit-font-smoothing: antialiased; }
+  .email-wrapper { max-width: 620px; margin: 0 auto; background: #FFFDF9; }
+  .header { background: #1E6B2E; padding: 28px 40px 24px; border-bottom: 4px solid #E8921A; }
+  .header-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #E8921A; margin-bottom: 4px; }
+  .header-title { font-family: 'Lora', serif; font-size: 28px; color: #FFFDF9; line-height: 1.2; }
+  .header-title span { color: #E8921A; }
+  .section-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #E8921A; margin-bottom: 6px; }
+  .section-title { font-family: 'Lora', serif; font-size: 21px; color: #1E6B2E; line-height: 1.3; margin-bottom: 14px; }
+  .section-body { font-size: 15px; line-height: 1.8; color: #3D3830; margin-bottom: 24px; }
+  .section-body strong { color: #1E6B2E; font-weight: 700; }
+  .image-block { margin: 20px 0 8px; border-radius: 10px; overflow: hidden; }
+  .image-block img { width: 100%; display: block; }
+  .image-caption { font-size: 12px; color: #9A9088; text-align: center; margin-bottom: 24px; font-style: italic; padding: 0 10px; }
+  .actu-block { background: #FFF8F0; border-left: 4px solid #E8921A; border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 28px; }
+  .actu-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #E8921A; margin-bottom: 8px; }
+  .actu-title { font-family: 'Lora', serif; font-size: 17px; color: #1E6B2E; margin-bottom: 10px; line-height: 1.3; }
+  .actu-body { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .actu-body strong { color: #1E6B2E; }
+  .divider { height: 1px; background: #D4C9B8; margin: 28px 0; }
+  .tool-card { background: #F4F1EC; border-radius: 12px; padding: 24px 26px; margin-bottom: 28px; }
+  .tool-badge { display: inline-block; background: #E8921A; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; margin-bottom: 10px; }
+  .tool-title { font-family: 'Lora', serif; font-size: 17px; color: #1E6B2E; margin-bottom: 16px; line-height: 1.3; }
+  .question-block { border: 1.5px solid #D4C9B8; border-radius: 12px; padding: 24px 26px; margin-bottom: 28px; }
+  .question-quote { font-family: 'Lora', serif; font-size: 15px; font-style: italic; color: #4A4540; margin-bottom: 14px; line-height: 1.6; padding-left: 16px; border-left: 3px solid #E8921A; }
+  .question-answer { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .question-answer strong { color: #1E6B2E; }
+  .cta-block { background: #1E6B2E; border-radius: 12px; padding: 26px 28px; margin-bottom: 36px; text-align: center; }
+  .cta-block p { font-size: 14px; line-height: 1.7; color: rgba(255,253,249,0.85); margin-bottom: 16px; }
+  .cta-block p strong { color: #FFFDF9; }
+  .cta-button { display: inline-block; background: #E8921A; color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; padding: 11px 24px; border-radius: 6px; }
+  .next-issue { margin-bottom: 40px; padding: 20px 0; border-top: 1px dashed #D4C9B8; }
+  .next-issue-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #7A7068; margin-bottom: 8px; }
+  .next-issue-text { font-family: 'Lora', serif; font-size: 15px; color: #1E6B2E; font-style: italic; margin-bottom: 4px; }
+  .next-issue-sub { font-size: 13px; color: #7A7068; }
+  .footer { background: #1E6B2E; padding: 32px 40px; }
+  .footer-name { font-family: 'Lora', serif; font-size: 16px; color: #FFFDF9; margin-bottom: 4px; }
+  .footer-desc { font-size: 12px; color: rgba(255,253,249,0.85); margin-bottom: 20px; line-height: 1.6; }
+  .footer-sep { color: rgba(255,253,249,0.5); font-size: 12px; margin: 0 8px; }
+  .footer-legal { font-size: 11px; color: rgba(255,253,249,0.75); line-height: 1.6; border-top: 1px solid rgba(255,253,249,0.25); padding-top: 16px; }
+  .footer-legal a { color: #E8921A; }
+  .intro-block { border-left: 3px solid #E8921A; padding-left: 18px; margin-bottom: 36px; }
+  .intro-block p { font-family: 'Lora', serif; font-size: 15px; line-height: 1.75; color: #4A4540; font-style: italic; }
+  @media (max-width: 480px) {
+    .header, .body-content, .footer { padding-left: 20px; padding-right: 20px; }
+    .header-title { font-size: 23px; }
+  }
+</style>
+</head>
+<body>
+<div class="email-wrapper">
+
+  <!-- ============================================================
+       EN-TÊTE — ne pas modifier
+       ============================================================ -->
+  <div class="header">
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:16px;">
+      <tr>
+        <td style="padding-right:20px; vertical-align:middle;">
+          <img src="https://initia-vienne.com/newsletters/image_1.png" alt="initIA Vienne" width="72" height="72" style="width:72px; height:72px; background:#FFFDF9; border-radius:10px; padding:6px; display:block;">
+        </td>
+        <td style="vertical-align:middle;">
+          <div class="header-label">La newsletter</div>
+          <div class="header-title">L'IA en clair <span>·</span></div>
+        </td>
+      </tr>
+    </table>
+    <div style="font-size:12px; color:rgba(255,253,249,0.85);">
+      Par Bruno Repellin &nbsp;<span style="color:#E8921A;">|</span>&nbsp; initIA Vienne &nbsp;<span style="color:#E8921A;">|</span>&nbsp; Pour les curieux de l'IA
+    </div>
+  </div>
+
+  <!-- ============================================================
+       BANDEAU — modifier : NUMERO et MOIS_ANNEE
+       ============================================================ -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#E8921A;">
+    <tr>
+      <td style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase;">N° 7 &nbsp;·&nbsp; Juillet 2026</td>
+      <td style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase; text-align:right;">Lecture : 3 min &#9749;</td>
+    </tr>
+  </table>
+
+  <!-- ============================================================
+       CORPS
+       ============================================================ -->
+  <div class="body-content" style="padding: 40px 40px 0;">
+
+    <!-- INTRO — modifier le texte entre les balises <p> -->
+    <div class="intro-block" style="margin-top:36px;">
+      <p>Bonjour,<br><br>
+      Les vieilles photos de famille, un peu jaunies, parfois floues ou abîmées, sont pleines de souvenirs précieux. Et si l'IA pouvait vous aider à leur redonner vie ? Dans ce numéro, on explore comment restaurer, améliorer et parfois coloriser vos photos anciennes, tout en gardant le plus important : les visages de ceux qu'on aime.</p>
+    </div>
+
+    <!-- IMAGE — modifier : NOM_FICHIER_IMAGE et LEGENDE_IMAGE
+         En local   : src="nom_du_fichier.png"
+         Sur Netlify : src="https://initia-vienne.com/newsletters/nom_du_fichier.png" -->
+    <div class="image-block">
+      <img src="https://initia-vienne.com/newsletters/image_7.jpg" alt="Illustration représentant la restauration de photos de famille anciennes avec l'IA" style="width:100%; display:block; border-radius:10px;">
+    </div>
+    <p class="image-caption">Image créée avec ChatGPT Images.</p>
+
+    <!-- BADGE — ne pas modifier -->
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius:20px; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#1E6B2E; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour tout le monde</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ============================================================
+         ACTU DU MOMENT — modifier : TITRE_ACTU et CONTENU_ACTU
+         ============================================================ -->
+    <div class="actu-block">
+      <div class="actu-label">&#9889; L'actu du moment</div>
+      <div class="actu-title">La restauration de photos par IA en plein essor</div>
+      <p class="actu-body">Le secteur de la restauration de photos anciennes par IA connaît une croissance rapide : ce marché pèserait déjà <strong>1,74 milliard de dollars</strong> dans le monde, avec une progression attendue jusqu'à 8 milliards d'ici 2035.<br><br>Concrètement, les fonctions image de ChatGPT ou de Gemini permettent aujourd'hui de réparer une photo abîmée, d'améliorer sa netteté, et même de la coloriser, gratuitement et en quelques minutes. Il suffit d'envoyer la photo et de décrire ce qu'on souhaite. Ce qui demandait autrefois des heures de retouche photo sur des logiciels professionnels devient accessible à tous, sans compétence technique particulière.</p>
+    </div>
+
+    <!-- ============================================================
+         SUJET DU MOIS — modifier : TITRE_SUJET et CONTENU_SUJET
+         ============================================================ -->
+    <div class="section-eyebrow">Le sujet du mois</div>
+    <h2 class="section-title">Redonner vie à vos photos de famille avec l'IA</h2>
+    <p class="section-body">Une vieille photo floue, tachée ou en noir et blanc peut aujourd'hui être restaurée en quelques minutes grâce à l'IA. Deux options s'offrent à vous, selon ce que vous souhaitez faire : <strong>améliorer sans coloriser</strong>, en réparant le flou et les défauts tout en gardant le charme du noir et blanc d'origine, ou <strong>coloriser</strong>, en ajoutant des teintes réalistes à une photo ancienne.<br><br>Dans les deux cas, il y a un point essentiel à ne jamais négliger : <strong>la préservation des visages</strong>. C'est souvent ce qui compte le plus dans une photo de famille, et c'est aussi ce que l'IA peut le plus facilement modifier si on ne lui précise pas de rester fidèle à l'original.</p>
+
+    <!-- ============================================================
+         CAS D'USAGE — modifier : TITRE_CAS et les 4 étapes
+         ============================================================ -->
+    <div class="section-eyebrow">Le cas d'usage</div>
+    <h2 class="section-title">"Je veux restaurer une photo de famille abîmée"</h2>
+    <p class="section-body">Voici la démarche à suivre, que vous souhaitiez garder le noir et blanc ou coloriser votre photo.</p>
+
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%; margin-bottom:28px;">
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">1</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Numérisez votre photo.</strong> Scannez-la si possible, ou photographiez-la avec votre téléphone dans de bonnes conditions de lumière, bien à plat et sans reflet. Plus la source est nette, meilleur sera le résultat.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">2</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Choisissez votre objectif.</strong> Décidez si vous voulez simplement améliorer la netteté en gardant le noir et blanc, ou si vous préférez coloriser la photo. Les deux sont possibles, cela dépend de vos goûts et de la photo elle-même.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">3</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Donnez une consigne précise à l'IA.</strong> Transmettez la photo à un outil comme ChatGPT ou Gemini, en précisant clairement votre objectif et en demandant explicitement de <strong>préserver les visages et les traits d'origine</strong>, sans les modifier.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">4</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top;"><strong style="color:#1E6B2E;">Comparez avant de valider.</strong> Placez le résultat à côté de l'original et vérifiez que les visages sont bien restés fidèles. Si quelque chose vous semble modifié ou "trop lissé", redemandez à l'IA de corriger en insistant sur ce point.</td>
+      </tr>
+    </table>
+
+    <div class="divider"></div>
+
+    <!-- BADGES — ne pas modifier -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:36px 0 28px;">
+      <tr>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+        <td style="padding:0 14px; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#B0A898; white-space:nowrap; text-align:center;">Pour ceux qui pratiquent déjà</td>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+      </tr>
+    </table>
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius:20px; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#E8921A; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour aller plus loin</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ============================================================
+         ASTUCE DU MOIS — modifier : TITRE_ASTUCE, BADGE_ASTUCE,
+         INTRO_ASTUCE, CONTENU_PROMPT, CONTENU_RETENIR
+         ============================================================ -->
+    <div class="section-eyebrow">L'astuce du mois</div>
+    <div class="tool-card">
+      <div class="tool-badge">Prompt clé en main</div>
+      <div class="tool-title">Restaurer une photo en préservant les visages</div>
+      <p style="font-size:14px; line-height:1.7; color:#3D3830; margin-bottom:16px;">Voici un prompt à copier-coller pour une restauration en noir et blanc, avec une variante pour la colorisation :</p>
+      <div style="background:#E8F4EC; border-radius:8px; padding:16px 20px; margin-bottom:16px; border-left:3px solid #1E6B2E;">
+        <p style="font-family:'Courier New', monospace; font-size:12px; line-height:1.9; color:#1E6B2E; margin:0;">Voici une photo de famille ancienne, abîmée et floue. Améliore la netteté et répare les défauts (taches, rayures), sans la coloriser : je veux garder le noir et blanc d'origine. <strong>Important : ne modifie pas les traits des visages, conserve leur apparence exacte.</strong><br><br><em>Pour coloriser à la place :</em><br>Fais la même chose, mais colorise la photo avec des tons réalistes adaptés à l'époque de <strong>[année approximative]</strong>, tout en gardant les visages fidèles à l'original.</p>
+      </div>
+      <div style="background:#FFF8F0; border-radius:8px; padding:12px 16px; margin-bottom:16px; border-left:3px solid #E8921A;">
+        <p style="font-size:13px; line-height:1.65; color:#3D3830; margin:0;"><strong style="color:#E8921A;">💡 Pour aller plus loin :</strong> Vous pouvez aussi demander à l'IA de rédiger elle-même le prompt de restauration à votre place. Décrivez-lui simplement ce que vous voyez sur la photo et ce que vous souhaitez changer (modifier un élément du décor, préciser une couleur connue, etc.), et elle formulera une consigne précise et bien structurée. Un bon moyen de gagner du temps, surtout si vous ne savez pas exactement comment formuler votre demande.<br><br><em>Exemple :</em> <span style="font-family:'Courier New', monospace; font-size:12px;">"Je vais te transmettre une photo ancienne, en noir et blanc, avec un fond de jardin que je voudrais remplacer par une façade de maison. Rédige-moi le prompt à utiliser pour cette restauration, en pensant à bien préserver les visages."</span></p>
+      </div>
+      <div style="background:#FFF8F0; border-radius:8px; padding:12px 16px; border-left:3px solid #E8921A;">
+        <p style="font-size:13px; line-height:1.65; color:#3D3830; margin:0;"><strong style="color:#E8921A;">À retenir :</strong> Plus votre consigne est précise (garder ou non le noir et blanc, préserver les visages), plus le résultat sera fidèle. Une consigne vague laisse l'IA "interpréter" la photo, avec un risque de dénaturer les visages. Gardez toujours la photo d'origine de côté, sans l'écraser.</p>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         QUESTION D'UN PARTICIPANT — modifier : QUESTION et REPONSE
+         ============================================================ -->
+    <div class="section-eyebrow">La question d'un participant</div>
+    <div class="question-block">
+      <p class="question-quote">"Est-ce que l'IA peut deviner les vraies couleurs d'une photo ancienne, ou est-ce qu'elle invente ?"</p>
+      <p class="question-answer"><strong>Un peu des deux, en réalité.</strong> L'IA ne connaît pas les vraies couleurs de votre photo : elle n'a aucun moyen de savoir que le pull de votre grand-père était vert plutôt que marron. Ce qu'elle fait, c'est une <strong>estimation plausible</strong>, basée sur des millions de photos similaires qu'elle a analysées. Elle sait par exemple que la peau, le ciel ou la végétation ont des teintes typiques, et elle les applique de façon cohérente.<br><br>Résultat : la colorisation est souvent convaincante, mais ce n'est pas une reconstitution garantie fidèle à la réalité. Si vous connaissez la vraie couleur d'un vêtement ou d'un objet sur la photo, précisez-le dans votre demande, l'IA en tiendra compte.<br><br><strong>Le même principe s'applique aux visages :</strong> sans consigne claire, l'IA peut avoir tendance à "améliorer" un visage en le rendant plus net ou plus symétrique, ce qui peut légèrement le dénaturer. C'est pour cela qu'il est important de toujours demander explicitement de préserver les traits d'origine, comme on l'a vu dans le cas d'usage de ce numéro.</p>
+    </div>
+
+    <!-- ============================================================
+         CTA — modifier : TEXTE_CTA (lien fixe, ne pas modifier)
+         ============================================================ -->
+    <div class="cta-block">
+      <p>Vous avez des photos de famille à restaurer et vous voulez apprendre à bien utiliser l'IA pour ça, et pour bien d'autres usages du quotidien ? Rejoignez un <strong>atelier initIA Vienne</strong>.</p>
+      <a class="cta-button" href="https://initia-vienne.com/ateliers">Voir les prochaines dates &#8594;</a>
+    </div>
+
+    <!-- ============================================================
+         PROCHAIN NUMÉRO — modifier : TITRE_SUIVANT et SOUS_TITRE_SUIVANT
+         ============================================================ -->
+    <div class="next-issue">
+      <div class="next-issue-label">Au prochain numéro</div>
+      <div class="next-issue-text">Petite pause estivale</div>
+      <div class="next-issue-sub">La newsletter fait relâche en août. Rendez-vous en septembre pour un nouveau numéro, avec une surprise qui vous attend à la rentrée...</div>
+    </div>
+
+  </div>
+
+  <!-- ============================================================
+       FOOTER — ne pas modifier
+       ============================================================ -->
+  <div class="footer">
+    <div class="footer-name">Bruno Repellin</div>
+    <div class="footer-desc">
+      initIA Vienne · Ateliers d'initiation à l'intelligence artificielle<br>
+      Pour les débutants, les seniors, les associations et les collectivités de Vienne et communes environnantes.
+    </div>
+    <div style="margin-bottom:20px;">
+      <a href="https://initia-vienne.com" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">initia-vienne.com</a>
+      <span class="footer-sep">|</span>
+      <a href="mailto:initia.vienne@gmail.com" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">initia.vienne@gmail.com</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.instagram.com/initia.vienne" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">Instagram</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.linkedin.com/in/bruno-repellin-b1425a21" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">LinkedIn</a>
+    </div>
+    <div class="footer-legal">
+      Vous recevez cet email parce que vous êtes inscrit à la newsletter initIA Vienne.<br>
+      <a href="{{UNSUBSCRIBE_URL}}">Se désinscrire</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
