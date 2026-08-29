@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { supabase, type Contact } from "@/lib/supabase";
 
-const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD as string;
 const PAGE_SIZE = 20;
 
 type Tab = "dashboard" | "newsletter" | "ateliers" | "abonnes";
@@ -46,6 +45,15 @@ const btnPrimary = "px-4 py-2 bg-green-700 text-white text-sm font-semibold roun
 const btnSecondary = "px-4 py-2 bg-gray-100 text-gray-700 text-sm font-semibold rounded-lg hover:bg-gray-200 transition-colors";
 const btnDanger = "px-3 py-1 bg-red-50 text-red-600 text-xs font-semibold rounded-lg hover:bg-red-100 transition-colors";
 
+async function adminWrite(payload: Record<string, unknown>) {
+  const res = await fetch("/.netlify/functions/admin-write", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password: sessionStorage.getItem("admin_pw"), ...payload }),
+  });
+  return res;
+}
+
 function fmt(iso: string) {
   return new Date(iso).toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit", year: "numeric" });
 }
@@ -61,14 +69,29 @@ function fmtDate(iso: string) {
 function LoginForm({ onLogin }: { onLogin: () => void }) {
   const [input, setInput] = useState("");
   const [error, setError] = useState(false);
+  const [checking, setChecking] = useState(false);
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (input === ADMIN_PASSWORD) {
-      sessionStorage.setItem("admin_auth", "true");
-      onLogin();
-    } else {
+    setChecking(true);
+    setError(false);
+    try {
+      const res = await fetch("/.netlify/functions/admin-write", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "verify", password: input }),
+      });
+      if (res.ok) {
+        sessionStorage.setItem("admin_auth", "true");
+        sessionStorage.setItem("admin_pw", input);
+        onLogin();
+      } else {
+        setError(true);
+      }
+    } catch {
       setError(true);
+    } finally {
+      setChecking(false);
     }
   };
 
@@ -89,8 +112,8 @@ function LoginForm({ onLogin }: { onLogin: () => void }) {
             autoFocus
           />
           {error && <p className="text-red-500 text-sm">Mot de passe incorrect.</p>}
-          <button type="submit" className={`${btnPrimary} w-full py-3`}>
-            Connexion
+          <button type="submit" disabled={checking} className={`${btnPrimary} w-full py-3`}>
+            {checking ? "Vérification…" : "Connexion"}
           </button>
         </form>
       </div>
@@ -231,7 +254,7 @@ function GestionNewsletter() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          password: ADMIN_PASSWORD,
+          password: sessionStorage.getItem("admin_pw"),
           numero: Number(numero),
           sujet,
           corps_message: corps,
@@ -398,11 +421,11 @@ function GestionAteliers() {
       places_restantes: form.places_restantes !== "" ? Number(form.places_restantes) : null,
       visible: form.visible,
     };
-    if (editId) {
-      await supabase.from("ateliers").update(payload).eq("id", editId);
-    } else {
-      await supabase.from("ateliers").insert(payload);
-    }
+    await adminWrite(
+      editId
+        ? { action: "atelier_update", id: editId, payload }
+        : { action: "atelier_create", payload }
+    );
     setSaving(false);
     setShowForm(false);
     setEditId(null);
@@ -410,12 +433,12 @@ function GestionAteliers() {
   };
 
   const toggleVisible = async (a: Atelier) => {
-    await supabase.from("ateliers").update({ visible: !a.visible }).eq("id", a.id);
+    await adminWrite({ action: "atelier_update", id: a.id, payload: { visible: !a.visible } });
     load();
   };
 
   const handleDelete = async (id: string) => {
-    await supabase.from("ateliers").delete().eq("id", id);
+    await adminWrite({ action: "atelier_delete", id });
     setDeleteId(null);
     load();
   };
@@ -610,22 +633,20 @@ function GestionAbonnes() {
     setAdding(false);
   };
 
-  const handleUnsub = async (a: Abonne) => {
-    await supabase.from("abonnes").update({ actif: false }).eq("id", a.id);
+  const setActif = async (a: Abonne, actif: boolean) => {
+    await adminWrite({ action: "abonne_set_actif", id: a.id, actif });
     load();
   };
 
-  const handleReactivate = async (a: Abonne) => {
-    await supabase.from("abonnes").update({ actif: true }).eq("id", a.id);
-    load();
-  };
+  const handleUnsub = (a: Abonne) => setActif(a, false);
+  const handleReactivate = (a: Abonne) => setActif(a, true);
 
   const exportCsv = () => {
     const rows = [["email", "prenom", "source", "date_inscription"], ...actifs.map((a) => [
       a.email, a.prenom ?? "", a.source, a.date_inscription ? fmt(a.date_inscription) : "",
     ])];
     const csv = rows.map((r) => r.join(";")).join("\n");
-    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+    const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
@@ -760,6 +781,7 @@ export default function Admin() {
 
   const handleLogout = () => {
     sessionStorage.removeItem("admin_auth");
+    sessionStorage.removeItem("admin_pw");
     setAuthed(false);
   };
 
