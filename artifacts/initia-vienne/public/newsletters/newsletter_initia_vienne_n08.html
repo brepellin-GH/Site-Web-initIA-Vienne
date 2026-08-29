@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'IA en clair — N°8 — initIA Vienne</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #F4F1EC; font-family: 'DM Sans', sans-serif; color: #2C2825; -webkit-font-smoothing: antialiased; }
+  .email-wrapper { max-width: 620px; margin: 0 auto; background: #FFFDF9; }
+  .header { background: #1E6B2E; padding: 28px 40px 24px; border-bottom: 4px solid #E8921A; }
+  .header-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #E8921A; margin-bottom: 4px; }
+  .header-title { font-family: 'Lora', serif; font-size: 28px; color: #FFFDF9; line-height: 1.2; }
+  .header-title span { color: #E8921A; }
+  .section-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #E8921A; margin-bottom: 6px; }
+  .section-title { font-family: 'Lora', serif; font-size: 21px; color: #1E6B2E; line-height: 1.3; margin-bottom: 14px; }
+  .section-body { font-size: 15px; line-height: 1.8; color: #3D3830; margin-bottom: 24px; }
+  .section-body strong { color: #1E6B2E; font-weight: 700; }
+  .image-block { margin: 20px 0 8px; border-radius: 10px; overflow: hidden; }
+  .image-block img { width: 100%; display: block; }
+  .image-caption { font-size: 12px; color: #9A9088; text-align: center; margin-bottom: 24px; font-style: italic; padding: 0 10px; }
+  .actu-block { background: #FFF8F0; border-left: 4px solid #E8921A; border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 28px; }
+  .actu-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #E8921A; margin-bottom: 8px; }
+  .actu-title { font-family: 'Lora', serif; font-size: 17px; color: #1E6B2E; margin-bottom: 10px; line-height: 1.3; }
+  .actu-body { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .actu-body strong { color: #1E6B2E; }
+  .divider { height: 1px; background: #D4C9B8; margin: 28px 0; }
+  .tool-card { background: #F4F1EC; border-radius: 12px; padding: 24px 26px; margin-bottom: 28px; }
+  .tool-badge { display: inline-block; background: #E8921A; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; margin-bottom: 10px; }
+  .tool-title { font-family: 'Lora', serif; font-size: 17px; color: #1E6B2E; margin-bottom: 16px; line-height: 1.3; }
+  .question-block { border: 1.5px solid #D4C9B8; border-radius: 12px; padding: 24px 26px; margin-bottom: 28px; }
+  .question-quote { font-family: 'Lora', serif; font-size: 15px; font-style: italic; color: #4A4540; margin-bottom: 14px; line-height: 1.6; padding-left: 16px; border-left: 3px solid #E8921A; }
+  .question-answer { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .question-answer strong { color: #1E6B2E; }
+  .cta-block { background: #1E6B2E; border-radius: 12px; padding: 26px 28px; margin-bottom: 36px; text-align: center; }
+  .cta-block p { font-size: 14px; line-height: 1.7; color: rgba(255,253,249,0.85); margin-bottom: 16px; }
+  .cta-block p strong { color: #FFFDF9; }
+  .cta-button { display: inline-block; background: #E8921A; color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; padding: 11px 24px; border-radius: 6px; }
+  .next-issue { margin-bottom: 40px; padding: 20px 0; border-top: 1px dashed #D4C9B8; }
+  .next-issue-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #7A7068; margin-bottom: 8px; }
+  .next-issue-text { font-family: 'Lora', serif; font-size: 15px; color: #1E6B2E; font-style: italic; margin-bottom: 4px; }
+  .next-issue-sub { font-size: 13px; color: #7A7068; }
+  .footer { background: #1E6B2E; padding: 32px 40px; }
+  .footer-name { font-family: 'Lora', serif; font-size: 16px; color: #FFFDF9; margin-bottom: 4px; }
+  .footer-desc { font-size: 12px; color: rgba(255,253,249,0.85); margin-bottom: 20px; line-height: 1.6; }
+  .footer-sep { color: rgba(255,253,249,0.5); font-size: 12px; margin: 0 8px; }
+  .footer-legal { font-size: 11px; color: rgba(255,253,249,0.75); line-height: 1.6; border-top: 1px solid rgba(255,253,249,0.25); padding-top: 16px; }
+  .footer-legal a { color: #E8921A; }
+  .intro-block { border-left: 3px solid #E8921A; padding-left: 18px; margin-bottom: 36px; }
+  .intro-block p { font-family: 'Lora', serif; font-size: 15px; line-height: 1.75; color: #4A4540; font-style: italic; }
+  @media (max-width: 480px) {
+    .header, .body-content, .footer { padding-left: 20px; padding-right: 20px; }
+    .header-title { font-size: 23px; }
+  }
+</style>
+</head>
+<body>
+<div class="email-wrapper">
+
+  <!-- ============================================================
+       EN-TÊTE — ne pas modifier
+       ============================================================ -->
+  <div class="header">
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:16px;">
+      <tr>
+        <td style="padding-right:20px; vertical-align:middle;">
+          <img src="https://initia-vienne.com/newsletters/image_1.png" alt="initIA Vienne" width="72" height="72" style="width:72px; height:72px; background:#FFFDF9; border-radius:10px; padding:6px; display:block;">
+        </td>
+        <td style="vertical-align:middle;">
+          <div class="header-label">La newsletter</div>
+          <div class="header-title">L'IA en clair <span>·</span></div>
+        </td>
+      </tr>
+    </table>
+    <div style="font-size:12px; color:rgba(255,253,249,0.85);">
+      Par Bruno Repellin &nbsp;<span style="color:#E8921A;">|</span>&nbsp; initIA Vienne &nbsp;<span style="color:#E8921A;">|</span>&nbsp; Pour les curieux de l'IA
+    </div>
+  </div>
+
+  <!-- ============================================================
+       BANDEAU — modifier : NUMERO et MOIS_ANNEE
+       ============================================================ -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#E8921A;">
+    <tr>
+      <td style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase;">N° 8 &nbsp;·&nbsp; Septembre 2026</td>
+      <td style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase; text-align:right;">Lecture : 3 min &#9749;</td>
+    </tr>
+  </table>
+
+  <!-- ============================================================
+       CORPS
+       ============================================================ -->
+  <div class="body-content" style="padding: 40px 40px 0;">
+
+    <!-- INTRO — modifier le texte entre les balises <p> -->
+    <div class="intro-block" style="margin-top:36px;">
+      <p>Bonjour,<br><br>
+      Après une pause estivale bien méritée, « L'IA en clair » est de retour. Et comme promis dans le numéro précédent, voici la surprise annoncée : ce numéro est consacré aux devoirs. Une rentrée, ça ramène son lot de leçons, d'exercices et parfois de tensions autour de la table du soir. Voyons comment l'intelligence artificielle peut devenir un vrai coup de main, sans jamais faire le travail à la place de vos enfants ou petits-enfants.</p>
+    </div>
+
+    <!-- IMAGE — modifier : NOM_FICHIER_IMAGE et LEGENDE_IMAGE
+         En local   : src="nom_du_fichier.png"
+         Sur Netlify : src="https://initia-vienne.com/newsletters/nom_du_fichier.png" -->
+    <div class="image-block">
+      <img src="image_8.jpg" alt="Illustration d'un parent et d'un enfant faisant un exercice de maths ensemble, avec une tablette affichant une IA à côté." style="width:100%; display:block; border-radius:10px;">
+    </div>
+    <p class="image-caption">Image créée avec ChatGPT.</p>
+
+    <!-- BADGE — ne pas modifier -->
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius:20px; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#1E6B2E; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour tout le monde</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ============================================================
+         ACTU DU MOMENT — modifier : TITRE_ACTU et CONTENU_ACTU
+         ============================================================ -->
+    <div class="actu-block">
+      <div class="actu-label">&#9889; L'actu du moment</div>
+      <div class="actu-title">Ce que dit vraiment le ministère sur l'IA et les devoirs</div>
+      <p class="actu-body">Depuis juin 2025, le ministère de l'Éducation nationale a publié un cadre officiel sur l'usage de l'IA à l'école, toujours en vigueur pour cette rentrée.<br><br>Ce texte est clair sur un point : utiliser une IA générative pour un devoir noté, sans autorisation explicite de l'enseignant et sans travail personnel d'appropriation, est officiellement considéré comme une fraude.<br><br>Le cadre précise aussi les usages autorisés en classe : encadré dès la 4e, en autonomie au lycée selon les consignes du professeur. Le bon réflexe pour les parents reste le même : demander à l'enfant ce que son enseignant autorise pour un devoir donné.</p>
+    </div>
+
+    <!-- ============================================================
+         SUJET DU MOIS — modifier : TITRE_SUJET et CONTENU_SUJET
+         ============================================================ -->
+    <div class="section-eyebrow">Le sujet du mois</div>
+    <h2 class="section-title">L'IA, un soutien aux devoirs, pas un raccourci</h2>
+    <p class="section-body">Utiliser l'IA pour les devoirs, c'est un peu comme utiliser une calculatrice : tout dépend de la manière dont on s'en sert.<br><br><strong style="color:#1E6B2E;">Demander la réponse</strong> revient à copier sur un camarade : rapide, mais ça n'apprend rien, et c'est une fraude si l'enseignant ne l'a pas autorisé.<br><br><strong style="color:#1E6B2E;">Demander une explication</strong> permet de comprendre une notion mal assimilée en classe, à son rythme et sans jugement.<br><br><strong style="color:#1E6B2E;">Demander une vérification</strong> aide à repérer ses propres erreurs une fois l'exercice terminé. Le ministère lui-même met en garde : une IA peut se tromper ("halluciner"), mieux vaut donc toujours vérifier une réponse avant de la recopier.</p>
+
+    <!-- ============================================================
+         CAS D'USAGE — modifier : TITRE_CAS et les 4 étapes
+         ============================================================ -->
+    <div class="section-eyebrow">Le cas d'usage</div>
+    <h2 class="section-title">Un exercice de maths qui bloque</h2>
+    <p class="section-body">Votre enfant sèche sur un exercice de maths et vous ne vous souvenez plus très bien de la méthode. Voici comment transformer l'IA en tuteur patient, sans la laisser faire le travail à sa place.</p>
+
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%; margin-bottom:28px;">
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">1</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Poser l'exercice sans demander la réponse.</strong> Recopiez l'énoncé dans ChatGPT ou Gemini en précisant : « N'indique surtout pas la réponse, aide-moi à comprendre la méthode. »</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">2</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Demander un indice, pas une solution.</strong> L'IA rappelle la règle ou la notion du cours concernée (par exemple la règle de trois) et propose une première piste, sans résoudre l'exercice.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">3</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Laisser l'enfant réessayer seul.</strong> Avec cet indice, l'enfant retente l'exercice. Si ça bloque encore, redemandez un indice un peu plus précis, sans jamais demander la solution complète.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">4</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top;"><strong style="color:#1E6B2E;">Vérifier la réponse trouvée.</strong> Une fois l'exercice terminé, montrez la réponse de l'enfant à l'IA pour qu'elle confirme ou explique l'erreur. C'est cette dernière étape qui referme la boucle d'apprentissage.</td>
+      </tr>
+    </table>
+
+    <div style="background:#FFF8F0; border-radius:8px; padding:12px 16px; border-left:3px solid #E8921A; margin-bottom:28px;">
+      <p style="font-size:13px; line-height:1.65; color:#3D3830; margin:0;"><strong style="color:#E8921A;">Autre idée à tester :</strong> la même logique fonctionne pour réviser un contrôle. Demandez à l'IA une fiche de révision synthétique sur le chapitre, puis un quiz de 5 à 10 questions pour vérifier ce qui est acquis avant l'interrogation.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- BADGES — ne pas modifier -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:36px 0 28px;">
+      <tr>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+        <td style="padding:0 14px; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#B0A898; white-space:nowrap; text-align:center;">Pour ceux qui pratiquent déjà</td>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+      </tr>
+    </table>
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius:20px; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#E8921A; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour aller plus loin</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ============================================================
+         ASTUCE DU MOIS — modifier : TITRE_ASTUCE, BADGE_ASTUCE,
+         INTRO_ASTUCE, CONTENU_PROMPT, CONTENU_RETENIR
+         ============================================================ -->
+    <div class="section-eyebrow">L'astuce du mois</div>
+    <div class="tool-card">
+      <div class="tool-badge">Prompt clé en main</div>
+      <div class="tool-title">Transformez l'IA en tuteur qui pose des questions</div>
+      <p style="font-size:14px; line-height:1.7; color:#3D3830; margin-bottom:16px;">Par défaut, une IA a tendance à donner directement la réponse. Ce prompt l'oblige à adopter une posture de tuteur, qui guide plutôt qu'il ne résout.</p>
+      <div style="background:#E8F4EC; border-radius:8px; padding:16px 20px; margin-bottom:16px; border-left:3px solid #1E6B2E;">
+        <p style="font-family:'Courier New', monospace; font-size:12px; line-height:1.9; color:#1E6B2E; margin:0;">Tu es un tuteur pour un enfant de <strong>[niveau, ex. CM2]</strong>. Je vais te donner un exercice de <strong>[matière]</strong>. Ne donne jamais la réponse directement. Pose-moi des questions pour m'aider à trouver la solution moi-même, une étape à la fois. Voici l'exercice : <strong>[coller l'énoncé]</strong></p>
+      </div>
+      <div style="background:#FFF8F0; border-radius:8px; padding:12px 16px; border-left:3px solid #E8921A;">
+        <p style="font-size:13px; line-height:1.65; color:#3D3830; margin:0;"><strong style="color:#E8921A;">À retenir :</strong> Si l'IA donne quand même la réponse, redites-le lui simplement : « Non, pose-moi juste une question pour m'aider à réfléchir. » Elle s'ajustera.</p>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         QUESTION D'UN PARTICIPANT — modifier : QUESTION et REPONSE
+         ============================================================ -->
+    <div class="section-eyebrow">La question d'un participant</div>
+    <div class="question-block">
+      <p class="question-quote">"Est-ce prudent de faire lire les devoirs de mon enfant par une IA ? Je m'inquiète pour ses données personnelles."</p>
+      <p class="question-answer">C'est une question légitime, et même le ministère de l'Éducation nationale la prend au sérieux dans son cadre d'usage.<br><br><strong style="color:#1E6B2E;">La règle de base</strong> : ne jamais faire saisir de données personnelles ou confidentielles (nom complet, adresse, établissement, photo du visage) dans une IA grand public comme ChatGPT ou Gemini. Pour un devoir, l'énoncé d'un exercice de maths ou une leçon d'histoire ne pose pas de problème : ce sont des contenus publics.<br><br><strong style="color:#1E6B2E;">Le bon réflexe</strong> : recopiez l'énoncé sans les informations identifiantes, pas besoin d'indiquer le nom de l'école ou de l'enfant, et ne créez jamais de compte personnel au nom de l'enfant sur ces outils. C'est d'ailleurs une recommandation explicite du ministère.<br><br><strong style="color:#1E6B2E;">En pratique</strong>, pour de l'aide aux devoirs classique (maths, français, histoire), le risque est faible tant qu'on reste sur du contenu scolaire général et qu'on évite les informations personnelles.</p>
+    </div>
+
+    <!-- ============================================================
+         CTA — modifier : TEXTE_CTA (lien fixe, ne pas modifier)
+         ============================================================ -->
+    <div class="cta-block">
+      <p>Envie d'apprendre à utiliser l'IA sereinement, pour vous ou pour accompagner vos enfants et petits-enfants ? Rejoignez un <strong>atelier initiation IA</strong> près de chez vous.</p>
+      <a class="cta-button" href="https://initia-vienne.com/ateliers">Voir les prochaines dates &#8594;</a>
+    </div>
+
+    <!-- ============================================================
+         PROCHAIN NUMÉRO — modifier : TITRE_SUIVANT et SOUS_TITRE_SUIVANT
+         ============================================================ -->
+    <div class="next-issue">
+      <div class="next-issue-label">Au prochain numéro</div>
+      <div class="next-issue-text">L'IA et les arnaques</div>
+      <div class="next-issue-sub">Repérer un faux conseiller bancaire, un phishing, une arnaque au faux proche.</div>
+    </div>
+
+  </div>
+
+  <!-- ============================================================
+       FOOTER — ne pas modifier
+       ============================================================ -->
+  <div class="footer">
+    <div class="footer-name">Bruno Repellin</div>
+    <div class="footer-desc">
+      initIA Vienne · Ateliers d'initiation à l'intelligence artificielle<br>
+      Pour les débutants, les seniors, les associations et les collectivités de Vienne et communes environnantes.
+    </div>
+    <div style="margin-bottom:20px;">
+      <a href="https://initia-vienne.com" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">initia-vienne.com</a>
+      <span class="footer-sep">|</span>
+      <a href="mailto:initia.vienne@gmail.com" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">initia.vienne@gmail.com</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.instagram.com/initia.vienne" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">Instagram</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.linkedin.com/in/bruno-repellin-b1425a21" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">LinkedIn</a>
+    </div>
+    <div class="footer-legal">
+      Vous recevez cet email parce que vous êtes inscrit à la newsletter initIA Vienne.<br>
+      <a href="{{UNSUBSCRIBE_URL}}">Se désinscrire</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
