@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'IA en clair — N°9 — initIA Vienne</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #F4F1EC; font-family: 'DM Sans', sans-serif; color: #2C2825; -webkit-font-smoothing: antialiased; }
+  .email-wrapper { max-width: 620px; margin: 0 auto; background: #FFFDF9; }
+  .header { background: #1E6B2E; padding: 28px 40px 24px; border-bottom: 4px solid #E8921A; }
+  .header-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #E8921A; margin-bottom: 4px; }
+  .header-title { font-family: 'Lora', serif; font-size: 28px; color: #FFFDF9; line-height: 1.2; }
+  .header-title span { color: #E8921A; }
+  .section-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #E8921A; margin-bottom: 6px; }
+  .section-title { font-family: 'Lora', serif; font-size: 21px; color: #1E6B2E; line-height: 1.3; margin-bottom: 14px; }
+  .section-body { font-size: 15px; line-height: 1.8; color: #3D3830; margin-bottom: 24px; }
+  .section-body strong { color: #1E6B2E; font-weight: 700; }
+  .image-block { margin: 20px 0 8px; border-radius: 10px; overflow: hidden; }
+  .image-block img { width: 100%; display: block; }
+  .image-caption { font-size: 12px; color: #9A9088; text-align: center; margin-bottom: 24px; font-style: italic; padding: 0 10px; }
+  .actu-block { background: #FFF8F0; border-left: 4px solid #E8921A; border-radius: 0 10px 10px 0; padding: 20px 24px; margin-bottom: 28px; }
+  .actu-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #E8921A; margin-bottom: 8px; }
+  .actu-title { font-family: 'Lora', serif; font-size: 17px; color: #1E6B2E; margin-bottom: 10px; line-height: 1.3; }
+  .actu-body { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .actu-body strong { color: #1E6B2E; }
+  .divider { height: 1px; background: #D4C9B8; margin: 28px 0; }
+  .tool-card { background: #F4F1EC; border-radius: 12px; padding: 24px 26px; margin-bottom: 28px; }
+  .tool-badge { display: inline-block; background: #E8921A; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; margin-bottom: 10px; }
+  .tool-title { font-family: 'Lora', serif; font-size: 17px; color: #1E6B2E; margin-bottom: 16px; line-height: 1.3; }
+  .question-block { border: 1.5px solid #D4C9B8; border-radius: 12px; padding: 24px 26px; margin-bottom: 28px; }
+  .question-quote { font-family: 'Lora', serif; font-size: 15px; font-style: italic; color: #4A4540; margin-bottom: 14px; line-height: 1.6; padding-left: 16px; border-left: 3px solid #E8921A; }
+  .question-answer { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .question-answer strong { color: #1E6B2E; }
+  .cta-block { background: #1E6B2E; border-radius: 12px; padding: 26px 28px; margin-bottom: 36px; text-align: center; }
+  .cta-block p { font-size: 14px; line-height: 1.7; color: rgba(255,253,249,0.85); margin-bottom: 16px; }
+  .cta-block p strong { color: #FFFDF9; }
+  .cta-button { display: inline-block; background: #E8921A; color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; padding: 11px 24px; border-radius: 6px; }
+  .next-issue { margin-bottom: 40px; padding: 20px 0; border-top: 1px dashed #D4C9B8; }
+  .next-issue-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #7A7068; margin-bottom: 8px; }
+  .next-issue-text { font-family: 'Lora', serif; font-size: 15px; color: #1E6B2E; font-style: italic; margin-bottom: 4px; }
+  .next-issue-sub { font-size: 13px; color: #7A7068; }
+  .footer { background: #1E6B2E; padding: 32px 40px; }
+  .footer-name { font-family: 'Lora', serif; font-size: 16px; color: #FFFDF9; margin-bottom: 4px; }
+  .footer-desc { font-size: 12px; color: rgba(255,253,249,0.85); margin-bottom: 20px; line-height: 1.6; }
+  .footer-sep { color: rgba(255,253,249,0.5); font-size: 12px; margin: 0 8px; }
+  .footer-legal { font-size: 11px; color: rgba(255,253,249,0.75); line-height: 1.6; border-top: 1px solid rgba(255,253,249,0.25); padding-top: 16px; }
+  .footer-legal a { color: #E8921A; }
+  .intro-block { border-left: 3px solid #E8921A; padding-left: 18px; margin-bottom: 36px; }
+  .intro-block p { font-family: 'Lora', serif; font-size: 15px; line-height: 1.75; color: #4A4540; font-style: italic; }
+  @media (max-width: 480px) {
+    .header, .body-content, .footer { padding-left: 20px; padding-right: 20px; }
+    .header-title { font-size: 23px; }
+  }
+</style>
+</head>
+<body>
+<div class="email-wrapper">
+
+  <!-- ============================================================
+       EN-TÊTE — ne pas modifier
+       ============================================================ -->
+  <div class="header">
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:16px;">
+      <tr>
+        <td style="padding-right:20px; vertical-align:middle;">
+          <img src="https://initia-vienne.com/newsletters/image_1.png" alt="initIA Vienne" width="72" height="72" style="width:72px; height:72px; background:#FFFDF9; border-radius:10px; padding:6px; display:block;">
+        </td>
+        <td style="vertical-align:middle;">
+          <div class="header-label">La newsletter</div>
+          <div class="header-title">L'IA en clair <span>·</span></div>
+        </td>
+      </tr>
+    </table>
+    <div style="font-size:12px; color:rgba(255,253,249,0.85);">
+      Par Bruno Repellin &nbsp;<span style="color:#E8921A;">|</span>&nbsp; initIA Vienne &nbsp;<span style="color:#E8921A;">|</span>&nbsp; Pour les curieux de l'IA
+    </div>
+  </div>
+
+  <!-- ============================================================
+       BANDEAU
+       ============================================================ -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#E8921A;">
+    <tr>
+      <td style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase;">N° 9 &nbsp;·&nbsp; Septembre 2026</td>
+      <td style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase; text-align:right;">Lecture : 3 min &#9749;</td>
+    </tr>
+  </table>
+
+  <!-- ============================================================
+       CORPS
+       ============================================================ -->
+  <div class="body-content" style="padding: 40px 40px 0;">
+
+    <!-- INTRO -->
+    <div class="intro-block" style="margin-top:36px;">
+      <p>Bonjour,<br><br>
+      Ce mois-ci, on parle d'un sujet qui concerne absolument tout le monde : les arnaques. L'intelligence artificielle a rendu certaines d'entre elles bien plus difficiles à repérer (une voix imitée, un message sans la moindre faute, une fausse vidéo convaincante). Bonne nouvelle : quelques réflexes simples suffisent à s'en protéger, et l'IA elle-même peut devenir une alliée pour les détecter.</p>
+    </div>
+
+    <!-- IMAGE -->
+    <div class="image-block">
+      <img src="newsletter_n9_image.jpg" alt="Aquarelle d'une main tenant un smartphone dans un salon chaleureux, avec un bouclier doré lumineux flottant à proximité, symbole de protection" style="width:100%; display:block; border-radius:10px;">
+    </div>
+    <p class="image-caption">Image créée avec ChatGPT Images.</p>
+
+    <!-- BADGE -->
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius:20px; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#1E6B2E; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour tout le monde</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ============================================================
+         ACTU DU MOMENT
+         ============================================================ -->
+    <div class="actu-block">
+      <div class="actu-label">&#9889; L'actu du moment</div>
+      <div class="actu-title">Claude signe désormais ses textes</div>
+      <p class="actu-body">Depuis le 11 août 2026, Anthropic (l'entreprise derrière Claude) ajoute un <strong>filigrane invisible</strong> dans les textes que l'IA génère.<br><br>Concrètement, rien ne change à la lecture : le texte reste parfaitement normal, mais une trace technique reste présente dans la façon dont les mots sont choisis, comme une signature cachée.<br><br>Objectif affiché : permettre, à terme, de vérifier qu'un contenu a bien été écrit par une IA. Cette mesure s'inscrit dans une nouvelle règle européenne sur la transparence de l'IA, mais elle s'applique partout dans le monde, pas seulement en Europe.</p>
+    </div>
+
+    <!-- ============================================================
+         SUJET DU MOIS
+         ============================================================ -->
+    <div class="section-eyebrow">Le sujet du mois</div>
+    <h2 class="section-title">Trois arnaques que l'IA rend plus convaincantes</h2>
+    <p class="section-body">Ce printemps, la Banque de France elle-même a dû publier une alerte après la diffusion de fausses vidéos montrant son gouverneur recommander un placement financier : la preuve que même les institutions les plus sérieuses peuvent être imitées. Voici trois arnaques à connaître, et leurs signaux d'alerte.<br><br><strong style="color:#1E6B2E;">Le faux conseiller bancaire.</strong> Un appel, un numéro qui ressemble à celui de votre banque, un discours rassurant sur une "opération suspecte" à valider. Retenez ceci : votre banque ne vous demandera jamais vos codes ni votre mot de passe par téléphone.<br><br><strong style="color:#E8921A;">Le phishing plus soigné.</strong> Fini les mails truffés de fautes qui trahissaient l'arnaque : l'IA permet désormais d'écrire des messages parfaitement rédigés, avec de vrais logos repris à l'identique. Le seul repère fiable reste le fond du message : une urgence artificielle, une demande d'argent ou un lien inhabituel à cliquer.<br><br><strong style="color:#7A7068;">L'arnaque au faux proche.</strong> Quelques secondes d'une voix, parfois publiées sans y penser sur les réseaux sociaux, suffisent aujourd'hui à en fabriquer une imitation convaincante au téléphone. Un enfant ou un petit-enfant en détresse qui demande de l'argent en urgence peut donc ne pas être qui vous croyez.</p>
+
+    <!-- ============================================================
+         CAS D'USAGE
+         ============================================================ -->
+    <div class="section-eyebrow">Le cas d'usage</div>
+    <h2 class="section-title">"Mon petit-fils m'appelle en pleurant, il a besoin d'argent"</h2>
+    <p class="section-body">Le téléphone sonne. Une voix visiblement bouleversée, qui ressemble à s'y méprendre à celle de votre petit-fils, vous explique qu'il a eu un accident et a besoin d'argent immédiatement. Voici comment réagir, étape par étape.</p>
+
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%; margin-bottom:28px;">
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">1</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Respirez, sans décider sous le coup de l'émotion.</strong> L'urgence et la panique sont les meilleures armes des arnaqueurs. Prenez le temps de raccrocher poliment, même si la voix insiste.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">2</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Rappelez la personne vous-même.</strong> Composez le numéro habituel de votre petit-fils, et non celui qui vient d'appeler, ou celui d'un de ses parents, pour vérifier directement auprès de lui.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">3</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#1E6B2E;">Posez une question que lui seul connaît.</strong> Un souvenir de famille, un mot convenu à l'avance entre vous : une voix clonée par IA ne pourra jamais y répondre correctement.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top;"><div style="width:26px; height:26px; background:#1E6B2E; color:#E8921A; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">4</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top;"><strong style="color:#1E6B2E;">Ne versez jamais d'argent avant d'avoir vérifié.</strong> Aucune urgence ne justifie un virement immédiat sans confirmation. Prenez contact avec un autre membre de la famille pour croiser l'information avant d'agir.</td>
+      </tr>
+    </table>
+
+    <div class="divider"></div>
+
+    <!-- BADGES -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:36px 0 28px;">
+      <tr>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+        <td style="padding:0 14px; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#B0A898; white-space:nowrap; text-align:center;">Pour ceux qui pratiquent déjà</td>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+      </tr>
+    </table>
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius:20px; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#E8921A; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour aller plus loin</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ============================================================
+         ASTUCE DU MOIS
+         ============================================================ -->
+    <div class="section-eyebrow">L'astuce du mois</div>
+    <div class="tool-card">
+      <div class="tool-badge">Prompt clé en main</div>
+      <div class="tool-title">Faites relire un message suspect par l'IA avant d'y répondre</div>
+      <p style="font-size:14px; line-height:1.7; color:#3D3830; margin-bottom:16px;">Vous avez reçu un SMS ou un mail qui vous semble louche ? Avant de cliquer ou de répondre, copiez son texte dans ChatGPT, Claude ou Gemini et demandez une analyse.</p>
+      <div style="background:#E8F4EC; border-radius:8px; padding:16px 20px; margin-bottom:16px; border-left:3px solid #1E6B2E;">
+        <p style="font-family:'Courier New', monospace; font-size:12px; line-height:1.9; color:#1E6B2E; margin:0;">Voici un message que j'ai reçu : <strong>[coller le texte complet du message]</strong>. Est-ce que ce message présente des signes d'arnaque (urgence artificielle, fautes, demande d'argent ou de codes, lien suspect) ? Explique-moi pourquoi, simplement.</p>
+      </div>
+      <div style="background:#FFF8F0; border-radius:8px; padding:12px 16px; border-left:3px solid #E8921A;">
+        <p style="font-size:13px; line-height:1.65; color:#3D3830; margin:0;"><strong style="color:#E8921A;">À retenir :</strong> ne collez jamais un vrai mot de passe ou un code reçu par SMS dans une conversation avec l'IA, seul le texte du message suspect doit y figurer. Si la réponse reste incertaine, précisez le contexte (qui vous l'a envoyé, à quel sujet) et redemandez.</p>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         QUESTION D'UN PARTICIPANT
+         ============================================================ -->
+    <div class="section-eyebrow">La question d'un participant</div>
+    <div class="question-block">
+      <p class="question-quote">"Du coup, avec ce filigrane, je peux savoir si un mail qu'on m'envoie a été écrit par une IA ?"</p>
+      <p class="question-answer">Pas encore, et même quand ce sera possible, ça ne réglera pas tout.<br><br><strong style="color:#1E6B2E;">Aujourd'hui :</strong> Anthropic n'a pas encore mis à disposition du grand public un outil pour vérifier ce filigrane. Il faudra patienter.<br><br><strong style="color:#1E6B2E;">Et même demain :</strong> un texte "signé IA" ne sera pas forcément une preuve d'arnaque. Énormément d'usages parfaitement légitimes passent déjà par l'IA (un mail professionnel, un communiqué, une réponse administrative). Le filigrane renseigne sur l'origine d'un texte, pas sur son intention.<br><br>La vraie protection reste donc de regarder le contenu du message lui-même : ce qu'il vous demande, avec quelle urgence, et vers quel lien il vous pousse. Ce réflexe-là ne change pas, filigrane ou non.</p>
+    </div>
+
+    <!-- ============================================================
+         CTA
+         ============================================================ -->
+    <div class="cta-block">
+      <p>Pour continuer à apprendre à repérer ces pièges (et bien d'autres) en toute convivialité, rejoignez un <strong>atelier d'initiation à l'IA</strong> près de chez vous.</p>
+      <a class="cta-button" href="https://initia-vienne.com/ateliers">Voir les prochaines dates &#8594;</a>
+    </div>
+
+    <!-- ============================================================
+         PROCHAIN NUMÉRO
+         ============================================================ -->
+    <div class="next-issue">
+      <div class="next-issue-label">Au prochain numéro</div>
+      <div class="next-issue-text">L'IA, votre assistante pour les démarches administratives</div>
+      <div class="next-issue-sub">Remplir un formulaire, comprendre un courrier, rédiger une réclamation : les bons réflexes pour se faire aider sans se faire piéger.</div>
+    </div>
+
+  </div>
+
+  <!-- ============================================================
+       FOOTER — ne pas modifier
+       ============================================================ -->
+  <div class="footer">
+    <div class="footer-name">Bruno Repellin</div>
+    <div class="footer-desc">
+      initIA Vienne · Ateliers d'initiation à l'intelligence artificielle<br>
+      Pour les débutants, les seniors, les associations et les collectivités de Vienne et communes environnantes.
+    </div>
+    <div style="margin-bottom:20px;">
+      <a href="https://initia-vienne.com" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">initia-vienne.com</a>
+      <span class="footer-sep">|</span>
+      <a href="mailto:initia.vienne@gmail.com" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">initia.vienne@gmail.com</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.instagram.com/initia.vienne" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">Instagram</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.linkedin.com/in/bruno-repellin-b1425a21" style="font-size:13px; color:#E8921A; text-decoration:none; font-weight:500;">LinkedIn</a>
+    </div>
+    <div class="footer-legal">
+      Vous recevez cet email parce que vous êtes inscrit à la newsletter initIA Vienne.<br>
+      <a href="{{UNSUBSCRIBE_URL}}">Se désinscrire</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
