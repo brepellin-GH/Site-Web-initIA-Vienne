@@ -2,10 +2,21 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { CheckCircle2, Send, PhoneCall } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
+import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/lib/supabase";
+import {
+  CopyEmailButton,
+  EMAIL,
+  Kicker,
+  PHONE_DISPLAY,
+  PHONE_HREF,
+  PhoneIcon,
+  WHATSAPP_HREF,
+  greenButtonClass,
+  inputClass,
+} from "@/components/site/ui";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Le nom est requis"),
@@ -17,7 +28,27 @@ const contactSchema = z.object({
 
 type ContactFormValues = z.infer<typeof contactSchema>;
 
-export function ContactForm({ className }: { className?: string }) {
+// Les valeurs enregistrées restent celles déjà présentes en base
+// (Association, Collectivite, Particulier), plus Reseau_pro.
+const TYPE_OPTIONS = [
+  { value: "Association", label: "Association ou centre social" },
+  { value: "Collectivite", label: "Collectivité" },
+  { value: "Reseau_pro", label: "Réseau professionnel" },
+  { value: "Particulier", label: "Particulier" },
+];
+
+const errorCls = "m-0 text-[#B42318] text-lg";
+const labelCls = "font-semibold text-iv-ink";
+
+function Check() {
+  return (
+    <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F07E01" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5">
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
+  );
+}
+
+function ContactForm({ label, title, intro }: { label: string; title: string; intro: string }) {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const {
@@ -45,154 +76,185 @@ export function ContactForm({ className }: { className?: string }) {
     }
   };
 
+  const heading = (
+    <div className="flex flex-col gap-2.5">
+      <Kicker>{label}</Kicker>
+      <h2 className="m-0 text-[32px] lg:text-[44px] leading-[1.08] text-balance">{title}</h2>
+      <p className="m-0 max-w-[640px]">{intro}</p>
+    </div>
+  );
+
   if (isSubmitted) {
     return (
-      <div className={cn("bg-white p-8 md:p-10 rounded-3xl shadow-xl shadow-brand-green/5 border border-brand-green/10 text-center space-y-4", className)}>
-        <div className="mx-auto w-16 h-16 bg-brand-green-light text-brand-green rounded-full flex items-center justify-center mb-6">
-          <CheckCircle2 className="w-8 h-8" />
+      <div className="flex flex-col gap-6 px-5 py-10 lg:px-12 lg:py-16" role="status">
+        {heading}
+        <div className="flex flex-col gap-3 p-6 border-2 border-iv-green bg-iv-paper">
+          <h3 className="m-0 text-2xl text-iv-green">Message envoyé !</h3>
+          <p className="m-0">Merci pour votre message. Je vous recontacte très prochainement.</p>
+          <button
+            type="button"
+            onClick={() => setIsSubmitted(false)}
+            className="self-start mt-2 font-bold text-iv-green underline underline-offset-4 hover:text-iv-green-dark"
+          >
+            Envoyer un autre message
+          </button>
         </div>
-        <h3 className="text-2xl font-display font-bold text-primary">Message envoyé !</h3>
-        <p className="text-muted-foreground">
-          Merci pour votre message. Je vous recontacte très prochainement.
-        </p>
-        <Button 
-          variant="outline" 
-          onClick={() => setIsSubmitted(false)}
-          className="mt-6"
-        >
-          Envoyer un autre message
-        </Button>
       </div>
     );
   }
 
   return (
-    <div className={cn("bg-white p-8 md:p-10 rounded-3xl shadow-xl shadow-brand-green/5 border border-brand-green/10", className)}>
-      <div className="mb-8">
-        <h3 className="text-2xl font-display font-bold text-primary mb-2">Envoyez-moi un message</h3>
-        <p className="text-muted-foreground">Remplissez le formulaire ci-dessous ou contactez-moi directement.</p>
+    <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-[22px] m-0 px-5 py-10 lg:px-12 lg:py-16">
+      {heading}
 
-        <div className="flex flex-col sm:flex-row gap-3 mt-4">
-          <a
-            href="tel:0673984285"
-            className="inline-flex items-center gap-2 text-brand-orange font-bold hover:text-brand-orange/80 transition-colors"
-          >
-            <PhoneCall className="w-5 h-5" />
-            06 73 98 42 85
-          </a>
-          <a
-            href="https://wa.me/33673984285"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-[#25D366] font-bold hover:opacity-80 transition-opacity"
-          >
-            <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            WhatsApp
-          </a>
-        </div>
-      </div>
+      <label className="flex flex-col gap-2" htmlFor="name">
+        <span className={labelCls}>Nom / Prénom</span>
+        <input
+          {...register("name")}
+          id="name"
+          autoComplete="name"
+          aria-invalid={!!errors.name}
+          className={cn(inputClass, errors.name && "border-[#B42318]")}
+          placeholder="Jean Dupont"
+        />
+        {errors.name && <span className={cn(errorCls, "block")}>{errors.name.message}</span>}
+      </label>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-        <div className="space-y-2">
-          <label className="text-sm font-semibold text-primary" htmlFor="name">Nom / Prénom</label>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-[22px]">
+        <label className="flex flex-col gap-2" htmlFor="email">
+          <span className={labelCls}>E-mail</span>
           <input
-            {...register("name")}
-            id="name"
-            className={cn(
-              "w-full px-4 py-3 rounded-xl bg-background border-2 transition-colors focus:outline-none focus:ring-4 focus:ring-brand-green/10",
-              errors.name ? "border-red-500" : "border-border focus:border-brand-green"
-            )}
-            placeholder="Jean Dupont"
+            {...register("email")}
+            id="email"
+            type="email"
+            autoComplete="email"
+            aria-invalid={!!errors.email}
+            className={cn(inputClass, errors.email && "border-[#B42318]")}
+            placeholder="jean@exemple.com"
           />
-          {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
-        </div>
+          {errors.email && <span className={cn(errorCls, "block")}>{errors.email.message}</span>}
+        </label>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div className="space-y-2">
-            <label className="text-sm font-semibold text-primary" htmlFor="email">Email</label>
-            <input
-              {...register("email")}
-              id="email"
-              type="email"
-              className={cn(
-                "w-full px-4 py-3 rounded-xl bg-background border-2 transition-colors focus:outline-none focus:ring-4 focus:ring-brand-green/10",
-                errors.email ? "border-red-500" : "border-border focus:border-brand-green"
-              )}
-              placeholder="jean@exemple.com"
-            />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-sm font-semibold text-primary" htmlFor="type">Vous êtes...</label>
+        <label className="flex flex-col gap-2" htmlFor="type">
+          <span className={labelCls}>Vous êtes…</span>
+          <span className="relative block">
             <select
               {...register("type")}
               id="type"
-              className={cn(
-                "w-full px-4 py-3 rounded-xl bg-background border-2 transition-colors focus:outline-none focus:ring-4 focus:ring-brand-green/10 appearance-none",
-                errors.type ? "border-red-500" : "border-border focus:border-brand-green"
-              )}
+              aria-invalid={!!errors.type}
+              className={cn(inputClass, "appearance-none pr-11", errors.type && "border-[#B42318]")}
             >
-              <option value="">Sélectionnez...</option>
-              <option value="Particulier">Un particulier</option>
-              <option value="Association">Une association</option>
-              <option value="Collectivite">Une collectivité</option>
+              <option value="">Sélectionnez…</option>
+              {TYPE_OPTIONS.map((o) => (
+                <option key={o.value} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
             </select>
-            {errors.type && <p className="text-red-500 text-sm">{errors.type.message}</p>}
-          </div>
-        </div>
+            <ChevronDown aria-hidden="true" className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-iv-ink" />
+          </span>
+          {errors.type && <span className={cn(errorCls, "block")}>{errors.type.message}</span>}
+        </label>
+      </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-semibold text-primary" htmlFor="message">Votre message</label>
-          <textarea
-            {...register("message")}
-            id="message"
-            rows={4}
-            className={cn(
-              "w-full px-4 py-3 rounded-xl bg-background border-2 transition-colors focus:outline-none focus:ring-4 focus:ring-brand-green/10 resize-none",
-              errors.message ? "border-red-500" : "border-border focus:border-brand-green"
-            )}
-            placeholder="Comment puis-je vous aider ?"
+      <label className="flex flex-col gap-2" htmlFor="message">
+        <span className={labelCls}>Votre message</span>
+        <textarea
+          {...register("message")}
+          id="message"
+          rows={5}
+          aria-invalid={!!errors.message}
+          className={cn(inputClass, "h-auto py-3.5 leading-normal resize-y", errors.message && "border-[#B42318]")}
+          placeholder="Comment puis-je vous aider ?"
+        />
+        {errors.message && <span className={cn(errorCls, "block")}>{errors.message.message}</span>}
+      </label>
+
+      <div className="flex flex-col gap-1">
+        <div className="grid grid-cols-[24px_1fr] gap-3 items-start">
+          <input
+            {...register("consent")}
+            type="checkbox"
+            id="consent"
+            className="w-[22px] h-[22px] mt-[3px] accent-iv-green cursor-pointer"
           />
-          {errors.message && <p className="text-red-500 text-sm">{errors.message.message}</p>}
-        </div>
-
-        <div className="space-y-1">
-          <label className="flex items-start gap-3 cursor-pointer group">
-            <input
-              {...register("consent")}
-              type="checkbox"
-              id="consent"
-              className="mt-1 w-4 h-4 shrink-0 accent-brand-green cursor-pointer"
-            />
-            <span className="text-sm text-muted-foreground leading-relaxed">
-              J'accepte que mes données soient utilisées pour traiter ma demande, conformément à la{" "}
-              <a href="/politique-de-confidentialite" className="underline hover:text-primary transition-colors">politique de confidentialité</a>.
-            </span>
+          <label htmlFor="consent" className="cursor-pointer">
+            J'accepte que mes données soient utilisées pour traiter ma demande, conformément à la{" "}
+            <Link href="/politique-de-confidentialite" className="font-semibold text-iv-green underline underline-offset-4 hover:text-iv-green-dark">
+              politique de confidentialité
+            </Link>
+            .
           </label>
-          {errors.consent && <p className="text-red-500 text-sm">{errors.consent.message}</p>}
         </div>
+        {errors.consent && <p className={errorCls}>{errors.consent.message}</p>}
+      </div>
 
-        <Button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full text-lg"
-        >
-          {isSubmitting ? "Envoi en cours..." : (
-            <>
-              Envoyer ma demande
-              <Send className="w-5 h-5 ml-2" />
-            </>
-          )}
-        </Button>
+      <div className="flex">
+        <button type="submit" disabled={isSubmitting} className={cn(greenButtonClass, "w-full lg:w-auto lg:min-w-[300px]")}>
+          {isSubmitting ? "Envoi en cours..." : "Envoyer ma demande"}
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
 
-        {submitError && (
-          <p className="text-red-500 text-sm text-center">
-            Une erreur est survenue. Merci de me contacter directement à{" "}
-            <a href="mailto:initia.vienne@gmail.com" className="underline">initia.vienne@gmail.com</a>.
-          </p>
-        )}
-      </form>
+      {submitError && (
+        <p className={errorCls} role="alert">
+          Une erreur est survenue. Merci de me contacter directement à{" "}
+          <a href={`mailto:${EMAIL}`} className="underline">
+            {EMAIL}
+          </a>
+          .
+        </p>
+      )}
+    </form>
+  );
+}
+
+/** Bloc contact de la maquette : formulaire à gauche, coordonnées sur fond vert à droite. */
+export function ContactBlock({ label, title, intro }: { label: string; title: string; intro: string }) {
+  const sideLink = "flex items-center gap-3 min-h-12 text-iv-paper font-semibold underline underline-offset-4 hover:text-iv-orange";
+  return (
+    <div className="iv-band grid grid-cols-1 lg:grid-cols-[7fr_5fr] border-t-2 border-iv-ink min-[1280px]:bg-[linear-gradient(to_right,transparent_50%,#006D29_50%)]">
+      <div className="bg-iv-cream">
+        <ContactForm label={label} title={title} intro={intro} />
+      </div>
+      <div className="iv-dark flex flex-col gap-7 px-5 py-9 lg:px-12 lg:py-16 bg-iv-green text-iv-paper border-t-2 lg:border-t-0 lg:border-l-2 border-iv-ink">
+        <Kicker className="text-iv-paper">Contactez-moi directement</Kicker>
+        <div className="flex flex-col gap-1.5">
+          <a href={PHONE_HREF} className="flex items-center gap-3 min-h-12 text-iv-paper text-[28px] lg:text-[34px] font-extrabold leading-[1.1] no-underline hover:text-iv-orange">
+            <PhoneIcon size={28} className="flex-none text-iv-orange" />
+            {PHONE_DISPLAY}
+          </a>
+          <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className={sideLink}>
+            <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F07E01" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-none">
+              <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+            </svg>
+            Écrire sur WhatsApp
+          </a>
+          <a href={`mailto:${EMAIL}`} className={cn(sideLink, "break-all")}>
+            <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F07E01" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-none">
+              <rect x="2" y="4" width="20" height="16" rx="2" />
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+            </svg>
+            {EMAIL}
+          </a>
+          <CopyEmailButton className="ml-9 text-iv-paper" />
+        </div>
+        <ul className="flex flex-col m-0 p-0 list-none">
+          {[
+            ["Réponse sous 24 à 48 h", "Je vous recontacte sous 24 à 48 heures."],
+            ["Devis gratuit, sans engagement", "Proposition sur mesure."],
+            ["Dans vos locaux ou en salle partenaire", "Selon vos besoins."],
+          ].map(([t, d], i) => (
+            <li key={t} className={cn("grid grid-cols-[24px_1fr] gap-3 py-[18px] border-t border-iv-hair-light", i === 2 && "border-b")}>
+              <Check />
+              <span className="flex flex-col gap-0.5">
+                <span className="text-[19px] font-bold">{t}</span>
+                <span className="leading-[1.45]">{d}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

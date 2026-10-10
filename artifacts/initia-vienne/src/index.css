@@ -25,6 +25,20 @@
   --color-brand-orange: #F5A623;
   --color-brand-orange-light: #FEF3E1;
   --color-brand-cream: #FDFBF7;
+
+  /* Site public (refonte 2026) : nouvelles couleurs, utilisées uniquement sous .site-public */
+  --font-archivo: 'Archivo', system-ui, sans-serif;
+  --color-iv-green: #006D29;
+  --color-iv-green-dark: #004d1c;
+  --color-iv-orange: #F07E01;
+  --color-iv-orange-hover: #FF9A33;
+  --color-iv-cream: #FAF3E8;
+  --color-iv-sand: #F1E8D8;
+  --color-iv-ink: #201e1d;
+  --color-iv-text: #3D3830;
+  --color-iv-paper: #FFFDF9;
+  --color-iv-hair: rgb(61 56 48 / 0.35);
+  --color-iv-hair-light: rgb(255 253 249 / 0.4);
 }
 
 :root {
@@ -68,6 +82,52 @@
   }
 }
 
+/* Site public (refonte 2026) : tout est limité à .site-public pour ne pas
+   modifier l'apparence de la page d'administration. */
+@layer base {
+  .site-public {
+    font-family: var(--font-archivo);
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--color-iv-text);
+    background: var(--color-iv-cream);
+  }
+
+  .site-public h1, .site-public h2, .site-public h3,
+  .site-public h4, .site-public h5, .site-public h6 {
+    font-family: var(--font-archivo);
+    font-weight: 700;
+    letter-spacing: normal;
+    color: var(--color-iv-ink);
+  }
+
+  .site-public ::selection {
+    background: var(--color-iv-orange);
+    color: var(--color-iv-ink);
+  }
+
+  .site-public :focus-visible {
+    outline: 3px solid var(--color-iv-ink);
+    outline-offset: 2px;
+  }
+
+  .site-public .iv-dark :focus-visible {
+    outline-color: var(--color-iv-paper);
+  }
+
+  /* Ancres : ne pas passer sous l'en-tête collant
+     (s'ajoute au scroll-padding-top de 5rem défini sur html) */
+  .site-public [id] {
+    scroll-margin-top: 48px;
+  }
+
+  @media (min-width: 1024px) {
+    .site-public [id] {
+      scroll-margin-top: 16px;
+    }
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -75,5 +135,15 @@
   
   .glass-panel {
     @apply bg-white/80 backdrop-blur-md border border-white/40 shadow-xl shadow-brand-green/5;
+  }
+}
+
+/* Site public, grand écran : contenu limité à 1280 px et centré, fonds sur toute
+   la largeur. Hors calque pour primer sur les marges Tailwind des bandeaux ;
+   --pad reprend la marge intérieure propre au bandeau (48 px par défaut sur ordinateur). */
+@media (min-width: 1280px) {
+  .site-public .iv-band {
+    padding-left: calc(var(--pad, 0px) + (100% - 1280px) / 2);
+    padding-right: calc(var(--pad, 0px) + (100% - 1280px) / 2);
   }
 }

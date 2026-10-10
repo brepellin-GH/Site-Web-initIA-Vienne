@@ -152,6 +152,7 @@ function Dashboard() {
     Particulier: "bg-blue-100 text-blue-700",
     Association: "bg-green-100 text-green-700",
     Collectivite: "bg-orange-100 text-orange-700",
+    Reseau_pro: "bg-purple-100 text-purple-700",
   };
 
   return (

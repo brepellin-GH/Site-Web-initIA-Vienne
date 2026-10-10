@@ -55,3 +55,9 @@ Thumbs.db
 
 # Visuels réseaux sociaux (ne pas publier)
 _reseaux-sociaux/
+
+# Maquette Claude Design (ne jamais publier)
+_maquette/
+
+# Local Netlify folder
+.netlify
