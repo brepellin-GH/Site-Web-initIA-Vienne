@@ -54,6 +54,18 @@ async function adminWrite(payload: Record<string, unknown>) {
   return res;
 }
 
+// Lectures des tables contacts et abonnes : via la fonction serveur admin-read
+// (mot de passe vérifié côté serveur), plus jamais avec la clé anonyme.
+async function adminRead<T>(action: string): Promise<T> {
+  const res = await fetch("/.netlify/functions/admin-read", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ password: sessionStorage.getItem("admin_pw"), action }),
+  });
+  if (!res.ok) throw new Error(`admin-read ${action} : ${res.status}`);
+  return res.json();
+}
+
 function fmt(iso: string) {
   return new Date(iso).toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit", year: "numeric" });
 }
@@ -130,8 +142,12 @@ function Dashboard() {
   const [expanded, setExpanded] = useState<string | null>(null);
 
   useEffect(() => {
-    supabase.from("abonnes").select("id", { count: "exact" }).eq("actif", true)
-      .then(({ count }) => setNbAbonnes(count ?? 0));
+    adminRead<{ nbAbonnesActifs: number; contacts: Contact[] }>("dashboard")
+      .then(({ nbAbonnesActifs, contacts }) => {
+        setNbAbonnes(nbAbonnesActifs);
+        setContacts(contacts ?? []);
+      })
+      .catch((err) => console.error(err));
 
     supabase.from("ateliers").select("id", { count: "exact" })
       .eq("visible", true).gt("date_heure", new Date().toISOString())
@@ -143,9 +159,6 @@ function Dashboard() {
         rows.sort((a, b) => (b.date_envoi ?? "").localeCompare(a.date_envoi ?? ""));
         setDernierEnvoi(rows[0] ?? null);
       });
-
-    supabase.from("contacts").select("*").order("created_at", { ascending: false }).limit(5)
-      .then(({ data }) => setContacts((data as Contact[]) ?? []));
   }, []);
 
   const TYPE_COLORS: Record<string, string> = {
@@ -596,10 +609,13 @@ function GestionAbonnes() {
 
   const load = () => {
     setLoading(true);
-    supabase.from("abonnes").select("*")
-      .then(({ data, error }) => {
-        if (error) console.error("Supabase abonnes SELECT error:", error);
-        const rows = (data as Abonne[]) ?? [];
+    adminRead<{ abonnes: Abonne[] }>("list-abonnes")
+      .then(({ abonnes }) => abonnes ?? [])
+      .catch((err) => {
+        console.error(err);
+        return [] as Abonne[];
+      })
+      .then((rows) => {
         rows.sort((a, b) => (b.date_inscription ?? "").localeCompare(a.date_inscription ?? ""));
         setAbonnes(rows);
         setLoading(false);
@@ -617,15 +633,13 @@ function GestionAbonnes() {
     e.preventDefault();
     setAdding(true);
     setAddResult(null);
-    const { error } = await supabase.from("abonnes").insert({
-      email: emailAdd.toLowerCase().trim(),
-      prenom: prenomAdd || null,
-      source: "admin",
-      actif: true,
-      date_inscription: new Date().toISOString(),
-    });
-    if (error) {
-      setAddResult({ ok: false, msg: error.code === "23505" ? "Cet email est déjà inscrit." : error.message });
+    const res = await adminWrite({ action: "abonne_add", email: emailAdd, prenom: prenomAdd || null });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      setAddResult({
+        ok: false,
+        msg: res.status === 409 ? "Cet email est déjà inscrit." : data.error ?? "Erreur lors de l'ajout.",
+      });
     } else {
       setAddResult({ ok: true, msg: "Abonné ajouté." });
       setEmailAdd(""); setPrenomAdd("");

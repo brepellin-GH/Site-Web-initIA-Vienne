@@ -18,7 +18,7 @@ exports.handler = async (event) => {
 
   const { password, action } = body;
 
-  if (password !== process.env.ADMIN_PASSWORD) {
+  if (!process.env.ADMIN_PASSWORD || password !== process.env.ADMIN_PASSWORD) {
     return { statusCode: 401, headers: CORS, body: JSON.stringify({ error: "Non autorisé" }) };
   }
 
@@ -70,6 +70,32 @@ exports.handler = async (event) => {
         body: JSON.stringify({ actif: body.actif }),
       });
       if (!res.ok) throw new Error(await res.text());
+      return { statusCode: 200, headers: CORS, body: JSON.stringify({ ok: true }) };
+    }
+
+    if (action === "abonne_add") {
+      const email = String(body.email || "").toLowerCase().trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: "Email invalide" }) };
+      }
+      const res = await fetch(`${base}/abonnes`, {
+        method: "POST",
+        headers: sbHeaders,
+        body: JSON.stringify({
+          email,
+          prenom: body.prenom || null,
+          source: "admin",
+          actif: true,
+          date_inscription: new Date().toISOString(),
+        }),
+      });
+      if (!res.ok) {
+        const text = await res.text();
+        if (text.includes("23505")) {
+          return { statusCode: 409, headers: CORS, body: JSON.stringify({ error: "duplicate" }) };
+        }
+        throw new Error(text);
+      }
       return { statusCode: 200, headers: CORS, body: JSON.stringify({ ok: true }) };
     }
 
