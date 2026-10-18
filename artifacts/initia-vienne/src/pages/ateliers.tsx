@@ -1,6 +1,7 @@
 import {
   Briefcase,
   Clock,
+  FileText,
   HeartHandshake,
   Landmark,
   Lock,
@@ -28,8 +29,72 @@ const ANCHORS: [string, string][] = [
   ["#reseaux-pros", "Réseaux pros"],
   ["#formats", "Formats"],
   ["#modalites", "Modalités"],
+  ["#fiches", "Fiches"],
   ["#faq", "FAQ"],
 ];
+
+// Fiches PDF de public/fiches/ : noms de fichiers définitifs (liens déjà envoyés par mail).
+type Fiche = { file: string; title: string; label: string; desc: string };
+
+const FICHES = {
+  benevoles: {
+    file: "fiche-atelier-ia-benevoles-associations.pdf",
+    title: "Atelier IA pour les bénévoles d'associations",
+    label: "Fiche bénévoles",
+    desc: "Atelier de 2 h pour le bureau et les bénévoles actifs",
+  },
+  adherents: {
+    file: "fiche-ateliers-ia-membres-associations.pdf",
+    title: "Ateliers IA pour les membres d'associations",
+    label: "Fiche adhérents",
+    desc: "Atelier ou séance découverte pour les membres",
+  },
+  elus: {
+    file: "fiche-atelier-ia-collectivites.pdf",
+    title: "Atelier IA pour les élus et agents",
+    label: "Fiche élus et agents",
+    desc: "Atelier de 2 h pour l'équipe municipale",
+  },
+  habitants: {
+    file: "fiche-ateliers-ia-habitants.pdf",
+    title: "Ateliers IA pour les habitants",
+    label: "Fiche habitants",
+    desc: "Atelier ou séance découverte à proposer aux habitants",
+  },
+  pros: {
+    file: "fiche-ateliers-ia-professionnels.pdf",
+    title: "Ateliers IA pour les professionnels de proximité",
+    label: "Fiche professionnels",
+    desc: "Commerçants, artisans, professions libérales : atelier ou séance découverte",
+  },
+} satisfies Record<string, Fiche>;
+
+const ficheLinkCls =
+  "flex items-start gap-3.5 h-full px-5 py-4 border-2 border-iv-ink text-iv-ink no-underline hover:bg-iv-ink/10 transition-colors";
+
+/** Lien vers une fiche PDF, ouverte dans un nouvel onglet (pas d'attribut download). */
+function FicheLink({ f, heading }: { f: Fiche; heading: "label" | "title" }) {
+  return (
+    <a
+      href={`/fiches/${f.file}`}
+      target="_blank"
+      rel="noopener"
+      aria-label={
+        heading === "title"
+          ? `Télécharger la fiche « ${f.title} » (PDF, 2 pages, nouvel onglet)`
+          : `Télécharger la ${f.label.toLowerCase()} (PDF, 2 pages, nouvel onglet)`
+      }
+      className={ficheLinkCls}
+    >
+      <FileText aria-hidden="true" className="w-6 h-6 flex-none mt-0.5 text-iv-green" />
+      <span className="flex flex-col gap-1">
+        <span className={cn("font-bold leading-[1.25]", heading === "title" ? "text-xl" : "text-lg")}>{f[heading]}</span>
+        <span className="text-lg text-iv-text leading-snug">{f.desc}</span>
+        <span className="text-base text-iv-text">PDF · 2 pages</span>
+      </span>
+    </a>
+  );
+}
 
 const GOALS = [
   "Comprendre ce qu'est l'IA et comment elle fonctionne",
@@ -61,6 +126,7 @@ type Public = {
   refLabel?: string;
   refs?: string[];
   testimonials?: boolean;
+  fiches?: Fiche[];
 };
 
 const PUBLICS: Public[] = [
@@ -85,6 +151,7 @@ const PUBLICS: Public[] = [
     ],
     refLabel: "Ils me font déjà confiance",
     refs: ["Club Léo Lagrange de Vienne", "Centre social d'Estressin", "Club de tarot de Vienne Estrablin"],
+    fiches: [FICHES.benevoles, FICHES.adherents],
   },
   {
     id: "collectivites",
@@ -97,6 +164,7 @@ const PUBLICS: Public[] = [
       ["Former les agents", "Rédiger un courrier, résumer un document, préparer une note, en gardant la maîtrise des données."],
       ["Sensibiliser les associations du territoire", "Un cycle pour les bénévoles et les trésoriers."],
     ],
+    fiches: [FICHES.elus, FICHES.habitants],
   },
   {
     id: "reseaux-pros",
@@ -119,6 +187,7 @@ const PUBLICS: Public[] = [
     ],
     refLabel: "Références",
     refs: ["Compagnons du Devoir, centre de Brignais"],
+    fiches: [FICHES.pros],
   },
 ];
 
@@ -254,6 +323,18 @@ function PublicSection({ p }: { p: Public }) {
                 </figcaption>
               </figure>
             ))}
+          </div>
+        )}
+        {p.fiches && (
+          <div className="flex flex-col gap-3 lg:gap-3.5 px-5 pt-6 pb-8 lg:px-12 lg:pt-7 lg:pb-9 border-t-2 border-iv-ink">
+            <Kicker>{p.fiches.length > 1 ? "Fiches à télécharger" : "Fiche à télécharger"}</Kicker>
+            <ul className="grid gap-3 lg:grid-cols-2 m-0 p-0 list-none">
+              {p.fiches.map((f) => (
+                <li key={f.file}>
+                  <FicheLink f={f} heading="label" />
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </div>
@@ -458,6 +539,26 @@ export default function Ateliers() {
         <p className="m-0 px-5 py-[18px] lg:px-12 lg:py-[22px] lg:border-t border-iv-hair bg-iv-sand font-medium text-iv-ink leading-normal">
           Tarif selon la prestation. Devis gratuit et sans engagement.
         </p>
+      </section>
+
+      {/* Fiches à télécharger */}
+      <section id="fiches" aria-labelledby="fiches-titre" className="iv-band flex flex-col lg:grid lg:grid-cols-[4fr_8fr] border-t-2 border-iv-ink">
+        <div className="flex flex-col gap-3 px-5 pt-9 pb-5 lg:p-12 lg:py-14 lg:border-r-2 border-iv-ink">
+          <Kicker>Fiches de présentation</Kicker>
+          <h2 id="fiches-titre" className={cn(h2Cls, "lg:text-4xl")}>
+            Les fiches à télécharger
+          </h2>
+          <p className="m-0 leading-[1.55]">
+            Chaque fiche présente l'atelier, les cas d'usage, le déroulé et les modalités pratiques. Vous pouvez la transmettre à votre bureau, à votre conseil ou à vos adhérents.
+          </p>
+        </div>
+        <ul className="grid gap-3 lg:grid-cols-2 m-0 px-5 pb-9 lg:px-12 lg:py-14 list-none">
+          {Object.values(FICHES).map((f) => (
+            <li key={f.file}>
+              <FicheLink f={f} heading="title" />
+            </li>
+          ))}
+        </ul>
       </section>
 
       <div id="faq">
