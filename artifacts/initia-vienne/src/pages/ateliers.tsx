@@ -17,7 +17,7 @@ import { usePageMeta } from "@/hooks/use-page-meta";
 import { cn } from "@/lib/utils";
 import { ContactBlock } from "@/components/contact-form";
 import { SiteFaq } from "@/components/site/site-faq";
-import { AgendaAteliers } from "@/components/site/agenda-ateliers";
+import { AgendaAteliers, InterventionsPrivees, useAteliers } from "@/components/site/agenda-ateliers";
 import { HeroBadge, Kicker, OrangeButton, OrangeRule, PHONE_DISPLAY, PHONE_HREF } from "@/components/site/ui";
 
 const ANCHORS: [string, string][] = [
@@ -382,6 +382,7 @@ export default function Ateliers() {
     description:
       "Formation IA à Vienne : ateliers d'initiation sur mesure pour les associations, les collectivités et les réseaux professionnels. Agenda, formats, modalités et devis gratuit.",
   });
+  const ateliers = useAteliers();
 
   return (
     <main>
@@ -435,9 +436,25 @@ export default function Ateliers() {
           </h2>
         </div>
         <div className="flex flex-col justify-center px-5 pb-9 lg:px-12 lg:py-10">
-          <AgendaAteliers />
+          <AgendaAteliers loading={ateliers.loading} ateliers={ateliers.publics} />
         </div>
       </section>
+
+      {/* Ateliers privés : affiché seulement s'il y en a */}
+      {ateliers.prives.length > 0 && (
+        <section id="interventions" aria-labelledby="interventions-titre" className="iv-band flex flex-col lg:grid lg:grid-cols-[4fr_8fr] border-b-2 border-iv-ink">
+          <div className="flex flex-col gap-3 lg:gap-2.5 px-5 pt-9 pb-4 lg:p-12 lg:py-14 lg:border-r-2 border-iv-ink">
+            <Kicker>Ils m'ont fait confiance</Kicker>
+            <h2 id="interventions-titre" className={cn(h2Cls, "lg:text-4xl")}>
+              Interventions récentes et à venir
+            </h2>
+            <p className="m-0 leading-[1.55]">Ateliers réalisés ou programmés pour des structures partenaires, sur invitation.</p>
+          </div>
+          <div className="flex flex-col justify-center px-5 pb-9 lg:px-12 lg:py-10">
+            <InterventionsPrivees ateliers={ateliers.prives} />
+          </div>
+        </section>
+      )}
 
       {/* Socle commun */}
       <section id="socle" aria-label="Le socle commun" className="iv-band flex flex-col lg:grid lg:grid-cols-[4fr_8fr] border-b-2 border-iv-ink">
