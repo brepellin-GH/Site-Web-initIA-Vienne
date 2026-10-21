@@ -61,3 +61,17 @@ _maquette/
 
 # Local Netlify folder
 .netlify
+
+# Toutes les variables d'environnement (y compris .env.production, etc.)
+.env.*
+!.env.example
+
+# Consignes de travail locales (ne pas publier)
+CONSIGNE_*.md
+CLAUDE.md
+
+# Réglages locaux de Claude Code
+.claude/settings.local.json
+
+# Journaux
+*.log
