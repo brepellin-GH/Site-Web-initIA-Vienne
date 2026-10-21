@@ -26,7 +26,8 @@ interface Atelier {
   inscription_label: string | null;
   places_restantes: number | null;
   visible: boolean;
-  created_at: string;
+  acces: "public" | "prive" | null;
+  date_creation: string;
 }
 
 interface Envoi {
@@ -149,8 +150,10 @@ function Dashboard() {
       })
       .catch((err) => console.error(err));
 
+    // Ateliers publics uniquement (acces vide traité comme public, comme sur le site).
     supabase.from("ateliers").select("id", { count: "exact" })
       .eq("visible", true).gt("date_heure", new Date().toISOString())
+      .or("acces.is.null,acces.neq.prive")
       .then(({ count }) => setNbAteliers(count ?? 0));
 
     supabase.from("envois_newsletter").select("*")
@@ -383,6 +386,7 @@ const ATELIER_EMPTY = {
   inscription_label: "",
   places_restantes: "",
   visible: true,
+  acces: "public" as "public" | "prive",
 };
 
 function GestionAteliers() {
@@ -415,6 +419,7 @@ function GestionAteliers() {
       inscription_label: a.inscription_label ?? "",
       places_restantes: a.places_restantes !== null ? String(a.places_restantes) : "",
       visible: a.visible,
+      acces: a.acces === "prive" ? "prive" : "public",
     });
     setEditId(a.id);
     setShowForm(true);
@@ -434,6 +439,7 @@ function GestionAteliers() {
       inscription_label: form.inscription_label || null,
       places_restantes: form.places_restantes !== "" ? Number(form.places_restantes) : null,
       visible: form.visible,
+      acces: form.acces,
     };
     await adminWrite(
       editId
@@ -496,6 +502,24 @@ function GestionAteliers() {
                 <label className={labelCls}>Thèmes</label>
                 <input type="text" value={form.themes} onChange={(e) => f("themes", e.target.value)}
                   className={inputCls} placeholder="Ex : ChatGPT, Images IA…" />
+              </div>
+            </div>
+
+            <div>
+              <label className={labelCls}>Accès</label>
+              <div className="flex gap-6 mt-1">
+                <label className="flex items-center gap-2 text-sm cursor-pointer">
+                  <input type="radio" name="acces" value="public"
+                    checked={form.acces === "public"}
+                    onChange={() => f("acces", "public")} />
+                  Public (agenda, avec inscription)
+                </label>
+                <label className="flex items-center gap-2 text-sm cursor-pointer">
+                  <input type="radio" name="acces" value="prive"
+                    checked={form.acces === "prive"}
+                    onChange={() => f("acces", "prive")} />
+                  Privé (références, sans inscription)
+                </label>
               </div>
             </div>
 
@@ -572,6 +596,9 @@ function GestionAteliers() {
                   {a.public_cible && <p className="text-xs text-gray-500 mt-0.5">Public : {a.public_cible}</p>}
                 </div>
                 <div className="flex items-center gap-2 flex-wrap">
+                  {a.acces === "prive" && (
+                    <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-purple-100 text-purple-700">Privé</span>
+                  )}
                   <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${a.visible ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}>
                     {a.visible ? "Visible" : "Masqué"}
                   </span>
