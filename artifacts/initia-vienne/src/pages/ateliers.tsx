@@ -34,7 +34,8 @@ const ANCHORS: [string, string][] = [
 ];
 
 // Fiches PDF de public/fiches/ : noms de fichiers définitifs (liens déjà envoyés par mail).
-type Fiche = { file: string; title: string; label: string; desc: string };
+// pages : 2 par défaut. ariaFor : précise la section quand un même fichier figure dans plusieurs sections.
+type Fiche = { file: string; title: string; label: string; desc: string; pages?: number; ariaFor?: string };
 
 const FICHES = {
   benevoles: {
@@ -67,6 +68,14 @@ const FICHES = {
     label: "Fiche professionnels",
     desc: "Commerçants, artisans, professions libérales : atelier ou séance découverte",
   },
+  // Fiche commune aux trois publics ; l'offre de lancement se met à jour dans le PDF, sous le même nom.
+  coaching: {
+    file: "fiche-coaching-individuel-ia.pdf",
+    title: "Coaching individuel pour les trois publics",
+    label: "Fiche coaching individuel",
+    desc: "Des séances individuelles pour mettre l'IA en place dans sa propre activité. Pour les bénévoles et responsables d'associations, les élus et agents, les professionnels de proximité.",
+    pages: 1,
+  },
 } satisfies Record<string, Fiche>;
 
 const ficheLinkCls =
@@ -74,6 +83,8 @@ const ficheLinkCls =
 
 /** Lien vers une fiche PDF, ouverte dans un nouvel onglet (pas d'attribut download). */
 function FicheLink({ f, heading }: { f: Fiche; heading: "label" | "title" }) {
+  const pages = f.pages ?? 2;
+  const pagesTxt = `${pages} page${pages > 1 ? "s" : ""}`;
   return (
     <a
       href={`/fiches/${f.file}`}
@@ -81,8 +92,8 @@ function FicheLink({ f, heading }: { f: Fiche; heading: "label" | "title" }) {
       rel="noopener"
       aria-label={
         heading === "title"
-          ? `Télécharger la fiche « ${f.title} » (PDF, 2 pages, nouvel onglet)`
-          : `Télécharger la ${f.label.toLowerCase()} (PDF, 2 pages, nouvel onglet)`
+          ? `Télécharger la fiche « ${f.title} » (PDF, ${pagesTxt}, nouvel onglet)`
+          : `Télécharger la ${f.label.toLowerCase()}${f.ariaFor ? ` ${f.ariaFor}` : ""} (PDF, ${pagesTxt}, nouvel onglet)`
       }
       className={ficheLinkCls}
     >
@@ -90,7 +101,7 @@ function FicheLink({ f, heading }: { f: Fiche; heading: "label" | "title" }) {
       <span className="flex flex-col gap-1">
         <span className={cn("font-bold leading-[1.25]", heading === "title" ? "text-xl" : "text-lg")}>{f[heading]}</span>
         <span className="text-lg text-iv-text leading-snug">{f.desc}</span>
-        <span className="text-base text-iv-text">PDF · 2 pages</span>
+        <span className="text-base text-iv-text">PDF · {pagesTxt}</span>
       </span>
     </a>
   );
@@ -151,7 +162,15 @@ const PUBLICS: Public[] = [
     ],
     refLabel: "Ils me font déjà confiance",
     refs: ["Club Léo Lagrange de Vienne", "Centre social d'Estressin", "Club de tarot de Vienne Estrablin"],
-    fiches: [FICHES.benevoles, FICHES.adherents],
+    fiches: [
+      FICHES.benevoles,
+      FICHES.adherents,
+      {
+        ...FICHES.coaching,
+        desc: "Pour un président, un trésorier ou un secrétaire qui veut avancer sur ses propres documents",
+        ariaFor: "pour les associations",
+      },
+    ],
   },
   {
     id: "collectivites",
@@ -164,7 +183,15 @@ const PUBLICS: Public[] = [
       ["Former les agents", "Rédiger un courrier, résumer un document, préparer une note, en gardant la maîtrise des données."],
       ["Sensibiliser les associations du territoire", "Un cycle pour les bénévoles et les trésoriers."],
     ],
-    fiches: [FICHES.elus, FICHES.habitants],
+    fiches: [
+      FICHES.elus,
+      FICHES.habitants,
+      {
+        ...FICHES.coaching,
+        desc: "Pour un élu ou un agent : des séances individuelles sur ses propres dossiers",
+        ariaFor: "pour les collectivités",
+      },
+    ],
   },
   {
     id: "reseaux-pros",
@@ -187,7 +214,14 @@ const PUBLICS: Public[] = [
     ],
     refLabel: "Références",
     refs: ["Compagnons du Devoir, centre de Brignais"],
-    fiches: [FICHES.pros],
+    fiches: [
+      FICHES.pros,
+      {
+        ...FICHES.coaching,
+        desc: "Pour un commerçant, un artisan ou un libéral : mettre l'IA en place dans son activité",
+        ariaFor: "pour les réseaux professionnels",
+      },
+    ],
   },
 ];
 
@@ -549,7 +583,7 @@ export default function Ateliers() {
             Les fiches à télécharger
           </h2>
           <p className="m-0 leading-[1.55]">
-            Chaque fiche présente l'atelier, les cas d'usage, le déroulé et les modalités pratiques. Vous pouvez la transmettre à votre bureau, à votre conseil ou à vos adhérents.
+            Chaque fiche présente l'atelier ou l'accompagnement, les cas d'usage, le déroulé et les modalités pratiques. Vous pouvez la transmettre à votre bureau, à votre conseil ou à vos adhérents.
           </p>
         </div>
         <ul className="grid gap-3 lg:grid-cols-2 m-0 px-5 pb-9 lg:px-12 lg:py-14 list-none">
