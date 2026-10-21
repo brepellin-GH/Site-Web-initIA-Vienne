@@ -55,7 +55,7 @@ async function adminWrite(payload: Record<string, unknown>) {
   return res;
 }
 
-// Lectures des tables contacts et abonnes : via la fonction serveur admin-read
+// Lectures des tables contacts, abonnes et ateliers : via la fonction serveur admin-read
 // (mot de passe vérifié côté serveur), plus jamais avec la clé anonyme.
 async function adminRead<T>(action: string): Promise<T> {
   const res = await fetch("/.netlify/functions/admin-read", {
@@ -143,18 +143,14 @@ function Dashboard() {
   const [expanded, setExpanded] = useState<string | null>(null);
 
   useEffect(() => {
-    adminRead<{ nbAbonnesActifs: number; contacts: Contact[] }>("dashboard")
-      .then(({ nbAbonnesActifs, contacts }) => {
+    // nbAteliers : ateliers publics visibles à venir, comptés côté serveur.
+    adminRead<{ nbAbonnesActifs: number; contacts: Contact[]; nbAteliers: number }>("dashboard")
+      .then(({ nbAbonnesActifs, contacts, nbAteliers }) => {
         setNbAbonnes(nbAbonnesActifs);
         setContacts(contacts ?? []);
+        setNbAteliers(nbAteliers ?? 0);
       })
       .catch((err) => console.error(err));
-
-    // Ateliers publics uniquement (acces vide traité comme public, comme sur le site).
-    supabase.from("ateliers").select("id", { count: "exact" })
-      .eq("visible", true).gt("date_heure", new Date().toISOString())
-      .or("acces.is.null,acces.neq.prive")
-      .then(({ count }) => setNbAteliers(count ?? 0));
 
     supabase.from("envois_newsletter").select("*")
       .then(({ data }) => {
@@ -400,8 +396,10 @@ function GestionAteliers() {
 
   const load = () => {
     setLoading(true);
-    supabase.from("ateliers").select("*").order("date_heure", { ascending: false })
-      .then(({ data }) => { setAteliers((data as Atelier[]) ?? []); setLoading(false); });
+    adminRead<{ ateliers: Atelier[] }>("list-ateliers")
+      .then(({ ateliers }) => setAteliers(ateliers ?? []))
+      .catch((err) => console.error(err))
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => { load(); }, []);

@@ -1,4 +1,4 @@
-// Lectures de l'administration (contacts, abonnés) avec la clé service.
+// Lectures de l'administration (contacts, abonnés, ateliers) avec la clé service.
 // Remplace les lectures faites auparavant avec la clé anonyme publique.
 
 const CORS = {
@@ -36,21 +36,28 @@ exports.handler = async (event) => {
 
   try {
     if (action === "dashboard") {
-      // Nombre d'abonnés actifs (en-tête Content-Range « 0-0/64 ») et 5 derniers contacts
-      const [resCount, resContacts] = await Promise.all([
+      // Nombre d'abonnés actifs (en-tête Content-Range « 0-0/64 »), 5 derniers contacts
+      // et nombre d'ateliers publics visibles à venir (acces vide traité comme public).
+      const now = encodeURIComponent(new Date().toISOString());
+      const [resCount, resContacts, resAteliers] = await Promise.all([
         fetch(`${base}/abonnes?actif=eq.true&select=id&limit=1`, {
           headers: { ...sbHeaders, Prefer: "count=exact" },
         }),
         fetch(`${base}/contacts?select=id,created_at,name,email,type,message&order=created_at.desc&limit=5`, {
           headers: sbHeaders,
         }),
+        fetch(`${base}/ateliers?select=id&limit=1&visible=eq.true&date_heure=gt.${now}&or=(acces.is.null,acces.neq.prive)`, {
+          headers: { ...sbHeaders, Prefer: "count=exact" },
+        }),
       ]);
       if (!resCount.ok) throw new Error(await resCount.text());
       if (!resContacts.ok) throw new Error(await resContacts.text());
-      const range = resCount.headers.get("content-range") || "";
-      const nbAbonnesActifs = Number(range.split("/")[1]) || 0;
+      if (!resAteliers.ok) throw new Error(await resAteliers.text());
+      const total = (res) => Number((res.headers.get("content-range") || "").split("/")[1]) || 0;
+      const nbAbonnesActifs = total(resCount);
+      const nbAteliers = total(resAteliers);
       const contacts = await resContacts.json();
-      return { statusCode: 200, headers: CORS, body: JSON.stringify({ nbAbonnesActifs, contacts }) };
+      return { statusCode: 200, headers: CORS, body: JSON.stringify({ nbAbonnesActifs, contacts, nbAteliers }) };
     }
 
     if (action === "list-abonnes") {
@@ -60,6 +67,14 @@ exports.handler = async (event) => {
       if (!res.ok) throw new Error(await res.text());
       const abonnes = await res.json();
       return { statusCode: 200, headers: CORS, body: JSON.stringify({ abonnes }) };
+    }
+
+    if (action === "list-ateliers") {
+      // Tous les ateliers, masqués compris.
+      const res = await fetch(`${base}/ateliers?select=*&order=date_heure.desc`, { headers: sbHeaders });
+      if (!res.ok) throw new Error(await res.text());
+      const ateliers = await res.json();
+      return { statusCode: 200, headers: CORS, body: JSON.stringify({ ateliers }) };
     }
 
     return { statusCode: 400, headers: CORS, body: JSON.stringify({ error: "Action inconnue" }) };
