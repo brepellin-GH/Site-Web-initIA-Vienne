@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'IA en clair — N°12 — initIA Vienne</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #F4F1EC; font-family: 'Archivo', Arial, sans-serif; color: #2C2825; -webkit-font-smoothing: antialiased; }
+  .email-wrapper { max-width: 620px; margin: 0 auto; background: #FAF3E8; }
+  .header { background: #006D29; padding: 28px 40px 24px; border-bottom: 4px solid #F07E01; }
+  .header-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #F07E01; margin-bottom: 4px; }
+  .header-title { font-family: 'Archivo', Arial, sans-serif; font-weight: 700; font-size: 28px; color: #FFFDF9; line-height: 1.2; }
+  .header-title span { color: #F07E01; }
+  .section-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #F07E01; margin-bottom: 6px; }
+  .section-title { font-family: 'Archivo', Arial, sans-serif; font-weight: 700; font-size: 21px; color: #006D29; line-height: 1.3; margin-bottom: 14px; }
+  .section-body { font-size: 15px; line-height: 1.8; color: #3D3830; margin-bottom: 24px; }
+  .section-body strong { color: #006D29; font-weight: 700; }
+  .image-block { margin: 20px 0 8px; border-radius: 0; overflow: hidden; }
+  .image-block img { width: 100%; display: block; }
+  .image-caption { font-size: 12px; color: #9A9088; text-align: center; margin-bottom: 24px; font-style: italic; padding: 0 10px; }
+  .actu-block { background: #FFF8F0; border-left: 4px solid #F07E01; border-radius: 0; padding: 20px 24px; margin-bottom: 28px; }
+  .actu-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #F07E01; margin-bottom: 8px; }
+  .actu-title { font-family: 'Archivo', Arial, sans-serif; font-weight: 700; font-size: 17px; color: #006D29; margin-bottom: 10px; line-height: 1.3; }
+  .actu-body { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .actu-body strong { color: #006D29; }
+  .divider { height: 1px; background: #D4C9B8; margin: 28px 0; }
+  .tool-card { background: #F4F1EC; border-radius: 0; padding: 24px 26px; margin-bottom: 28px; }
+  .tool-badge { display: inline-block; background: #F07E01; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 0; margin-bottom: 10px; }
+  .tool-title { font-family: 'Archivo', Arial, sans-serif; font-weight: 700; font-size: 17px; color: #006D29; margin-bottom: 16px; line-height: 1.3; }
+  .question-block { border: 1.5px solid #D4C9B8; border-radius: 0; padding: 24px 26px; margin-bottom: 28px; }
+  .question-quote { font-family: 'Archivo', Arial, sans-serif; font-size: 15px; font-style: italic; color: #4A4540; margin-bottom: 14px; line-height: 1.6; padding-left: 16px; border-left: 3px solid #F07E01; }
+  .question-answer { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .question-answer strong { color: #006D29; }
+  .cta-block { background: #006D29; border-radius: 0; padding: 26px 28px; margin-bottom: 36px; text-align: center; }
+  .cta-block p { font-size: 14px; line-height: 1.7; color: rgba(255,253,249,0.85); margin-bottom: 16px; }
+  .cta-block p strong { color: #FFFDF9; }
+  .cta-button { display: inline-block; background: #F07E01; color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; padding: 11px 24px; border-radius: 0; }
+  .next-issue { margin-bottom: 40px; padding: 20px 0; border-top: 1px dashed #D4C9B8; }
+  .next-issue-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #7A7068; margin-bottom: 8px; }
+  .next-issue-text { font-family: 'Archivo', Arial, sans-serif; font-size: 15px; color: #006D29; font-style: italic; margin-bottom: 4px; }
+  .next-issue-sub { font-size: 13px; color: #7A7068; }
+  .footer { background: #006D29; padding: 32px 40px; }
+  .footer-name { font-family: 'Archivo', Arial, sans-serif; font-weight: 700; font-size: 16px; color: #FFFDF9; margin-bottom: 4px; }
+  .footer-desc { font-size: 12px; color: rgba(255,253,249,0.85); margin-bottom: 20px; line-height: 1.6; }
+  .footer-sep { color: rgba(255,253,249,0.5); font-size: 12px; margin: 0 8px; }
+  .footer-legal { font-size: 11px; color: rgba(255,253,249,0.75); line-height: 1.6; border-top: 1px solid rgba(255,253,249,0.25); padding-top: 16px; }
+  .footer-legal a { color: #F07E01; }
+  .intro-block { border-left: 3px solid #F07E01; padding-left: 18px; margin-bottom: 36px; }
+  .intro-block p { font-family: 'Archivo', Arial, sans-serif; font-size: 15px; line-height: 1.75; color: #4A4540; font-style: italic; }
+  @media (max-width: 480px) {
+    .header, .body-content, .footer { padding-left: 20px; padding-right: 20px; }
+    .header-title { font-size: 23px; }
+    .band-cell { padding: 10px 20px !important; font-size: 11px !important; letter-spacing: 0.5px !important; white-space: nowrap; }
+  }
+</style>
+</head>
+<body>
+<div class="email-wrapper">
+
+  <!-- ============================================================
+       EN-TÊTE — ne pas modifier
+       ============================================================ -->
+  <div class="header">
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:16px;">
+      <tr>
+        <td style="padding-right:36px; vertical-align:middle;">
+          <img src="https://initia-vienne.com/newsletters/logo_newsletter.png" alt="initIA Vienne" width="120" height="54" style="width:120px; height:54px; display:block; border:0;">
+        </td>
+        <td style="vertical-align:middle;">
+          <div class="header-label">La newsletter</div>
+          <div class="header-title">L'IA en clair <span>·</span></div>
+        </td>
+      </tr>
+    </table>
+    <div style="font-size:12px; color:rgba(255,253,249,0.85);">
+      Par Bruno Repellin &nbsp;<span style="color:#F07E01;">|</span>&nbsp; initIA Vienne &nbsp;<span style="color:#F07E01;">|</span>&nbsp; Pour les curieux de l'IA
+    </div>
+  </div>
+
+  <!-- ============================================================
+       BANDEAU — modifier : NUMERO et MOIS_ANNEE
+       ============================================================ -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F07E01;">
+    <tr>
+      <td class="band-cell" style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase;">N° 12 &nbsp;·&nbsp; Octobre 2026</td>
+      <td class="band-cell" style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase; text-align:right;">Lecture : 3 min &#9749;</td>
+    </tr>
+  </table>
+
+  <!-- ============================================================
+       CORPS
+       ============================================================ -->
+  <div class="body-content" style="padding: 40px 40px 0;">
+
+    <!-- INTRO — modifier le texte entre les balises <p> -->
+    <div class="intro-block" style="margin-top:36px;">
+      <p>Bonjour,<br><br>
+      Les associations vivent grâce à des bénévoles qui donnent leur temps sans compter. Et une bonne partie de ce temps part dans des tâches peu visibles : convocations, comptes rendus, affiches, relances…<br><br>Je le vis moi-même. Trésorier bénévole d'une association, je prépare le point financier de nos réunions avec Claude : je pars d'un modèle de présentation déjà prêt et je lui demande de l'actualiser à partir de mes tableaux Excel de suivi des comptes et des adhésions. Je garde la main sur chaque chiffre, mais je gagne un temps précieux sur la mise en forme.<br><br>Dans ce numéro, voyons comment l'IA peut alléger la vie de votre association, sans lui retirer son âme.</p>
+    </div>
+
+    <!-- IMAGE — modifier : NOM_FICHIER_IMAGE et LEGENDE_IMAGE
+         En local   : src="nom_du_fichier.png"
+         Sur Netlify : src="https://initia-vienne.com/newsletters/nom_du_fichier.png" -->
+    <div class="image-block">
+      <img src="https://initia-vienne.com/newsletters/image_12.jpg" alt="Sur une table de salle associative, un carnet de notes griffonnées à côté d'un compte rendu imprimé bien rangé et d'une affiche colorée." style="width:100%; display:block; border-radius: 0;">
+    </div>
+    <p class="image-caption">Image créée avec ChatGPT.</p>
+
+    <!-- BADGE — ne pas modifier -->
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius: 0; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#006D29; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour tout le monde</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ============================================================
+         ACTU DU MOMENT — modifier : TITRE_ACTU et CONTENU_ACTU
+         ============================================================ -->
+    <div class="actu-block">
+      <div class="actu-label">&#9889; L'actu du moment</div>
+      <div class="actu-title">Associations : « L'usage de l'intelligence artificielle reste basique »</div>
+      <p class="actu-body">Dans <strong>Le Dauphiné libéré du 16 octobre</strong>, Jeanne Bretécher, fondatrice du think tank européen Social Good Accelerator, fait le point : chez les bénévoles comme chez les salariés d'association, l'IA sert surtout à rédiger des comptes rendus, à monter des dossiers de financement et à préparer des posts pour les réseaux sociaux.<br><br>Une étude de France générosités va dans le même sens : <strong>86 %</strong> des professionnels d'associations et de fondations interrogés utilisent déjà l'IA, mais près de la moitié (<strong>47 %</strong>) le font sans aucun cadre fixé par leur structure.</p>
+    </div>
+
+    <!-- ============================================================
+         SUJET DU MOIS — modifier : TITRE_SUJET et CONTENU_SUJET
+         ============================================================ -->
+    <div class="section-eyebrow">Le sujet du mois</div>
+    <h2 class="section-title">L'IA, le bénévole qui ne compte pas ses heures</h2>
+    <p class="section-body">Dans une association, ce sont souvent les mêmes qui tiennent le stylo. L'IA ne remplace ni l'engagement ni la convivialité, mais elle peut se charger du premier jet. Voici trois moments où elle rend vraiment service.<br><br><strong style="color:#006D29;">Avant la réunion.</strong> Donnez en vrac à ChatGPT, Claude, Gemini ou Vibe les points à aborder : l'IA les remet dans un ordre logique, propose un ordre du jour clair et rédige la convocation. Il ne vous reste qu'à vérifier la date et le lieu.<br><br><strong style="color:#F07E01;">Après la réunion.</strong> Vos notes sont pleines d'abréviations ? Collez-les, dictez-les ou photographiez votre carnet. L'IA en tire un compte rendu structuré : décisions prises, résultats des votes, actions à mener avec le nom de la personne et l'échéance.<br><br><strong style="color:#7A7068;">Pour communiquer.</strong> Une même information ne se dit pas de la même façon partout : une affiche doit accrocher, un message aux adhérents doit être court, un courrier à la mairie doit rester formel. L'IA adapte le ton en quelques secondes. À vous de relire avant d'envoyer.</p>
+
+    <!-- ============================================================
+         CAS D'USAGE — modifier : TITRE_CAS et les 4 étapes
+         ============================================================ -->
+    <div class="section-eyebrow">Le cas d'usage</div>
+    <h2 class="section-title">« L'AG, c'était samedi. Le compte rendu est prêt dimanche. »</h2>
+    <p class="section-body">Christiane est secrétaire bénévole d'un club de randonnée de Vienne. Samedi, l'assemblée générale a duré deux heures : bilan de l'année, budget, programme des sorties, élection du bureau. Elle a trois pages de notes et peu d'envie de tout retaper. Voici comment elle s'y prend.</p>
+
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%; margin-bottom:28px;">
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#006D29; color:#F07E01; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">1</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#006D29;">Rassembler ses notes.</strong> Elle photographie son carnet ou dicte ses notes sur son téléphone. Avant de les confier à l'IA, elle retire les adresses et numéros de téléphone des adhérents : l'IA n'en a pas besoin.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#006D29; color:#F07E01; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">2</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#006D29;">Demander une trame claire.</strong> Elle écrit : « Voici mes notes de l'assemblée générale de notre club de randonnée. Rédige un compte rendu avec les décisions, les résultats des votes et un tableau des actions : qui fait quoi et pour quand. »</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#006D29; color:#F07E01; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">3</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#006D29;">Relire et corriger.</strong> L'IA peut mal lire un prénom ou se tromper sur un chiffre. Christiane vérifie les noms, les montants et les résultats des votes, puis fait valider le texte par la présidente.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top;"><div style="width:26px; height:26px; background:#006D29; color:#F07E01; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">4</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top;"><strong style="color:#006D29;">Décliner pour les adhérents.</strong> Elle demande enfin : « Résume ce compte rendu en 5 lignes, sur un ton chaleureux, pour un message aux adhérents. » Le compte rendu complet va au bureau, le résumé à tous les membres.</td>
+      </tr>
+    </table>
+
+    <div class="divider"></div>
+
+    <!-- BADGES — ne pas modifier -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:36px 0 28px;">
+      <tr>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+        <td style="padding:0 14px; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#B0A898; white-space:nowrap; text-align:center;">Pour ceux qui pratiquent déjà</td>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+      </tr>
+    </table>
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius: 0; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#F07E01; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour aller plus loin</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ============================================================
+         ASTUCE DU MOIS — modifier : TITRE_ASTUCE, BADGE_ASTUCE,
+         INTRO_ASTUCE, CONTENU_PROMPT, CONTENU_RETENIR
+         ============================================================ -->
+    <div class="section-eyebrow">L'astuce du mois</div>
+    <div class="tool-card">
+      <div class="tool-badge">Prompt clé en main</div>
+      <div class="tool-title">Un seul prompt pour annoncer votre événement partout</div>
+      <p style="font-size:14px; line-height:1.7; color:#3D3830; margin-bottom:16px;">Loto, vide-grenier, concert, sortie : chaque événement demande une affiche, un message aux adhérents et un post sur les réseaux. Plutôt que d'écrire trois fois, demandez les trois versions d'un coup.</p>
+      <div style="background:#E8F4EC; border-radius: 0; padding:16px 20px; margin-bottom:16px; border-left:3px solid #006D29;">
+        <p style="font-family:'Courier New', monospace; font-size:12px; line-height:1.9; color:#006D29; margin:0;">Tu es bénévole chargé de la communication d'une association. Voici notre événement :<br>- Association : <strong>[nom et activité]</strong><br>- Événement : <strong>[type, date, heure, lieu]</strong><br>- Public visé : <strong>[adhérents, familles, habitants du quartier…]</strong><br>- Infos pratiques : <strong>[tarif, inscription, contact]</strong><br><br>Rédige trois versions :<br>1. Le texte d'une affiche : un titre accrocheur, une phrase d'accroche et les infos pratiques.<br>2. Un message court pour SMS ou WhatsApp (moins de 300 caractères).<br>3. Un post Facebook chaleureux avec 2 ou 3 émojis.<br>N'invente aucune information que je ne t'ai pas donnée.</p>
+      </div>
+      <div style="background:#FFF8F0; border-radius: 0; padding:12px 16px; border-left:3px solid #F07E01;">
+        <p style="font-size:13px; line-height:1.65; color:#3D3830; margin:0;"><strong style="color:#F07E01;">À retenir :</strong> relisez toujours la date, l'heure et le lieu, une erreur sur une affiche coûte cher. Si le ton ne vous plaît pas, demandez simplement « plus festif », « plus sobre » ou « plus court ». Vous pouvez même demander à ChatGPT de créer l'affiche complète, texte compris : le résultat est souvent réussi, mais relisez chaque mot avant d'imprimer.</p>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         QUESTION D'UN PARTICIPANT — modifier : QUESTION et REPONSE
+         ============================================================ -->
+    <div class="section-eyebrow">La question d'un participant</div>
+    <div class="question-block">
+      <p class="question-quote">"Notre association a un petit budget : faut-il vraiment payer un abonnement à une IA ?"</p>
+      <p class="question-answer"><strong>Pour la plupart des usages, le gratuit suffit.</strong> Les versions gratuites de ChatGPT, Claude, Gemini et Vibe permettent déjà de rédiger un compte rendu, une affiche ou un courrier. Leurs limites (nombre de messages par jour, fonctions avancées) gênent rarement une association qui s'en sert quelques fois par semaine.<br><br><strong>Des offres réservées aux associations existent.</strong> Google inclut sans frais son assistant Gemini et son outil NotebookLM dans Google Workspace pour les associations. OpenAI propose ChatGPT Business à tarif réduit (environ 8 dollars par mois et par utilisateur) et Anthropic accorde jusqu'à 75 % de remise sur l'offre Team de Claude. Il faut faire une demande et justifier du statut associatif.<br><br><strong>Quand payer devient utile.</strong> Un abonnement se justifie si plusieurs bénévoles travaillent régulièrement sur les mêmes documents, ou si vous manipulez des données d'adhérents : les offres professionnelles garantissent que vos échanges ne servent pas à entraîner l'IA. Jeanne Bretécher conseille d'ailleurs de privilégier les outils français comme Vibe de Mistral. Elle rappelle aussi que les responsables associatifs manipulent des données personnelles d'adhérents : un sujet qui mérite qu'on s'y forme.<br><br><strong>Mon conseil :</strong> commencez gratuitement, avec un ou deux bénévoles volontaires. Au bout de quelques mois, vous saurez si un abonnement vaut la dépense. Avec une version gratuite, pensez à désactiver dans les paramètres l'option qui autorise l'outil à utiliser vos conversations pour s'améliorer.</p>
+    </div>
+
+    <!-- ============================================================
+         CTA — modifier : TEXTE_CTA (lien fixe, ne pas modifier)
+         ============================================================ -->
+    <div class="cta-block">
+      <p>Vous faites partie du bureau d'une association ou d'un centre social ? J'anime des <strong>ateliers d'initiation à l'IA dans vos locaux</strong>, adaptés à vos tâches du quotidien : comptes rendus, communication, suivi des adhérents.</p>
+      <a class="cta-button" href="https://initia-vienne.com/ateliers">Voir les prochaines dates &#8594;</a>
+    </div>
+
+    <!-- ============================================================
+         PROCHAIN NUMÉRO — modifier : TITRE_SUIVANT et SOUS_TITRE_SUIVANT
+         ============================================================ -->
+    <div class="next-issue">
+      <div class="next-issue-label">Au prochain numéro</div>
+      <div class="next-issue-text">L'IA, un coup de main pour nos commerçants et artisans</div>
+      <div class="next-issue-sub">Fiches produits, réponses aux avis Google, posts sur les réseaux : comment l'IA peut faire gagner du temps aux indépendants de chez nous.</div>
+    </div>
+
+  </div>
+
+  <!-- ============================================================
+       FOOTER — ne pas modifier (cibles alignées sur le site refondu, octobre 2026)
+       ============================================================ -->
+  <div class="footer">
+    <div class="footer-name">Bruno Repellin</div>
+    <div class="footer-desc">
+      initIA Vienne · Ateliers d'initiation à l'intelligence artificielle<br>
+      Pour les associations et centres sociaux, les collectivités et les réseaux professionnels de Vienne et des environs.
+    </div>
+    <div style="margin-bottom:20px;">
+      <a href="https://initia-vienne.com" style="font-size:13px; color:#F07E01; text-decoration:none; font-weight:500;">initia-vienne.com</a>
+      <span class="footer-sep">|</span>
+      <a href="mailto:initia.vienne@gmail.com" style="font-size:13px; color:#F07E01; text-decoration:none; font-weight:500;">initia.vienne@gmail.com</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.instagram.com/initia.vienne" style="font-size:13px; color:#F07E01; text-decoration:none; font-weight:500;">Instagram</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.linkedin.com/in/bruno-repellin-b1425a21" style="font-size:13px; color:#F07E01; text-decoration:none; font-weight:500;">LinkedIn</a>
+    </div>
+    <div class="footer-legal">
+      Vous recevez cet email parce que vous êtes inscrit à la newsletter initIA Vienne.<br>
+      <a href="{{UNSUBSCRIBE_URL}}">Se désinscrire</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
