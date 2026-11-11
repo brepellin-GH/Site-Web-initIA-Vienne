@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'IA en clair — N°13 — initIA Vienne</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #F4F1EC; font-family: 'Archivo', Arial, sans-serif; color: #2C2825; -webkit-font-smoothing: antialiased; }
+  .email-wrapper { max-width: 620px; margin: 0 auto; background: #FAF3E8; }
+  .header { background: #006D29; padding: 28px 40px 24px; border-bottom: 4px solid #F07E01; }
+  .header-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #F07E01; margin-bottom: 4px; }
+  .header-title { font-family: 'Archivo', Arial, sans-serif; font-weight: 700; font-size: 28px; color: #FFFDF9; line-height: 1.2; }
+  .header-title span { color: #F07E01; }
+  .section-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #F07E01; margin-bottom: 6px; }
+  .section-title { font-family: 'Archivo', Arial, sans-serif; font-weight: 700; font-size: 21px; color: #006D29; line-height: 1.3; margin-bottom: 14px; }
+  .section-body { font-size: 15px; line-height: 1.8; color: #3D3830; margin-bottom: 24px; }
+  .section-body strong { color: #006D29; font-weight: 700; }
+  .image-block { margin: 20px 0 8px; border-radius: 0; overflow: hidden; }
+  .image-block img { width: 100%; display: block; }
+  .image-caption { font-size: 12px; color: #9A9088; text-align: center; margin-bottom: 24px; font-style: italic; padding: 0 10px; }
+  .actu-block { background: #FFF8F0; border-left: 4px solid #F07E01; border-radius: 0; padding: 20px 24px; margin-bottom: 28px; }
+  .actu-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #F07E01; margin-bottom: 8px; }
+  .actu-title { font-family: 'Archivo', Arial, sans-serif; font-weight: 700; font-size: 17px; color: #006D29; margin-bottom: 10px; line-height: 1.3; }
+  .actu-body { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .actu-body strong { color: #006D29; }
+  .divider { height: 1px; background: #D4C9B8; margin: 28px 0; }
+  .tool-card { background: #F4F1EC; border-radius: 0; padding: 24px 26px; margin-bottom: 28px; }
+  .tool-badge { display: inline-block; background: #F07E01; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 0; margin-bottom: 10px; }
+  .tool-title { font-family: 'Archivo', Arial, sans-serif; font-weight: 700; font-size: 17px; color: #006D29; margin-bottom: 16px; line-height: 1.3; }
+  .question-block { border: 1.5px solid #D4C9B8; border-radius: 0; padding: 24px 26px; margin-bottom: 28px; }
+  .question-quote { font-family: 'Archivo', Arial, sans-serif; font-size: 15px; font-style: italic; color: #4A4540; margin-bottom: 14px; line-height: 1.6; padding-left: 16px; border-left: 3px solid #F07E01; }
+  .question-answer { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .question-answer strong { color: #006D29; }
+  .cta-block { background: #006D29; border-radius: 0; padding: 26px 28px; margin-bottom: 36px; text-align: center; }
+  .cta-block p { font-size: 14px; line-height: 1.7; color: rgba(255,253,249,0.85); margin-bottom: 16px; }
+  .cta-block p strong { color: #FFFDF9; }
+  .cta-button { display: inline-block; background: #F07E01; color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; padding: 11px 24px; border-radius: 0; }
+  .next-issue { margin-bottom: 40px; padding: 20px 0; border-top: 1px dashed #D4C9B8; }
+  .next-issue-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #7A7068; margin-bottom: 8px; }
+  .next-issue-text { font-family: 'Archivo', Arial, sans-serif; font-size: 15px; color: #006D29; font-style: italic; margin-bottom: 4px; }
+  .next-issue-sub { font-size: 13px; color: #7A7068; }
+  .footer { background: #006D29; padding: 32px 40px; }
+  .footer-name { font-family: 'Archivo', Arial, sans-serif; font-weight: 700; font-size: 16px; color: #FFFDF9; margin-bottom: 4px; }
+  .footer-desc { font-size: 12px; color: rgba(255,253,249,0.85); margin-bottom: 20px; line-height: 1.6; }
+  .footer-sep { color: rgba(255,253,249,0.5); font-size: 12px; margin: 0 8px; }
+  .footer-legal { font-size: 11px; color: rgba(255,253,249,0.75); line-height: 1.6; border-top: 1px solid rgba(255,253,249,0.25); padding-top: 16px; }
+  .footer-legal a { color: #F07E01; }
+  .intro-block { border-left: 3px solid #F07E01; padding-left: 18px; margin-bottom: 36px; }
+  .intro-block p { font-family: 'Archivo', Arial, sans-serif; font-size: 15px; line-height: 1.75; color: #4A4540; font-style: italic; }
+  @media (max-width: 480px) {
+    .header, .body-content, .footer { padding-left: 20px; padding-right: 20px; }
+    .header-title { font-size: 23px; }
+    .band-cell { padding: 10px 20px !important; font-size: 11px !important; letter-spacing: 0.5px !important; white-space: nowrap; }
+  }
+</style>
+</head>
+<body>
+<div class="email-wrapper">
+
+  <!-- ============================================================
+       EN-TÊTE — ne pas modifier
+       ============================================================ -->
+  <div class="header">
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:16px;">
+      <tr>
+        <td style="padding-right:36px; vertical-align:middle;">
+          <img src="https://initia-vienne.com/newsletters/logo_newsletter.png" alt="initIA Vienne" width="120" height="54" style="width:120px; height:54px; display:block; border:0;">
+        </td>
+        <td style="vertical-align:middle;">
+          <div class="header-label">La newsletter</div>
+          <div class="header-title">L'IA en clair <span>·</span></div>
+        </td>
+      </tr>
+    </table>
+    <div style="font-size:12px; color:rgba(255,253,249,0.85);">
+      Par Bruno Repellin &nbsp;<span style="color:#F07E01;">|</span>&nbsp; initIA Vienne &nbsp;<span style="color:#F07E01;">|</span>&nbsp; Pour les curieux de l'IA
+    </div>
+  </div>
+
+  <!-- ============================================================
+       BANDEAU — modifier : NUMERO et MOIS_ANNEE
+       ============================================================ -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F07E01;">
+    <tr>
+      <td class="band-cell" style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase;">N° 13 &nbsp;·&nbsp; Novembre 2026</td>
+      <td class="band-cell" style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase; text-align:right;">Lecture : 3 min &#9749;</td>
+    </tr>
+  </table>
+
+  <!-- ============================================================
+       CORPS
+       ============================================================ -->
+  <div class="body-content" style="padding: 40px 40px 0;">
+
+    <!-- INTRO — modifier le texte entre les balises <p> -->
+    <div class="intro-block" style="margin-top:36px;">
+      <p>Bonjour,<br><br>
+      Boulangers, fleuristes, coiffeurs, plombiers, menuisiers : les commerçants et artisans de nos communes ont un point commun. Ils passent leurs journées à servir leurs clients et leurs soirées sur les devis, les messages et les réseaux sociaux. Ce mois-ci, voyons comment l'IA peut leur rendre un peu de ce temps.<br><br>J'aurai d'ailleurs le plaisir d'intervenir le 19 novembre à la matinale des adhérents de Vienne Atout Commerce, sur le thème de l'IA au quotidien.</p>
+    </div>
+
+    <!-- IMAGE — modifier : NOM_FICHIER_IMAGE et LEGENDE_IMAGE
+         En local   : src="nom_du_fichier.png"
+         Sur Netlify : src="https://initia-vienne.com/newsletters/nom_du_fichier.png" -->
+    <div class="image-block">
+      <img src="https://initia-vienne.com/newsletters/image_13.jpg" alt="Photographie du comptoir d'une boutique de quartier : un carnet de notes ouvert, un smartphone appuyé contre une vieille caisse enregistreuse, un bouquet de fleurs et un colis en papier kraft que l'on tamponne." style="width:100%; display:block; border-radius: 0;">
+    </div>
+    <p class="image-caption">Image créée avec ChatGPT.</p>
+
+    <!-- BADGE — ne pas modifier -->
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius: 0; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#006D29; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour tout le monde</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ============================================================
+         ACTU DU MOMENT — modifier : TITRE_ACTU et CONTENU_ACTU
+         ============================================================ -->
+    <div class="actu-block">
+      <div class="actu-label">&#9889; L'actu du moment</div>
+      <div class="actu-title">Artisanat : l'IA gagne du terrain, tout doucement</div>
+      <p class="actu-body">Le 7 octobre, la Direction générale des Entreprises (ministère de l'Économie) a publié un décryptage sur l'IA dans l'artisanat. Selon le baromètre France Num qu'elle cite, <strong style="color:#006D29;">27 %</strong> des chefs d'entreprises artisanales déclarent déjà utiliser un outil d'IA dans leur activité. L'État vise <strong style="color:#006D29;">50 % de TPE utilisatrices d'ici 2030</strong> avec son plan « Osez l'IA ». Les premiers usages cités sont très concrets : courriels, devis, réponses aux clients. L'IA y est présentée comme une aide pour les tâches répétitives et administratives, pas comme un remplaçant du savoir-faire.<br><br>Pour aller plus loin, le ministère publie un guide de fiches pratiques destiné aux artisans. Les chambres de métiers et de l'artisanat proposent aussi des ressources pour se former à l'IA.</p>
+    </div>
+
+    <!-- ============================================================
+         SUJET DU MOIS — modifier : TITRE_SUJET et CONTENU_SUJET
+         ============================================================ -->
+    <div class="section-eyebrow">Le sujet du mois</div>
+    <h2 class="section-title">L'IA, l'employé que vous n'avez pas encore embauché</h2>
+    <p class="section-body">Un commerçant ou un artisan fait tout lui-même : le métier, la vitrine, la comptabilité et le service après-vente. L'IA ne remplace ni votre savoir-faire ni votre sourire derrière le comptoir. Elle peut en revanche vous aider avec la paperasse. Voici trois endroits où elle rend service.<br><br><strong style="color:#006D29;">Communiquer.</strong> Une fiche produit, un post pour la page Facebook de la boutique, le texte de l'ardoise de la semaine. Vous décrivez en trois lignes ce que vous proposez et ChatGPT, Claude, Gemini ou Vibe vous suggèrent plusieurs versions. Vous choisissez et vous gardez votre ton.<br><br><strong style="color:#F07E01;">Répondre.</strong> Un avis Google, une demande de renseignements reçue le soir, un client mécontent. L'IA vous aide à trouver des mots justes et polis, surtout quand on est fatigué ou agacé. Vous relisez et vous envoyez.<br><br><strong style="color:#7A7068;">Gérer.</strong> Un devis à mettre au propre, une relance de facture, un message à un fournisseur. L'IA structure et rédige. Les chiffres restent de votre ressort : vérifiez toujours les montants avant d'envoyer.</p>
+
+    <!-- ============================================================
+         CAS D'USAGE — modifier : TITRE_CAS et les 4 étapes
+         ============================================================ -->
+    <div class="section-eyebrow">Le cas d'usage</div>
+    <h2 class="section-title">« Le devis du soir »</h2>
+    <p class="section-body">Thierry est menuisier à Vienne. Il vient de passer l'après-midi chez une cliente qui veut refaire ses placards de cuisine. Il est 19 h : ses notes sont griffonnées sur un carnet et il n'a guère envie de s'attaquer à un devis. Voici comment il s'y prend.</p>
+
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%; margin-bottom:28px;">
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#006D29; color:#F07E01; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">1</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#006D29;">Dicter ses notes.</strong> Dans sa camionnette, il dicte sur son téléphone ce qu'il a vu : dimensions, matériaux, délais, souhaits de la cliente. Il n'indique ni l'adresse ni le numéro de téléphone de la cliente : l'IA n'en a pas besoin.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#006D29; color:#F07E01; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">2</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#006D29;">Demander une trame.</strong> Il colle ses notes dans ChatGPT, Claude, Gemini ou Vibe avec cette consigne : « Voici mes notes de visite. Rédige un devis clair avec les travaux, les matériaux, le délai et un emplacement vide pour chaque prix. N'invente aucun chiffre. »</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#006D29; color:#F07E01; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">3</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#006D29;">Compléter et vérifier.</strong> L'IA a classé les postes. Thierry ajoute lui-même les prix et contrôle les dimensions et les matériaux : elle peut se tromper sur un chiffre ou oublier un poste. Il recopie ensuite le contenu dans son modèle de devis habituel.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top;"><div style="width:26px; height:26px; background:#006D29; color:#F07E01; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">4</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top;"><strong style="color:#006D29;">Rédiger le mail et la relance.</strong> Il demande un mail d'envoi chaleureux et le devis part le soir même. Huit jours plus tard, si la cliente n'a pas répondu, une relance polie de deux phrases lui permet de reprendre contact sans la brusquer.</td>
+      </tr>
+    </table>
+
+    <div class="divider"></div>
+
+    <!-- BADGES — ne pas modifier -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:36px 0 28px;">
+      <tr>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+        <td style="padding:0 14px; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#B0A898; white-space:nowrap; text-align:center;">Pour ceux qui pratiquent déjà</td>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+      </tr>
+    </table>
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius: 0; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#F07E01; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour aller plus loin</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ============================================================
+         ASTUCE DU MOIS — modifier : TITRE_ASTUCE, BADGE_ASTUCE,
+         INTRO_ASTUCE, CONTENU_PROMPT, CONTENU_RETENIR
+         ============================================================ -->
+    <div class="section-eyebrow">L'astuce du mois</div>
+    <div class="tool-card">
+      <div class="tool-badge">Prompt clé en main</div>
+      <div class="tool-title">Répondre à un avis client sans y passer la soirée</div>
+      <p style="font-size:14px; line-height:1.7; color:#3D3830; margin-bottom:16px;">Un avis Google mérite une réponse, surtout quand il est négatif. Mais trouver les mots à 20 h après une longue journée n'est pas simple. Collez l'avis dans ce prompt et laissez l'IA proposer un brouillon.</p>
+      <div style="background:#E8F4EC; border-radius: 0; padding:16px 20px; margin-bottom:16px; border-left:3px solid #006D29;">
+        <p style="font-family:'Courier New', monospace; font-size:12px; line-height:1.9; color:#006D29; margin:0;">Tu es le gérant d'un commerce de proximité. Voici l'avis d'un client :<br>« <strong>[collez l'avis ici]</strong> »<br>Mon commerce : <strong>[type de commerce, ville]</strong>.<br>Ce qui s'est passé de mon côté : <strong>[les faits, ou « rien de particulier »]</strong>.<br>Rédige une réponse de 4 à 5 lignes : un remerciement, une réponse précise à ce que dit le client et, si l'avis est négatif, une excuse sincère avec une proposition concrète. Ton : <strong>[chaleureux, sobre ou plus formel]</strong>. Vouvoie le client. N'invente aucun fait ni aucune promesse que je ne t'ai pas donnés.</p>
+      </div>
+      <div style="background:#FFF8F0; border-radius: 0; padding:12px 16px; border-left:3px solid #F07E01;">
+        <p style="font-size:13px; line-height:1.65; color:#3D3830; margin:0;"><strong style="color:#F07E01;">À retenir :</strong> relisez toujours avant de publier : une réponse trop parfaite sonne faux. Si le ton ne vous plaît pas, demandez « plus court », « moins formel » ou « plus chaleureux ». Face à un avis très négatif ou injuste, laissez passer une nuit avant de publier.</p>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         QUESTION D'UN PARTICIPANT — modifier : QUESTION et REPONSE
+         ============================================================ -->
+    <div class="section-eyebrow">La question d'un participant</div>
+    <div class="question-block">
+      <p class="question-quote">"Puis-je utiliser l'IA pour créer les photos de mes produits ?"</p>
+      <p class="question-answer"><strong style="color:#006D29;">Pour l'ambiance, oui.</strong> Une image d'ambiance pour un post (une table dressée, un décor de fête, un joli fond) ne trompe personne. Vous pouvez aussi demander à l'IA d'améliorer la lumière ou de nettoyer l'arrière-plan d'une vraie photo.<br><br><strong style="color:#F07E01;">Pour le produit lui-même, non.</strong> Une image générée qui montre un gâteau, un meuble ou un bijou plus beau que celui que vous vendez peut relever de la pratique commerciale trompeuse. C'est le genre de pratique que surveille la DGCCRF, le service de l'État chargé de la répression des fraudes. Le client doit retrouver en boutique ou dans son colis ce qu'il a vu sur la photo. Je ne suis pas juriste mais la règle de bon sens est simple.<br><br><strong style="color:#7A7068;">Le bon réflexe.</strong> Photographiez vous-même vos produits (un smartphone et la lumière d'une fenêtre suffisent). Et quand une image est créée par l'IA, dites-le : c'est ce que je fais sous l'image de cette newsletter. Vos clients apprécieront la transparence.</p>
+    </div>
+
+    <!-- ============================================================
+         CTA — modifier : TEXTE_CTA (lien fixe, ne pas modifier)
+         ============================================================ -->
+    <div class="actu-block">
+  <div class="actu-label">Vienne Atout Commerce</div>
+  <div class="actu-body"><strong>Un coup de pouce à Vienne Atout Commerce.</strong> Les professionnels qui envisagent de rejoindre l'association peuvent être invités à ses matinales et soirées. Pour en savoir plus, y compris sur les adhésions 2027, écrivez à <a href="mailto:contact@vienneatoutcommerce.fr" style="color:#006D29; font-weight:700;">contact@vienneatoutcommerce.fr</a>.</div>
+</div>
+
+<div class="cta-block">
+      <p>Vous êtes commerçant ou artisan et vous aimeriez apprivoiser l'IA sans y passer vos soirées ? J'anime des <strong>ateliers d'initiation à l'IA pour les professionnels de proximité</strong>, adaptés à votre quotidien : devis, avis clients, communication. Contactez-moi pour en parler.</p>
+      <a class="cta-button" href="https://initia-vienne.com/ateliers">Voir les prochaines dates &#8594;</a>
+    </div>
+
+    <!-- ============================================================
+         PROCHAIN NUMÉRO — modifier : TITRE_SUIVANT et SOUS_TITRE_SUIVANT
+         ============================================================ -->
+    <div class="next-issue">
+      <div class="next-issue-label">Au prochain numéro</div>
+      <div class="next-issue-text">L'IA et les fêtes de fin d'année</div>
+      <div class="next-issue-sub">Menus, cadeaux, vœux : comment l'IA peut vous aider à préparer les fêtes en toute sérénité.</div>
+    </div>
+
+  </div>
+
+  <!-- ============================================================
+       FOOTER — ne pas modifier (cibles alignées sur le site refondu, octobre 2026)
+       ============================================================ -->
+  <div class="footer">
+    <div class="footer-name">Bruno Repellin</div>
+    <div class="footer-desc">
+      initIA Vienne · Ateliers d'initiation à l'intelligence artificielle<br>
+      Pour les associations et centres sociaux, les collectivités et les réseaux professionnels de Vienne et des environs.
+    </div>
+    <div style="margin-bottom:20px;">
+      <a href="https://initia-vienne.com" style="font-size:13px; color:#F07E01; text-decoration:none; font-weight:500;">initia-vienne.com</a>
+      <span class="footer-sep">|</span>
+      <a href="mailto:initia.vienne@gmail.com" style="font-size:13px; color:#F07E01; text-decoration:none; font-weight:500;">initia.vienne@gmail.com</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.instagram.com/initia.vienne" style="font-size:13px; color:#F07E01; text-decoration:none; font-weight:500;">Instagram</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.linkedin.com/in/bruno-repellin-b1425a21" style="font-size:13px; color:#F07E01; text-decoration:none; font-weight:500;">LinkedIn</a>
+    </div>
+    <div class="footer-legal">
+      Vous recevez cet email parce que vous êtes inscrit à la newsletter initIA Vienne.<br>
+      <a href="{{UNSUBSCRIBE_URL}}">Se désinscrire</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
