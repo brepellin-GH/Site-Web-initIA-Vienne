@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'IA en clair · N°14 · initIA Vienne</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #F4F1EC; font-family: 'Archivo', Arial, sans-serif; color: #2C2825; -webkit-font-smoothing: antialiased; }
+  .email-wrapper { max-width: 620px; margin: 0 auto; background: #FAF3E8; }
+  .header { background: #006D29; padding: 28px 40px 24px; border-bottom: 4px solid #F07E01; }
+  .header-label { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: #F07E01; margin-bottom: 4px; }
+  .header-title { font-family: 'Archivo', Arial, sans-serif; font-weight: 700; font-size: 28px; color: #FFFDF9; line-height: 1.2; }
+  .header-title span { color: #F07E01; }
+  .section-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: #F07E01; margin-bottom: 6px; }
+  .section-title { font-family: 'Archivo', Arial, sans-serif; font-weight: 700; font-size: 21px; color: #006D29; line-height: 1.3; margin-bottom: 14px; }
+  .section-body { font-size: 15px; line-height: 1.8; color: #3D3830; margin-bottom: 24px; }
+  .section-body strong { color: #006D29; font-weight: 700; }
+  .image-block { margin: 20px 0 8px; border-radius: 0; overflow: hidden; }
+  .image-block img { width: 100%; display: block; }
+  .image-caption { font-size: 12px; color: #9A9088; text-align: center; margin-bottom: 24px; font-style: italic; padding: 0 10px; }
+  .actu-block { background: #FFF8F0; border-left: 4px solid #F07E01; border-radius: 0; padding: 20px 24px; margin-bottom: 28px; }
+  .actu-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #F07E01; margin-bottom: 8px; }
+  .actu-title { font-family: 'Archivo', Arial, sans-serif; font-weight: 700; font-size: 17px; color: #006D29; margin-bottom: 10px; line-height: 1.3; }
+  .actu-body { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .actu-body strong { color: #006D29; }
+  .divider { height: 1px; background: #D4C9B8; margin: 28px 0; }
+  .tool-card { background: #F4F1EC; border-radius: 0; padding: 24px 26px; margin-bottom: 28px; }
+  .tool-badge { display: inline-block; background: #F07E01; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 0; margin-bottom: 10px; }
+  .tool-title { font-family: 'Archivo', Arial, sans-serif; font-weight: 700; font-size: 17px; color: #006D29; margin-bottom: 16px; line-height: 1.3; }
+  .question-block { border: 1.5px solid #D4C9B8; border-radius: 0; padding: 24px 26px; margin-bottom: 28px; }
+  .question-quote { font-family: 'Archivo', Arial, sans-serif; font-size: 15px; font-style: italic; color: #4A4540; margin-bottom: 14px; line-height: 1.6; padding-left: 16px; border-left: 3px solid #F07E01; }
+  .question-answer { font-size: 14px; line-height: 1.75; color: #3D3830; }
+  .question-answer strong { color: #006D29; }
+  .cta-block { background: #006D29; border-radius: 0; padding: 26px 28px; margin-bottom: 36px; text-align: center; }
+  .cta-block p { font-size: 14px; line-height: 1.7; color: rgba(255,253,249,0.85); margin-bottom: 16px; }
+  .cta-block p strong { color: #FFFDF9; }
+  .cta-button { display: inline-block; background: #F07E01; color: #fff; font-size: 13px; font-weight: 700; text-decoration: none; padding: 11px 24px; border-radius: 0; }
+  .next-issue { margin-bottom: 40px; padding: 20px 0; border-top: 1px dashed #D4C9B8; }
+  .next-issue-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #7A7068; margin-bottom: 8px; }
+  .next-issue-text { font-family: 'Archivo', Arial, sans-serif; font-size: 15px; color: #006D29; font-style: italic; margin-bottom: 4px; }
+  .next-issue-sub { font-size: 13px; color: #7A7068; }
+  .footer { background: #006D29; padding: 32px 40px; }
+  .footer-name { font-family: 'Archivo', Arial, sans-serif; font-weight: 700; font-size: 16px; color: #FFFDF9; margin-bottom: 4px; }
+  .footer-desc { font-size: 12px; color: rgba(255,253,249,0.85); margin-bottom: 20px; line-height: 1.6; }
+  .footer-sep { color: rgba(255,253,249,0.5); font-size: 12px; margin: 0 8px; }
+  .footer-legal { font-size: 11px; color: rgba(255,253,249,0.75); line-height: 1.6; border-top: 1px solid rgba(255,253,249,0.25); padding-top: 16px; }
+  .footer-legal a { color: #F07E01; }
+  .intro-block { border-left: 3px solid #F07E01; padding-left: 18px; margin-bottom: 36px; }
+  .intro-block p { font-family: 'Archivo', Arial, sans-serif; font-size: 15px; line-height: 1.75; color: #4A4540; font-style: italic; }
+  @media (max-width: 480px) {
+    .header, .body-content, .footer { padding-left: 20px; padding-right: 20px; }
+    .header-title { font-size: 23px; }
+    .band-cell { padding: 10px 20px !important; font-size: 11px !important; letter-spacing: 0.5px !important; white-space: nowrap; }
+  }
+</style>
+</head>
+<body>
+<div class="email-wrapper">
+
+  <!-- ============================================================
+       EN-TÊTE — ne pas modifier
+       ============================================================ -->
+  <div class="header">
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:16px;">
+      <tr>
+        <td style="padding-right:36px; vertical-align:middle;">
+          <img src="https://initia-vienne.com/newsletters/logo_newsletter.png" alt="initIA Vienne" width="120" height="54" style="width:120px; height:54px; display:block; border:0;">
+        </td>
+        <td style="vertical-align:middle;">
+          <div class="header-label">La newsletter</div>
+          <div class="header-title">L'IA en clair <span>·</span></div>
+        </td>
+      </tr>
+    </table>
+    <div style="font-size:12px; color:rgba(255,253,249,0.85);">
+      Par Bruno Repellin &nbsp;<span style="color:#F07E01;">|</span>&nbsp; initIA Vienne &nbsp;<span style="color:#F07E01;">|</span>&nbsp; Pour les curieux de l'IA
+    </div>
+  </div>
+
+  <!-- ============================================================
+       BANDEAU — modifier : NUMERO et MOIS_ANNEE
+       ============================================================ -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F07E01;">
+    <tr>
+      <td class="band-cell" style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase;">N° 14 &nbsp;·&nbsp; Novembre 2026</td>
+      <td class="band-cell" style="padding:10px 40px; font-size:12px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase; text-align:right;">Lecture : 3 min &#9749;</td>
+    </tr>
+  </table>
+
+  <!-- ============================================================
+       CORPS
+       ============================================================ -->
+  <div class="body-content" style="padding: 40px 40px 0;">
+
+    <!-- INTRO — modifier le texte entre les balises <p> -->
+    <div class="intro-block" style="margin-top:36px;">
+      <p>Bonjour,<br><br>
+      À la matinale de Vienne Atout Commerce, où j'ai eu le plaisir d'intervenir le 19 novembre, une crainte est revenue plusieurs fois : si tout le monde fait ses affiches avec l'IA, tout va finir par se ressembler. Elle est légitime et ce numéro y répond. Vitrine d'un commerce, affiche d'une association ou cartes de vœux de la famille : à l'approche des fêtes, voyons comment donner à vos créations un air qui vous ressemble.</p>
+    </div>
+
+    <!-- IMAGE — modifier : NOM_FICHIER_IMAGE et LEGENDE_IMAGE
+         En local   : src="nom_du_fichier.png"
+         Sur Netlify : src="https://initia-vienne.com/newsletters/nom_du_fichier.png" -->
+    <div class="image-block">
+      <img src="https://initia-vienne.com/newsletters/image_14.jpg" alt="Photographie d'une table d'atelier sur laquelle sont disposées plusieurs maquettes de cartes et d'affiches de fêtes très différentes les unes des autres, avec des échantillons de papier de couleur, de la ficelle et un tampon encreur." style="width:100%; display:block; border-radius: 0;">
+    </div>
+    <p class="image-caption">Image créée avec ChatGPT.</p>
+
+    <!-- BADGE — ne pas modifier -->
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius: 0; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#006D29; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour tout le monde</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ============================================================
+         ACTU DU MOMENT — modifier : TITRE_ACTU et CONTENU_ACTU
+         ============================================================ -->
+    <div class="actu-block">
+      <div class="actu-label">&#9889; L'actu du moment</div>
+      <div class="actu-title">Affiches IA : l'été où tout le monde a remarqué qu'elles se ressemblent</div>
+      <p class="actu-body">Fin août, le média <strong style="color:#006D29;">Next</strong> a consacré une enquête aux affiches, cartes postales et menus créés avec l'IA, qui se sont multipliés cet été pour les fêtes de village, les brocantes, les marchés et les promotions. Beaucoup y trouvent un outil pratique : une friperie associative de la Manche s'en réjouit et des communes et comités des fêtes de Champagne y ont recours. Mais des internautes remarquent que les visuels <strong style="color:#006D29;">se ressemblent</strong> et des spécialistes relèvent des affiches trop chargées qui disent mal l'essentiel.<br><br>Le vrai défi n'est donc pas d'utiliser l'IA ou non : c'est de ne pas faire comme tout le monde.</p>
+    </div>
+
+    <!-- ============================================================
+         SUJET DU MOIS — modifier : TITRE_SUJET et CONTENU_SUJET
+         ============================================================ -->
+    <div class="section-eyebrow">Le sujet du mois</div>
+    <h2 class="section-title">Pourquoi tout se ressemble (et comment faire autrement)</h2>
+    <p class="section-body">Une demande vague donne souvent un résultat « moyen » : l'ambiance la plus courante, des guirlandes dorées, un sapin. Rien de faux mais rien qui parle de vous. Des chercheurs l'ont même observé en décembre 2025 dans la revue <em>Patterns</em> : quand deux IA se renvoient la balle sans personne pour les guider (l'une dessine, l'autre décrit l'image, puis on recommence) les images finissent par converger vers une douzaine de thèmes très classiques comme les cathédrales gothiques, les paysages ou les phares sous l'orage. Leur conclusion : garder l'humain dans la boucle pourrait être essentiel. C'est donc vous qui faites la différence, avec trois leviers.<br><br><strong style="color:#006D29;">Donner de la matière.</strong> Vos couleurs, l'ambiance de votre boutique ou de votre salle, le public visé, vos vraies photos : plus vous apportez d'éléments qui vous sont propres, moins le résultat ressemble à celui du voisin. Indiquez aussi ce que vous ne voulez pas (pas de dorures, pas de père Noël).<br><br><strong style="color:#F07E01;">Demander plusieurs pistes.</strong> Plutôt qu'une seule image, réclamez trois propositions franchement différentes (une sobre, une colorée, une plus originale) et choisissez. Vous pouvez même mélanger : la composition de l'une avec les couleurs d'une autre.<br><br><strong style="color:#7A7068;">Garder la main.</strong> Retouchez au lieu de tout régénérer et ajoutez vous-même votre logo, vos horaires et vos prix : une erreur de chiffre sur une affiche coûte cher et votre vrai logo vaut mieux qu'une imitation.<br><br><em>Petite précision pour les curieux :</em> certains outils spécialisés comme Midjourney proposent de vrais curseurs d'originalité (<em>chaos</em>, <em>stylize</em>, <em>weird</em>). Dans les applications ChatGPT ou Gemini vous n'avez pas ce genre de curseurs : ce sont vos consignes qui jouent ce rôle.</p>
+
+    <!-- ============================================================
+         CAS D'USAGE — modifier : TITRE_CAS et les 4 étapes
+         ============================================================ -->
+    <div class="section-eyebrow">Le cas d'usage</div>
+    <h2 class="section-title">« L'affiche de Camille »</h2>
+    <p class="section-body">Camille tient une boutique de fleurs à Vienne. Elle veut une affiche pour ses compositions de fêtes. Sa première tentative, « une affiche de Noël pour un fleuriste », ressemble à toutes celles qu'elle a déjà vues. Voici comment elle s'y prend la deuxième fois.</p>
+
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%; margin-bottom:28px;">
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#006D29; color:#F07E01; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">1</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#006D29;">Décrire son identité.</strong> Elle écrit en cinq lignes ce qui fait sa boutique : ses couleurs (vert sapin et blanc cassé), son ambiance (simple et champêtre), son public (la clientèle du quartier) et ce qu'elle refuse (pas de dorures, pas de bonhomme de neige).</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#006D29; color:#F07E01; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">2</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#006D29;">Demander trois pistes très différentes.</strong> Elle colle cette description dans ChatGPT ou Gemini et demande trois visuels franchement différents : l'un sobre, l'un plus coloré et l'un façon papier découpé.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top; padding-bottom:14px;"><div style="width:26px; height:26px; background:#006D29; color:#F07E01; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">3</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top; padding-bottom:14px;"><strong style="color:#006D29;">Partir d'une vraie photo.</strong> Elle choisit la piste qui lui plaît et y joint une photo de sa propre vitrine. Les fleurs montrées sont ainsi celles qu'elle vend réellement : le client retrouvera en boutique ce qu'il a vu sur l'affiche.</td>
+      </tr>
+      <tr>
+        <td style="width:26px; vertical-align:top;"><div style="width:26px; height:26px; background:#006D29; color:#F07E01; border-radius:50%; display:inline-block; font-size:11px; font-weight:700; text-align:center; line-height:26px; font-family:Arial,sans-serif;">4</div></td>
+        <td style="padding-left:14px; font-size:14px; line-height:1.65; color:#3D3830; vertical-align:top;"><strong style="color:#006D29;">Ajouter soi-même les mots.</strong> Elle inscrit elle-même son logo, ses horaires de fêtes et son adresse avec un simple outil de retouche ou de traitement de texte. Elle fait relire l'ensemble par une personne de confiance avant d'imprimer.</td>
+      </tr>
+    </table>
+
+    <p class="section-body"><strong style="color:#F07E01;">Et à la maison ?</strong> Même méthode pour une carte de vœux : décrivez en trois lignes vos couleurs, un souvenir de l'année et une vraie photo de famille puis demandez trois versions. Votre carte ne ressemblera à aucune autre parce que le point de départ est à vous.</p>
+
+    <div class="divider"></div>
+
+    <!-- BADGES — ne pas modifier -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:36px 0 28px;">
+      <tr>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+        <td style="padding:0 14px; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#B0A898; white-space:nowrap; text-align:center;">Pour ceux qui pratiquent déjà</td>
+        <td style="border-top:1px solid #D4C9B8; width:40%;"></td>
+      </tr>
+    </table>
+    <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+      <tr>
+        <td style="background:#F4F1EC; border-radius: 0; padding:5px 14px 5px 10px;">
+          <table cellpadding="0" cellspacing="0" border="0"><tr>
+            <td style="width:9px; height:9px; background:#F07E01; border-radius:50%; font-size:1px;">&nbsp;</td>
+            <td style="padding-left:8px; font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#7A7068; white-space:nowrap;">Pour aller plus loin</td>
+          </tr></table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- ============================================================
+         ASTUCE DU MOIS — modifier : TITRE_ASTUCE, BADGE_ASTUCE,
+         INTRO_ASTUCE, CONTENU_PROMPT, CONTENU_RETENIR
+         ============================================================ -->
+    <div class="section-eyebrow">L'astuce du mois</div>
+    <div class="tool-card">
+      <div class="tool-badge">Prompt clé en main</div>
+      <div class="tool-title">Ma carte d'identité visuelle, à réutiliser</div>
+      <p style="font-size:14px; line-height:1.7; color:#3D3830; margin-bottom:16px;">Écrivez une fois pour toutes ce qui vous ressemble puis collez-le à chaque demande de visuel : affiche, carte de vœux ou post pour les réseaux. Voici un prompt à compléter.</p>
+      <div style="background:#E8F4EC; border-radius: 0; padding:16px 20px; margin-bottom:16px; border-left:3px solid #006D29;">
+        <p style="font-family:'Courier New', monospace; font-size:12px; line-height:1.9; color:#006D29; margin:0;">Je prépare un visuel de fête pour <strong>[mon commerce, mon association ou ma famille]</strong>.<br>Mon identité : couleurs <strong>[vos couleurs]</strong>, ambiance <strong>[chaleureuse, sobre, champêtre, moderne…]</strong>, public visé <strong>[clients du quartier, adhérents, famille…]</strong>.<br>Ce que je ne veux pas : <strong>[par exemple dorures, père Noël, flocons]</strong>.<br>Je joins une vraie photo de <strong>[ma boutique, notre salle, notre sapin]</strong> comme point de départ.<br><br>Propose-moi trois visuels pour <strong>[affiche, carte de vœux, post pour les réseaux]</strong>, franchement différents les uns des autres : un sobre, un coloré et un plus original. Pas de texte dans l'image : j'ajouterai les mots moi-même.</p>
+      </div>
+      <div style="background:#FFF8F0; border-radius: 0; padding:12px 16px; border-left:3px solid #F07E01;">
+        <p style="font-size:13px; line-height:1.65; color:#3D3830; margin:0;"><strong style="color:#F07E01;">À retenir :</strong> enregistrez ce texte dans une note ou dans un Projet ChatGPT pour ne pas le retaper. Si le résultat ne vous plaît pas, dites « change complètement l'ambiance » ou « garde la composition mais change les couleurs ». Comparez enfin avec les affiches que vous voyez autour de vous : si la vôtre leur ressemble, relancez.</p>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         QUESTION D'UN PARTICIPANT — modifier : QUESTION et REPONSE
+         ============================================================ -->
+    <div class="section-eyebrow">La question d'un participant</div>
+    <div class="question-block">
+      <p class="question-quote">"Puis-je donner à l'IA une photo trouvée sur internet pour lui montrer le style que je veux ?"</p>
+      <p class="question-answer"><strong style="color:#006D29;">Le style, oui.</strong> Une lumière, une palette de couleurs, un cadrage, une ambiance : un style n'est pas protégé par le droit d'auteur, seules les œuvres précises le sont. Vous pouvez donc demander « dans l'esprit d'une affiche des années 50 ».<br><br><strong style="color:#F07E01;">La photo elle-même, prudence.</strong> Une photo trouvée sur internet reste protégée, même si on la voit partout. La diffuser sans autorisation constitue une contrefaçon. Si le résultat reproduit de façon reconnaissable une œuvre, un personnage ou une marque, vous risquez les mêmes ennuis. Si l'image montre des personnes, leur droit à l'image entre aussi en jeu. Et une affiche trop proche de celle d'un concurrent au point de créer une confusion pose un autre problème, la concurrence déloyale. Je ne suis pas juriste : le simple fait d'importer l'image d'un autre dans un outil n'est pas clairement encadré, mieux vaut l'éviter.<br><br><strong style="color:#7A7068;">Le bon réflexe.</strong> Décrivez le style avec vos mots ou partez de vos propres photos ou d'images libres de droits. Comparez ensuite le résultat avec ce qui vous inspirait : s'il y ressemble trop, recommencez.<br><br><strong style="color:#006D29;">Comment savoir si une image est libre ?</strong> D'abord, « libre de droits » ne veut pas dire sans condition. Cherchez sur une banque d'images qui affiche clairement sa licence (Pexels, Pixabay, Unsplash ou Wikimedia Commons) et cliquez sur l'image pour lire ses conditions d'utilisation. Pexels et Unsplash ont leur propre licence, à lire une fois. Sur Wikimedia Commons chaque image a la sienne. Repérez ensuite la mention : <em>CC0</em> (aucune obligation), <em>CC BY</em> (il faut citer l'auteur), <em>NC</em> (pas d'usage commercial, donc pas pour la vitrine d'un commerce) ou <em>ND</em> (pas de modification). Dans Google Images, le filtre « Droits d'usage » du menu Outils ne montre que des images sous licence Creative Commons mais vérifiez la licence sur le site d'origine : il arrive qu'une image soit republiée à tort sous licence libre. Enfin, une œuvre n'entre dans le domaine public que 70 ans après la mort de son auteur : une photo récente n'en fait donc pas partie.</p>
+    </div>
+
+    <!-- ============================================================
+         CTA — modifier : TEXTE_CTA (lien fixe, ne pas modifier)
+         ============================================================ -->
+    <div class="cta-block">
+      <p>Vous êtes commerçant, responsable d'association ou agent d'une collectivité et vous voulez des visuels qui vous ressemblent sans y passer vos soirées ? J'anime des <strong>ateliers d'initiation à l'IA</strong> pour les associations, les collectivités et les professionnels de proximité : communication, visuels, courriers. Et si vous étiez à la matinale de Vienne Atout Commerce, pensez au petit questionnaire partagé dans le groupe : il m'aide à préparer des ateliers sur mesure.</p>
+      <a class="cta-button" href="https://initia-vienne.com/ateliers">Voir les prochaines dates &#8594;</a>
+    </div>
+
+    <!-- ============================================================
+         PROCHAIN NUMÉRO — modifier : TITRE_SUIVANT et SOUS_TITRE_SUIVANT
+         ============================================================ -->
+    <div class="next-issue">
+      <div class="next-issue-label">Au prochain numéro</div>
+      <div class="next-issue-text">Le bilan de l'année : cinq réflexes à garder</div>
+      <div class="next-issue-sub">Vérifier, relire, protéger : ce qui compte vraiment de 2026, pour aborder la suite l'esprit tranquille.</div>
+    </div>
+
+  </div>
+
+  <!-- ============================================================
+       FOOTER — ne pas modifier (cibles alignées sur le site refondu, octobre 2026)
+       ============================================================ -->
+  <div class="footer">
+    <div class="footer-name">Bruno Repellin</div>
+    <div class="footer-desc">
+      initIA Vienne · Ateliers d'initiation à l'intelligence artificielle<br>
+      Pour les associations et centres sociaux, les collectivités et les réseaux professionnels de Vienne et des environs.
+    </div>
+    <div style="margin-bottom:20px;">
+      <a href="https://initia-vienne.com" style="font-size:13px; color:#F07E01; text-decoration:none; font-weight:500;">initia-vienne.com</a>
+      <span class="footer-sep">|</span>
+      <a href="mailto:initia.vienne@gmail.com" style="font-size:13px; color:#F07E01; text-decoration:none; font-weight:500;">initia.vienne@gmail.com</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.instagram.com/initia.vienne" style="font-size:13px; color:#F07E01; text-decoration:none; font-weight:500;">Instagram</a>
+      <span class="footer-sep">|</span>
+      <a href="https://www.linkedin.com/in/bruno-repellin-b1425a21" style="font-size:13px; color:#F07E01; text-decoration:none; font-weight:500;">LinkedIn</a>
+    </div>
+    <div class="footer-legal">
+      Vous recevez cet email parce que vous êtes inscrit à la newsletter initIA Vienne.<br>
+      <a href="{{UNSUBSCRIBE_URL}}">Se désinscrire</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
